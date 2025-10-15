@@ -95,4 +95,10 @@ export class MoralisRepository {
       address,
     });
   }
+
+  static getWalletStats(address: string) {
+    return Moralis.EvmApi.wallets.getWalletStats({
+      address,
+    });
+  }
 }

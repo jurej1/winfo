@@ -1,0 +1,20 @@
+meta {
+  name: Stats
+  type: http
+  seq: 9
+}
+
+get {
+  url: {{api}}/wallet/:address/stats
+  body: none
+  auth: inherit
+}
+
+params:path {
+  address: {{walletAddress}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
