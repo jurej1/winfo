@@ -1,0 +1,26 @@
+meta {
+  name: Historical data by exchange
+  type: http
+  seq: 2
+}
+
+get {
+  url: https://rest.coinapi.io/v1/ohlcv/exchanges/:exchange_id/history?time_start=2025-09-15T00:00:00Z&time_end=2025-09-16T00:00:00Z
+  body: none
+  auth: inherit
+}
+
+params:query {
+  time_start: 2025-09-15T00:00:00Z
+  time_end: 2025-09-16T00:00:00Z
+  ~period_id: 1DAY
+}
+
+params:path {
+  exchange_id: BINANCE
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

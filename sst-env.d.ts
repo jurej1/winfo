@@ -5,6 +5,10 @@
 
 declare module "sst" {
   export interface Resource {
+    "CoinAPIKey": {
+      "type": "sst.sst.Secret"
+      "value": string
+    }
     "MoralisAPIKey": {
       "type": "sst.sst.Secret"
       "value": string

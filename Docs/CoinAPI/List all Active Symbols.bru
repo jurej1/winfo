@@ -1,0 +1,25 @@
+meta {
+  name: List all Active Symbols
+  type: http
+  seq: 3
+}
+
+get {
+  url: https://rest.coinapi.io/v1/symbols/:exchange_id/active?filter_asset_id=ETH
+  body: none
+  auth: inherit
+}
+
+params:query {
+  filter_asset_id: ETH
+  ~filter_symbol_id: BINANCE_SPOT_ETH_USDT
+}
+
+params:path {
+  exchange_id: BINANCE
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
