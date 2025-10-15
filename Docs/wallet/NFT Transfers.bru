@@ -1,0 +1,19 @@
+meta {
+  name: NFT Transfers
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{api}}/wallet/:address/nft-transfers
+  body: none
+  auth: inherit
+}
+
+params:path {
+  address: {{walletAddress}}
+}
+
+settings {
+  encodeUrl: true
+}

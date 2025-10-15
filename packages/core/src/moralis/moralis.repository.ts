@@ -14,4 +14,11 @@ export class MoralisRepository {
       limit: 10,
     });
   }
+
+  static getWalletNftTransfers(address: string) {
+    return Moralis.EvmApi.nft.getWalletNFTTransfers({
+      address,
+      limit: 10,
+    });
+  }
 }
