@@ -1,4 +1,5 @@
 import Moralis from "moralis";
+import { GetWalletNetWorthOperationRequest } from "moralis/common-evm-utils";
 
 export class MoralisRepository {
   static getWalletHistory(address: string) {
@@ -27,5 +28,9 @@ export class MoralisRepository {
       address,
       limit: 10,
     });
+  }
+
+  static getWalletNetWorth(params: GetWalletNetWorthOperationRequest) {
+    return Moralis.EvmApi.wallets.getWalletNetWorth(params);
   }
 }

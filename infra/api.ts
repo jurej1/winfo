@@ -25,3 +25,9 @@ api.route("GET /wallet/{address}/tokens", {
   handler: "packages/functions/src/wallet/tokens/get.handler",
   link: [moralisAPIKey],
 });
+
+// GET wallet net worth
+api.route("GET /wallet/{address}/net-worth", {
+  handler: "packages/functions/src/wallet/net-worth/get.handler",
+  link: [moralisAPIKey],
+});

@@ -1,0 +1,19 @@
+meta {
+  name: Net Worth
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{api}}/wallet/:address/net-worth
+  body: json
+  auth: inherit
+}
+
+params:path {
+  address: {{walletAddress}}
+}
+
+settings {
+  encodeUrl: true
+}
