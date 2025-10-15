@@ -19,3 +19,9 @@ api.route("GET /wallet/{address}/nft-transfers", {
   handler: "packages/functions/src/wallet/nft-transfers/get.handler",
   link: [moralisAPIKey],
 });
+
+// GET token wallances by wallet
+api.route("GET /wallet/{address}/tokens", {
+  handler: "packages/functions/src/wallet/tokens/get.handler",
+  link: [moralisAPIKey],
+});

@@ -21,4 +21,11 @@ export class MoralisRepository {
       limit: 10,
     });
   }
+
+  static getTokenBalancesByWallet(address: string) {
+    return Moralis.EvmApi.wallets.getWalletTokenBalancesPrice({
+      address,
+      limit: 10,
+    });
+  }
 }

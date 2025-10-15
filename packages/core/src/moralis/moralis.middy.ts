@@ -9,6 +9,7 @@ export const initMoralisMiddleware = (): middy.MiddlewareObj => {
 
       await Moralis.start({
         apiKey: Resource.MoralisAPIKey.value,
+        defaultEvmApiChain: Moralis.EvmUtils.EvmChain.BSC,
       });
 
       console.log("[Moralis] initialized successfully!");

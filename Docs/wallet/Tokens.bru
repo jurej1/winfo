@@ -1,0 +1,19 @@
+meta {
+  name: Tokens
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{api}}/wallet/:address/tokens
+  body: none
+  auth: inherit
+}
+
+params:path {
+  address: {{walletAddress}}
+}
+
+settings {
+  encodeUrl: true
+}
