@@ -1,5 +1,6 @@
 import Moralis from "moralis";
 import { GetWalletNetWorthOperationRequest } from "moralis/common-evm-utils";
+import { Resource } from "sst";
 
 export class MoralisRepository {
   static getWalletHistory(address: string) {
@@ -32,5 +33,54 @@ export class MoralisRepository {
 
   static getWalletNetWorth(params: GetWalletNetWorthOperationRequest) {
     return Moralis.EvmApi.wallets.getWalletNetWorth(params);
+  }
+
+  static async getWalletApprovals(address: string) {
+    const options = {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        "X-API-Key": Resource.MoralisAPIKey.value,
+      },
+    };
+
+    const response = await fetch(
+      `https://deep-index.moralis.io/api/v2.2/wallets/${address}/approvals?chain=eth&limit=25`,
+      options
+    );
+
+    const body = await response.json();
+
+    return body as {
+      limit: number;
+      page_size: number;
+      cursor: string;
+      result: {
+        block_number: string;
+        block_timestamp: string;
+        transaction_hash: string;
+        value: string;
+        value_formatted: string;
+        token: {
+          address: string;
+          address_label: string;
+          name: string;
+          symbol: string;
+          logo: string;
+          possible_spam: string;
+          verified_contract: string;
+          current_balance: string;
+          current_balance_formatted: string;
+          usd_price: string;
+          usd_at_risk: string;
+        };
+        spender: {
+          address: string;
+          address_label: string;
+          entity: string;
+          entity_logo: string;
+        };
+      }[];
+    };
   }
 }

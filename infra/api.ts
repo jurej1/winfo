@@ -31,3 +31,9 @@ api.route("GET /wallet/{address}/net-worth", {
   handler: "packages/functions/src/wallet/net-worth/get.handler",
   link: [moralisAPIKey],
 });
+
+// GET wallet approvals
+api.route("GET /wallet/{address}/approvals", {
+  handler: "packages/functions/src/wallet/approvals/get.handler",
+  link: [moralisAPIKey],
+});

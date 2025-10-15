@@ -1,0 +1,19 @@
+meta {
+  name: Approvals
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{api}}/wallet/:address/approvals
+  body: none
+  auth: inherit
+}
+
+params:path {
+  address: {{walletAddress}}
+}
+
+settings {
+  encodeUrl: true
+}
