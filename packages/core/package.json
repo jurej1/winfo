@@ -5,12 +5,7 @@
   "scripts": {
     "test": "sst shell vitest"
   },
-  "exports": {
-    "./*": [
-      "./src/*/index.ts",
-      "./src/*.ts"
-    ]
-  },
+  "exports": "./src/index.ts",
   "dependencies": {
     "sst": "*"
   },
