@@ -83,4 +83,16 @@ export class MoralisRepository {
       }[];
     };
   }
+
+  static getMoralisProfitabilitySummary(address: string) {
+    return Moralis.EvmApi.wallets.getWalletProfitabilitySummary({
+      address,
+    });
+  }
+
+  static getWalletProfitability(address: string) {
+    return Moralis.EvmApi.wallets.getWalletProfitability({
+      address,
+    });
+  }
 }

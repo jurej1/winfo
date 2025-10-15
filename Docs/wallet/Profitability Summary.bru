@@ -1,0 +1,20 @@
+meta {
+  name: Profitability Summary
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{api}}/wallet/:address/profitability-summary
+  body: none
+  auth: inherit
+}
+
+params:path {
+  address: {{walletAddress}}
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

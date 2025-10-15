@@ -37,3 +37,15 @@ api.route("GET /wallet/{address}/approvals", {
   handler: "packages/functions/src/wallet/approvals/get.handler",
   link: [moralisAPIKey],
 });
+
+// GET wallet profitability
+api.route("GET /wallet/{address}/profitability", {
+  handler: "packages/functions/src/wallet/profitability/get.handler",
+  link: [moralisAPIKey],
+});
+
+// GET wallet profitability summary
+api.route("GET /wallet/{address}/profitability-summary", {
+  handler: "packages/functions/src/wallet/profitability-summary/get.handler",
+  link: [moralisAPIKey],
+});
