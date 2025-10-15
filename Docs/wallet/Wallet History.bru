@@ -1,0 +1,19 @@
+meta {
+  name: Wallet History
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{api}}/wallet/:address/history
+  body: none
+  auth: inherit
+}
+
+params:path {
+  address: {{walletAddress}}
+}
+
+settings {
+  encodeUrl: true
+}

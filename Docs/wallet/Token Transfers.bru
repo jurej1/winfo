@@ -1,0 +1,19 @@
+meta {
+  name: Token Transfers
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{api}}/wallet/:address/token-transfers
+  body: none
+  auth: inherit
+}
+
+params:path {
+  address: {{walletAddress}}
+}
+
+settings {
+  encodeUrl: true
+}

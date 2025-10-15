@@ -9,6 +9,10 @@ declare module "sst" {
       "type": "sst.sst.Secret"
       "value": string
     }
+    "WinfoAPI": {
+      "type": "sst.aws.ApiGatewayV2"
+      "url": string
+    }
   }
 }
 /// <reference path="sst-env.d.ts" />

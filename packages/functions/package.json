@@ -3,10 +3,13 @@
   "version": "0.0.0",
   "type": "module",
   "dependencies": {
+    "@middy/core": "^6.4.5",
+    "@middy/http-json-body-parser": "^6.4.5",
     "@w-info-sst/core": "*",
+    "@w-info-sst/types": "*",
     "sst": "*"
   },
   "devDependencies": {
-    "@types/aws-lambda": "^8"
+    "@types/aws-lambda": "*"
   }
 }
