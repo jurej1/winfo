@@ -68,3 +68,8 @@ api.route("GET /tokens/market_data", {
   handler: "packages/functions/src/tokens/market_chart/get.handler",
   link: [coinGeckoAPIKey],
 });
+
+api.route("GET /tokens/search", {
+  handler: "packages/functions/src/tokens/search/get.handler",
+  link: [coinGeckoAPIKey],
+});

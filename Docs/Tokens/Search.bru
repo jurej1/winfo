@@ -1,17 +1,17 @@
 meta {
-  name: Market Data
+  name: Search
   type: http
-  seq: 2
+  seq: 3
 }
 
 get {
-  url: {{api}}/tokens/market_data?coin=bitcoin
+  url: {{api}}/tokens/search?query=bit
   body: none
   auth: inherit
 }
 
 params:query {
-  coin: bitcoin
+  query: bit
 }
 
 settings {

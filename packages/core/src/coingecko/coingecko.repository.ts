@@ -1,4 +1,3 @@
-import Coingecko from "@coingecko/coingecko-typescript";
 import { Resource } from "sst";
 
 export class CoingeckoRepository {
@@ -42,5 +41,17 @@ export class CoingeckoRepository {
     const body = await response.json();
 
     return body;
+  }
+
+  static async searchCoin(query: string) {
+    const searchParams = new URLSearchParams({ query }).toString();
+
+    const response = await fetch(`${this.API_URL}/search?${searchParams}`);
+
+    const body = (await response.json()) as {
+      coins: [];
+    };
+
+    return body.coins;
   }
 }
