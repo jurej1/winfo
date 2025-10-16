@@ -1,4 +1,4 @@
-export const fetchTokenMarketData = async (coin: string) => {
+export const fetchTokenOHLC = async (coin: string) => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/tokens/ohlc?coin=${coin}`,
   );
@@ -25,4 +25,18 @@ export const fetchTokenMarketData = async (coin: string) => {
     low: number;
     close: number;
   };
+};
+
+export const fetchTokenPrice = async (coin: string) => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/tokens?coin=${coin}`,
+  );
+
+  if (!response.ok) {
+    throw new Error("Nework response was not ok");
+  }
+
+  const rawData = await response.json();
+
+  return rawData;
 };

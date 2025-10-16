@@ -1,3 +1,4 @@
+import { TokenListInfo } from "@w-info-sst/types";
 import { Resource } from "sst";
 
 export class CoingeckoRepository {
@@ -57,7 +58,7 @@ export class CoingeckoRepository {
 
   static async getCoinPriceById(id: string) {
     const queryParams = new URLSearchParams({
-      vs_currency: "usd",
+      vs_currencies: "usd,eth",
       ids: id,
       include_market_cap: "true",
       include_24hr_vol: "true",
@@ -74,5 +75,24 @@ export class CoingeckoRepository {
     const body = await response.json();
 
     return body;
+  }
+
+  static async getCoinListWithMarketData() {
+    const searchParams = new URLSearchParams({
+      vs_currency: "usd",
+      category: "layer-1",
+      price_change_percentage: "1h",
+      per_page: "10",
+    }).toString();
+
+    const url = `${this.API_URL}/coins/markets?${searchParams}`;
+
+    const response = await fetch(url, {
+      headers: this.headers,
+    });
+
+    const data = await response.json();
+
+    return data as TokenListInfo[];
   }
 }

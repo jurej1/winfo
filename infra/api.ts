@@ -58,6 +58,16 @@ api.route("GET /wallet/{address}/stats", {
 
 // TOKENS
 
+api.route("GET /tokens", {
+  handler: "packages/functions/src/tokens/price/get.handler",
+  link: [coinGeckoAPIKey],
+});
+
+api.route("GET /tokens/list", {
+  handler: "packages/functions/src/tokens/list/get.handler",
+  link: [coinGeckoAPIKey],
+});
+
 // GET /tokens?coin="bitcoin"
 api.route("GET /tokens/ohlc", {
   handler: "packages/functions/src/tokens/ohlc/get.handler",
@@ -71,10 +81,5 @@ api.route("GET /tokens/market_data", {
 
 api.route("GET /tokens/search", {
   handler: "packages/functions/src/tokens/search/get.handler",
-  link: [coinGeckoAPIKey],
-});
-
-api.route("GET /tokens", {
-  handler: "packages/functions/src/tokens/price/get.handler",
   link: [coinGeckoAPIKey],
 });

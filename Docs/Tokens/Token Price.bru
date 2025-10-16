@@ -1,11 +1,11 @@
 meta {
-  name: Get Token OHLC
+  name: Token Price
   type: http
-  seq: 1
+  seq: 4
 }
 
 get {
-  url: {{api}}/tokens/ohlc?coin=bitcoin
+  url: {{api}}/tokens?coin=bitcoin
   body: none
   auth: inherit
 }
