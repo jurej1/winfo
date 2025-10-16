@@ -5,14 +5,14 @@ meta {
 }
 
 get {
-  url: https://rest.coinapi.io/v1/symbols/:exchange_id/active?filter_asset_id=ETH
+  url: https://rest.coinapi.io/v1/symbols/:exchange_id/active?filter_symbol_id=BINANCE_SPOT_ETH_USDT
   body: none
   auth: inherit
 }
 
 params:query {
-  filter_asset_id: ETH
-  ~filter_symbol_id: BINANCE_SPOT_ETH_USDT
+  filter_symbol_id: BINANCE_SPOT_ETH_USDT
+  ~filter_asset_id: ETH
 }
 
 params:path {

@@ -1,4 +1,4 @@
-import { moralisAPIKey } from "./secrets";
+import { coinGeckoAPIKey, moralisAPIKey } from "./secrets";
 
 export const api = new sst.aws.ApiGatewayV2("WinfoAPI");
 
@@ -54,4 +54,17 @@ api.route("GET /wallet/{address}/profitability-summary", {
 api.route("GET /wallet/{address}/stats", {
   handler: "packages/functions/src/wallet/stats/get.handler",
   link: [moralisAPIKey],
+});
+
+// TOKENS
+
+// GET /tokens?coin="bitcoin"
+api.route("GET /tokens", {
+  handler: "packages/functions/src/tokens/ohlc/get.handler",
+  link: [coinGeckoAPIKey],
+});
+
+api.route("GET /tokens/market_data", {
+  handler: "packages/functions/src/tokens/market_chart/get.handler",
+  link: [coinGeckoAPIKey],
 });

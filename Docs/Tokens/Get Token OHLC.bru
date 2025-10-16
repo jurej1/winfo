@@ -1,0 +1,20 @@
+meta {
+  name: Get Token OHLC
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{api}}/tokens?coin=bitcoin
+  body: none
+  auth: inherit
+}
+
+params:query {
+  coin: bitcoin
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
