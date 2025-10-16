@@ -20,8 +20,7 @@ export default function Chart() {
 
   return (
     <div style={{ width: "100%", height: 400 }} className="p-4">
-      <h2 className="mb-4 text-xl font-bold">Price Trend (Closing Price)</h2>
-
+      <h2 className="mb-4 text-xl font-bold">BTC</h2>
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
           data={data as any}
@@ -33,7 +32,7 @@ export default function Chart() {
             type="number"
             tickFormatter={(value) => value.toLocaleString()}
           />
-          <Tooltip />
+          {/* <Tooltip /> */}
           <Line
             type="monotone"
             dataKey="close"

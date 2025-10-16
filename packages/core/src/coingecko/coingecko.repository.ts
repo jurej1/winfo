@@ -17,7 +17,7 @@ export class CoingeckoRepository {
       `${this.API_URL}/coins/${coinId}/ohlc?${searchParams}`,
       {
         headers: this.headers,
-      }
+      },
     );
 
     const body = await response.json();
@@ -35,7 +35,7 @@ export class CoingeckoRepository {
       `${this.API_URL}/coins/${coinId}/market_chart?${searchParams}`,
       {
         headers: this.headers,
-      }
+      },
     );
 
     const body = await response.json();
@@ -53,5 +53,26 @@ export class CoingeckoRepository {
     };
 
     return body.coins;
+  }
+
+  static async getCoinPriceById(id: string) {
+    const queryParams = new URLSearchParams({
+      vs_currency: "usd",
+      ids: id,
+      include_market_cap: "true",
+      include_24hr_vol: "true",
+      include_24hr_change: "true",
+      include_last_updated_at: "true",
+    }).toString();
+
+    const url = `${this.API_URL}/simple/price?${queryParams}`;
+
+    const response = await fetch(url, {
+      headers: this.headers,
+    });
+
+    const body = await response.json();
+
+    return body;
   }
 }

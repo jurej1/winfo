@@ -1,6 +1,6 @@
 export const fetchTokenMarketData = async (coin: string) => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/tokens?coin=${coin}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/tokens/ohlc?coin=${coin}`,
   );
 
   if (!response.ok) {
