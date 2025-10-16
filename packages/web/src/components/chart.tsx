@@ -7,9 +7,7 @@ import {
   LineChart,
   XAxis,
   YAxis,
-  CartesianGrid,
   Tooltip,
-  Legend,
   Line,
 } from "recharts";
 
@@ -29,17 +27,13 @@ export default function Chart() {
           data={data as any}
           margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
         >
-          <CartesianGrid strokeDasharray="3 3" stroke="#ccc" />
           <XAxis dataKey="date" />
           <YAxis
             domain={["dataMin", "dataMax"]}
             type="number"
-            // Formats the Y-axis labels
             tickFormatter={(value) => value.toLocaleString()}
           />
           <Tooltip />
-          <Legend />
-          {/* This is the line that plots the Closing Price */}
           <Line
             type="monotone"
             dataKey="close"
