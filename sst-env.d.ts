@@ -9,6 +9,10 @@ declare module "sst" {
       "type": "sst.sst.Secret"
       "value": string
     }
+    "CoinGeckoAPIKey": {
+      "type": "sst.sst.Secret"
+      "value": string
+    }
     "MoralisAPIKey": {
       "type": "sst.sst.Secret"
       "value": string
