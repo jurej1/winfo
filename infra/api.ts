@@ -57,7 +57,6 @@ api.route("GET /wallet/{address}/stats", {
 });
 
 // TOKENS
-
 api.route("GET /tokens", {
   handler: "packages/functions/src/tokens/price/get.handler",
   link: [coinGeckoAPIKey],
@@ -68,7 +67,6 @@ api.route("GET /tokens/list", {
   link: [coinGeckoAPIKey],
 });
 
-// GET /tokens?coin="bitcoin"
 api.route("GET /tokens/ohlc", {
   handler: "packages/functions/src/tokens/ohlc/get.handler",
   link: [coinGeckoAPIKey],
@@ -82,4 +80,9 @@ api.route("GET /tokens/market_data", {
 api.route("GET /tokens/search", {
   handler: "packages/functions/src/tokens/search/get.handler",
   link: [coinGeckoAPIKey],
+});
+
+api.route("GET /tokens/metadata", {
+  handler: "packages/functions/src/tokens/metadata/get.handler",
+  link: [moralisAPIKey, coinGeckoAPIKey],
 });

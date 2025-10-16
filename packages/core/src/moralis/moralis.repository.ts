@@ -46,7 +46,7 @@ export class MoralisRepository {
 
     const response = await fetch(
       `https://deep-index.moralis.io/api/v2.2/wallets/${address}/approvals?chain=eth&limit=25`,
-      options
+      options,
     );
 
     const body = await response.json();
@@ -100,5 +100,13 @@ export class MoralisRepository {
     return Moralis.EvmApi.wallets.getWalletStats({
       address,
     });
+  }
+
+  static getCoinMetadataBySymbol(symbol: string) {
+    return Moralis.EvmApi.token.getTokenMetadataBySymbol({ symbols: [symbol] });
+  }
+
+  static getCoinMetadataByAddress(address: string) {
+    return Moralis.EvmApi.token.getTokenMetadata({ addresses: [address] });
   }
 }
