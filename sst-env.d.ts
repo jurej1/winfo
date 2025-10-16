@@ -17,6 +17,10 @@ declare module "sst" {
       "type": "sst.sst.Secret"
       "value": string
     }
+    "ReownProjectID": {
+      "type": "sst.sst.Secret"
+      "value": string
+    }
     "WebApp": {
       "type": "sst.aws.StaticSite"
       "url": string
