@@ -17,6 +17,10 @@ declare module "sst" {
       "type": "sst.sst.Secret"
       "value": string
     }
+    "WebApp": {
+      "type": "sst.aws.StaticSite"
+      "url": string
+    }
     "WinfoAPI": {
       "type": "sst.aws.ApiGatewayV2"
       "url": string

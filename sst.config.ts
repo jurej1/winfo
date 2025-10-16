@@ -13,5 +13,7 @@ export default $config({
     import("./infra/secrets");
 
     import("./infra/api");
+
+    import("./infra/web");
   },
 });
