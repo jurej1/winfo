@@ -2,10 +2,16 @@
 
 import { config } from "@/lib/wagmi/config";
 import { darkTheme, RainbowKitProvider } from "@rainbow-me/rainbowkit";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {
+  QueryCache,
+  QueryClient,
+  QueryClientProvider,
+} from "@tanstack/react-query";
 import { WagmiProvider } from "wagmi";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  queryCache: new QueryCache(),
+});
 
 type Props = {
   children: React.ReactNode;
