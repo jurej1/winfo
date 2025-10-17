@@ -1,4 +1,6 @@
+import Chart from "@/components/chart";
 import TokenDetails from "@/components/token-details";
+import TokenDetailsPage from "@/components/token-details-page";
 
 type TokenPageProps = {
   params: Promise<{
@@ -9,11 +11,5 @@ type TokenPageProps = {
 export default async function TokenPage({ params }: TokenPageProps) {
   const { id } = await params;
 
-  return (
-    <div className="px-4">
-      <div className="flex max-w-md">
-        <TokenDetails id={id} />
-      </div>
-    </div>
-  );
+  return <TokenDetailsPage id={id} />;
 }

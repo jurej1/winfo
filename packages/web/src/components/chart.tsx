@@ -1,18 +1,16 @@
 "use client";
 
 import { useTokenPrice } from "@/util/api/hooks/useTokenPrice";
+import { TokenListInfo } from "@w-info-sst/types";
 
-import {
-  ResponsiveContainer,
-  LineChart,
-  XAxis,
-  YAxis,
-  Tooltip,
-  Line,
-} from "recharts";
+import { ResponsiveContainer, LineChart, XAxis, YAxis, Line } from "recharts";
 
-export default function Chart() {
-  const { data, error, isLoading, isError } = useTokenPrice("bitcoin");
+type Props = {
+  token: TokenListInfo;
+};
+
+export default function Chart({ token }: Props) {
+  const { data, error, isLoading, isError } = useTokenPrice(token.id);
 
   if (isLoading) return <div className="p-4">Loading Chart...</div>;
   if (isError)
@@ -20,7 +18,7 @@ export default function Chart() {
 
   return (
     <div style={{ width: "100%", height: 400 }} className="p-4">
-      <h2 className="mb-4 text-xl font-bold">BTC</h2>
+      <h2 className="mb-4 text-xl font-bold uppercase">{token.symbol}</h2>
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
           data={data as any}

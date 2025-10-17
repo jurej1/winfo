@@ -1,22 +1,14 @@
 "use client";
 
 import { useTokensList } from "@/util/api/hooks/useTokensList";
+import { TokenListInfo } from "@w-info-sst/types";
 import Image from "next/image";
 
 type Props = {
-  id: string;
+  token: TokenListInfo;
 };
 
-export default function TokenDetails({ id }: Props) {
-  const { data, isLoading, isError, error } = useTokensList();
-
-  if (isLoading || !data) return <div>Loading data...</div>;
-  if (isError) return <div>Error: ${error.message}</div>;
-
-  const token = data.find((t) => t.id === id);
-
-  if (!token) return <div>Token could not be found...</div>;
-
+export default function TokenDetails({ token }: Props) {
   return (
     <div className="flex w-full flex-col gap-y-2 rounded-2xl bg-gray-100 p-4">
       <div className="flex items-center gap-3">
