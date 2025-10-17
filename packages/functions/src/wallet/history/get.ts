@@ -1,5 +1,5 @@
 import middy from "@middy/core";
-import jsonBodyParser from "@middy/http-json-body-parser";
+
 import { initMoralisMiddleware, MoralisRepository } from "@w-info-sst/core";
 import { ApiGwRequest } from "@w-info-sst/types";
 
@@ -8,7 +8,7 @@ const baseHandler = async (
     pathParameters: {
       address: string;
     };
-  }>
+  }>,
 ) => {
   const { address } = event.pathParameters;
 
