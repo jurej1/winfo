@@ -10,8 +10,8 @@ const baseHandler = async (
     };
   }>,
 ) => {
-  const symbol = event.queryStringParameters.symbol;
-  const address = event.queryStringParameters.address;
+  const symbol = event.queryStringParameters?.symbol;
+  const address = event.queryStringParameters?.address;
 
   if (!symbol && !address) {
     return {

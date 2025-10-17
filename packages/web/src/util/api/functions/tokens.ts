@@ -1,3 +1,5 @@
+import { TokenListInfo } from "@w-info-sst/types";
+
 export const fetchTokenOHLC = async (coin: string) => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/tokens/ohlc?coin=${coin}`,
@@ -39,4 +41,18 @@ export const fetchTokenPrice = async (coin: string) => {
   const rawData = await response.json();
 
   return rawData;
+};
+
+export const fetchTokenList = async () => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/tokens/list`,
+  );
+
+  if (!response.ok) {
+    throw new Error("Network response was not ok");
+  }
+
+  const rawData = await response.json();
+
+  return rawData as TokenListInfo[];
 };
