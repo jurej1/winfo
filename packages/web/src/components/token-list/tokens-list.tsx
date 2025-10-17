@@ -20,5 +20,5 @@ export default function TokensList() {
 
   const listItems = data?.map((token) => TokenListItem({ token }));
 
-  return <ul className="px-6 py-2">{listItems}</ul>;
+  return <ul className="w-full px-6 py-2">{listItems}</ul>;
 }
