@@ -16,6 +16,9 @@ const baseHandler = async (
   return {
     statusCode: 200,
     body: JSON.stringify(response),
+    headers: {
+      "Content-Type": "application/json",
+    },
   };
 };
 

@@ -1,3 +1,5 @@
+import { GetContractNftsResponseObject } from "@w-info-sst/types";
+
 export const fetchContractNFTs = async (address: string) => {
   const searchParams = new URLSearchParams({
     address,
@@ -13,5 +15,5 @@ export const fetchContractNFTs = async (address: string) => {
 
   const body = await response.json();
 
-  return body;
+  return body as GetContractNftsResponseObject;
 };
