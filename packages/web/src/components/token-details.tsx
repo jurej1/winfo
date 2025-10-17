@@ -1,6 +1,5 @@
 "use client";
 
-import { useTokensList } from "@/util/api/hooks/useTokensList";
 import { TokenListInfo } from "@w-info-sst/types";
 import Image from "next/image";
 

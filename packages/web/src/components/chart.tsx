@@ -3,7 +3,14 @@
 import { useTokenPrice } from "@/util/api/hooks/useTokenPrice";
 import { TokenListInfo } from "@w-info-sst/types";
 
-import { ResponsiveContainer, LineChart, XAxis, YAxis, Line } from "recharts";
+import {
+  ResponsiveContainer,
+  LineChart,
+  XAxis,
+  YAxis,
+  Line,
+  Tooltip,
+} from "recharts";
 
 type Props = {
   token: TokenListInfo;
@@ -30,7 +37,7 @@ export default function Chart({ token }: Props) {
             type="number"
             tickFormatter={(value) => value.toLocaleString()}
           />
-          {/* <Tooltip /> */}
+          <Tooltip />
           <Line
             type="monotone"
             dataKey="close"

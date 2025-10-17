@@ -95,4 +95,18 @@ export class CoingeckoRepository {
 
     return data as TokenListInfo[];
   }
+
+  static async getTickersByCoinId(id: string) {
+    const searchParams = new URLSearchParams({
+      exchange_ids: "binance",
+    }).toString();
+
+    const url = `https://api.coingecko.com/api/v3/coins/${id}/tickers?${searchParams}`;
+
+    const response = await fetch(url, { headers: this.headers });
+
+    const data = await response.json();
+
+    return data;
+  }
 }

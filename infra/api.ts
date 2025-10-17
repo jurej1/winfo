@@ -86,3 +86,8 @@ api.route("GET /tokens/metadata", {
   handler: "packages/functions/src/tokens/metadata/get.handler",
   link: [moralisAPIKey, coinGeckoAPIKey],
 });
+
+api.route("GET /tokens/tickers", {
+  handler: "packages/functions/src/tokens/tickers/get.handler",
+  link: [coinGeckoAPIKey],
+});

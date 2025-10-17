@@ -1,0 +1,20 @@
+meta {
+  name: Token Tickers
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{api}}/tokens/tickers?coin=bitcoin
+  body: none
+  auth: inherit
+}
+
+params:query {
+  coin: bitcoin
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
