@@ -101,3 +101,8 @@ api.route("GET /nfts/contract-nfts", {
   handler: "packages/functions/src/nfts/contract-nfts/get.handler",
   link: link,
 });
+
+api.route("GET /nfts/collection-metadata", {
+  handler: "packages/functions/src/nfts/collection-metadata/get.handler",
+  link: link,
+});

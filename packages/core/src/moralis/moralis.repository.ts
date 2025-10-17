@@ -117,4 +117,11 @@ export class MoralisRepository {
       limit: 12,
     });
   }
+
+  static getNftCollectionMetadata(address: string) {
+    return Moralis.EvmApi.nft.getNFTContractMetadata({
+      address: address,
+      chain: Moralis.EvmUtils.EvmChain.ETHEREUM,
+    });
+  }
 }

@@ -1,4 +1,3 @@
-// The full object matching the structure of the JSON response
 export type FullNftData = {
   token_address: string;
   token_id: string;
@@ -57,4 +56,28 @@ export type GetContractNftsResponseObject = {
   page: number;
   page_size: number;
   result: FullNftData[];
+};
+
+export type NftCollectionMetadata = {
+  token_address: string;
+  name: string;
+  symbol: string;
+  contract_type: "ERC721" | "ERC1155";
+  synced_at: string;
+  possible_spam: boolean;
+  verified_collection: boolean;
+  collection_logo: string;
+  collection_banner_image: string;
+  collection_category: string;
+  project_url: string | null;
+  wiki_url: string | null;
+  discord_url: string | null;
+  telegram_url: string | null;
+  twitter_username: string | null;
+  instagram_username: string | null;
+  description: string;
+  created_date: string;
+  floor_price: string;
+  floor_price_usd: string;
+  floor_price_currency: string;
 };
