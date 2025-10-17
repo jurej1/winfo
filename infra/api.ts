@@ -93,3 +93,11 @@ api.route("GET /tokens/tickers", {
   handler: "packages/functions/src/tokens/tickers/get.handler",
   link: link,
 });
+
+////////
+// NFTS
+////////
+api.route("GET /nfts/contract-nfts", {
+  handler: "packages/functions/src/nfts/contract-nfts/get.handler",
+  link: link,
+});

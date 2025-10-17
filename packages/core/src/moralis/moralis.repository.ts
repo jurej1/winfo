@@ -109,4 +109,12 @@ export class MoralisRepository {
   static getCoinMetadataByAddress(address: string) {
     return Moralis.EvmApi.token.getTokenMetadata({ addresses: [address] });
   }
+
+  static getContractNFTs(address: string) {
+    return Moralis.EvmApi.nft.getContractNFTs({
+      address: address,
+      chain: Moralis.EvmUtils.EvmChain.ETHEREUM,
+      limit: 12,
+    });
+  }
 }

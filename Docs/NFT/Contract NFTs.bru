@@ -1,0 +1,20 @@
+meta {
+  name: Contract NFTs
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{api}}/nfts/contract-nfts?address=0x524cab2ec69124574082676e6f654a18df49a048
+  body: none
+  auth: inherit
+}
+
+params:query {
+  address: 0x524cab2ec69124574082676e6f654a18df49a048
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
