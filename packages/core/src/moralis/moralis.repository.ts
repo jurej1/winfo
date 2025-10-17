@@ -124,4 +124,12 @@ export class MoralisRepository {
       chain: Moralis.EvmUtils.EvmChain.ETHEREUM,
     });
   }
+
+  static getNftContractTransfers(address: string) {
+    return Moralis.EvmApi.nft.getNFTContractTransfers({
+      address: address,
+      limit: 12,
+      chain: Moralis.EvmUtils.EvmChain.ETHEREUM,
+    });
+  }
 }
