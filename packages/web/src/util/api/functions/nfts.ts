@@ -1,6 +1,7 @@
 import {
   GetContractNftsResponseObject,
   NftCollectionMetadata,
+  NftTransactionResponse,
 } from "@w-info-sst/types";
 
 const API = process.env.NEXT_PUBLIC_API_URL;
@@ -37,4 +38,22 @@ export const fetchNftContractMetadata = async (address: string) => {
   const body = await response.json();
 
   return body as NftCollectionMetadata;
+};
+
+export const fetchNftCollectionTransfers = async (address: string) => {
+  const searchParams = new URLSearchParams({
+    address,
+  }).toString();
+
+  const response = await fetch(
+    `${API}/nfts/collection-transfers?${searchParams}`,
+  );
+
+  if (!response.ok) {
+    throw Error("Response was not OK");
+  }
+
+  const body = await response.json();
+
+  return body as NftTransactionResponse;
 };
