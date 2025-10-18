@@ -1,4 +1,5 @@
 import {
+  CollectionStats,
   GetContractNftsResponseObject,
   NftCollectionMetadata,
   NftTransactions,
@@ -14,7 +15,7 @@ export const fetchContractNFTs = async (address: string) => {
   const response = await fetch(`${API}/nfts/contract-nfts?${searchParams}`);
 
   if (!response.ok) {
-    throw Error("Response was not ok!");
+    throw new Error("Response was not ok!");
   }
 
   const body = await response.json();
@@ -32,7 +33,7 @@ export const fetchNftContractMetadata = async (address: string) => {
   );
 
   if (!response.ok) {
-    throw Error("Response was not ok!");
+    throw new Error("Response was not ok!");
   }
 
   const body = await response.json();
@@ -50,10 +51,28 @@ export const fetchNftCollectionTransfers = async (address: string) => {
   );
 
   if (!response.ok) {
-    throw Error("Response was not OK");
+    throw new Error("Response was not OK");
   }
 
   const body = await response.json();
 
   return body as NftTransactions;
+};
+
+export const fetchNftSalePricesByCollection = async (address: string) => {
+  const searchParams = new URLSearchParams({
+    address,
+  }).toString();
+
+  const response = await fetch(
+    `${API}/nfts/contract-sale-prices?${searchParams}`,
+  );
+
+  if (!response.ok) {
+    throw new Error("Response was not ok!");
+  }
+
+  const body = await response.json();
+
+  return body as CollectionStats[];
 };
