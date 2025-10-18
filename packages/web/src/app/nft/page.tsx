@@ -1,17 +1,18 @@
-"use client";
-
 import { ContractNftDisplayer } from "@/components/contract-nfts-displayer";
 import { NftCollectionMetadata } from "@/components/nft-collection-metadata";
+import { NftCollectionTransfers } from "@/components/nft-collection-transfers";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
 
 export default function Page() {
+  const address = "0x80336ad7a747236ef41f47ed2c7641828a480baa";
+
   return (
     <div className="m-auto mb-[64px] flex w-7xl flex-col gap-y-4">
       {/* Header */}
-      <NftCollectionMetadata />
+      <NftCollectionMetadata address={address} />
 
-      <Tabs defaultValue="nfts" className="">
+      <Tabs defaultValue="nfts">
         {/* TABS */}
         <TabsList className="mb-2">
           <TabsTrigger value="nfts" asChild className="mr-1">
@@ -23,9 +24,11 @@ export default function Page() {
         </TabsList>
         {/* TabsContent */}
         <TabsContent value="nfts">
-          <ContractNftDisplayer />
+          <ContractNftDisplayer address={address} />
         </TabsContent>
-        <TabsContent value="transfers"></TabsContent>
+        <TabsContent value="transfers">
+          <NftCollectionTransfers address={address} />
+        </TabsContent>
       </Tabs>
     </div>
   );

@@ -1,3 +1,4 @@
+import { NftTransactions } from "@w-info-sst/types";
 import Moralis from "moralis";
 import { GetWalletNetWorthOperationRequest } from "moralis/common-evm-utils";
 import { Resource } from "sst";
@@ -125,11 +126,30 @@ export class MoralisRepository {
     });
   }
 
-  static getNftContractTransfers(address: string) {
-    return Moralis.EvmApi.nft.getNFTContractTransfers({
-      address: address,
-      limit: 12,
-      chain: Moralis.EvmUtils.EvmChain.ETHEREUM,
-    });
+  static async getNftContractTransfers(address: string) {
+    const options = {
+      method: "GET",
+      headers: {
+        accept: "application/json",
+        "X-API-Key": Resource.MoralisAPIKey.value,
+      },
+    };
+
+    const searchParams = new URLSearchParams({
+      chain: "eth",
+      format: "decimal",
+      include_prices: "true",
+      limit: "25",
+      order: "DESC",
+    }).toString();
+
+    const response = await fetch(
+      `https://deep-index.moralis.io/api/v2.2/nft/${address}/transfers?${searchParams}`,
+      options,
+    );
+
+    const body = await response.json();
+
+    return body as NftTransactions;
   }
 }

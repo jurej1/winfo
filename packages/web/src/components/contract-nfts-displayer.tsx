@@ -1,13 +1,16 @@
 "use client";
 
+import { Address } from "viem";
 import { NftCard } from "./nft-card";
 
 import { useContractNFTs } from "@/util/api/hooks/useContractNfts";
 
-export function ContractNftDisplayer() {
-  const { data, isLoading, isError } = useContractNFTs(
-    "0x524cab2ec69124574082676e6f654a18df49a048", // Pudgy pinguins
-  );
+type Props = {
+  address: Address;
+};
+
+export function ContractNftDisplayer({ address }: Props) {
+  const { data, isLoading, isError } = useContractNFTs(address);
 
   if (isLoading) return <div>NFT data is loading</div>;
 

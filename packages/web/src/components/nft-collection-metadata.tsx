@@ -2,14 +2,19 @@
 
 import { useNftCollectionMetadata } from "@/util/api/hooks/useNftCollectionMetadata";
 import { Button } from "./ui/button";
+import { Address } from "viem";
 
-export function NftCollectionMetadata() {
+type Props = {
+  address: Address;
+};
+
+export function NftCollectionMetadata({ address }: Props) {
   const {
     data: metadata,
     isLoading,
     error,
     isError,
-  } = useNftCollectionMetadata("0x524cab2ec69124574082676e6f654a18df49a048");
+  } = useNftCollectionMetadata("0xbd3531da5cf5857e7cfaa92426877b022e612cf8");
 
   if (isLoading) return <div>Loading...</div>;
 
