@@ -31,8 +31,6 @@ const baseHandler = async (
     ),
   );
 
-  console.log("response", response.length);
-
   return {
     statusCode: 200,
     body: JSON.stringify(response),
