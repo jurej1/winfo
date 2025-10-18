@@ -19,6 +19,10 @@ export function NftCollectionTransfers({ address }: Props) {
 
   return (
     <ul className="flex flex-col gap-2">
+      <li className="flex justify-between text-xs">
+        <span>Transaction Hash</span>
+        <span>Date</span>
+      </li>
       {data.result.map((record) => (
         <NftTransactionCard
           key={`${record.transaction_hash}-${record.log_index}`}
