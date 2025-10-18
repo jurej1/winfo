@@ -111,3 +111,8 @@ api.route("GET /nfts/collection-transfers", {
   handler: "packages/functions/src/nfts/collection-transfers/get.handler",
   link,
 });
+
+api.route("GET /nfts/contract-sale-prices", {
+  handler: "packages/functions/src/nfts/contract-sale-prices/get.handler",
+  link,
+});

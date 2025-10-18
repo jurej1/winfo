@@ -152,4 +152,18 @@ export class MoralisRepository {
 
     return body as NftTransactions;
   }
+
+  static async getNFTContractSalePrices({
+    address,
+    days,
+  }: {
+    address: string;
+    days: number;
+  }) {
+    return Moralis.EvmApi.nft.getNFTContractSalePrices({
+      address,
+      days,
+      chain: Moralis.EvmUtils.EvmChain.ETHEREUM,
+    });
+  }
 }
