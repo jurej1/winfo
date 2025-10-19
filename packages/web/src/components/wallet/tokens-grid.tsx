@@ -8,8 +8,8 @@ type Props = {
 export function TokensPortfolioList({ tokens }: Props) {
   return (
     <ul className="flex flex-col gap-y-2 overflow-y-auto">
-      {tokens.map((token, index) => (
-        <PortfolioTokenCard key={index} token={token} />
+      {tokens.map((token) => (
+        <PortfolioTokenCard key={token.token_address} token={token} />
       ))}
     </ul>
   );

@@ -16,7 +16,7 @@ export function PortfolioPie({ tokens }: Props) {
     .filter((item) => item.value > 0);
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex justify-center">
       <PieChart
         width={400}
         height={400}
