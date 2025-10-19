@@ -11,11 +11,7 @@ const baseHandler = async (
 ) => {
   const { address } = event.queryStringParameters;
 
-  console.log("Address", address);
-
   const response = await MoralisRepository.getNftContractTransfers(address);
-
-  console.log("response", response);
 
   return {
     statusCode: 200,

@@ -21,8 +21,6 @@ const baseHandler = async (
     chains: chains,
   });
 
-  console.log("RESPONSE", response);
-
   return {
     statusCode: 200,
     body: JSON.stringify(response),
