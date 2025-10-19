@@ -1,5 +1,4 @@
 import middy from "@middy/core";
-import httpJsonBodyParser from "@middy/http-json-body-parser";
 import { initMoralisMiddleware, MoralisRepository } from "@w-info-sst/core";
 import { ApiGwRequest } from "@w-info-sst/types";
 
@@ -11,7 +10,7 @@ const baseHandler = async (
     body: {
       chains?: string[];
     };
-  }>
+  }>,
 ) => {
   const { address } = event.pathParameters;
 
@@ -22,13 +21,15 @@ const baseHandler = async (
     chains: chains,
   });
 
+  console.log("RESPONSE", response);
+
   return {
     statusCode: 200,
     body: JSON.stringify(response),
+    headers: {
+      "Content-Type": "application/json",
+    },
   };
 };
 
-export const handler = middy(baseHandler).use([
-  initMoralisMiddleware(),
-  httpJsonBodyParser({ disableContentTypeError: true }),
-]);
+export const handler = middy(baseHandler).use([initMoralisMiddleware()]);
