@@ -166,4 +166,11 @@ export class MoralisRepository {
       chain: Moralis.EvmUtils.EvmChain.ETHEREUM,
     });
   }
+
+  static async getNativeBalanceByWallet(string: string) {
+    return Moralis.EvmApi.balance.getNativeBalance({
+      address: string,
+      chain: Moralis.EvmUtils.EvmChain.ETHEREUM,
+    });
+  }
 }
