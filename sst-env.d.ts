@@ -5,6 +5,34 @@
 
 declare module "sst" {
   export interface Resource {
+    "CoinAPIKey": {
+      "type": "sst.sst.Secret"
+      "value": string
+    }
+    "CoinGeckoAPIKey": {
+      "type": "sst.sst.Secret"
+      "value": string
+    }
+    "DatabaseUrl": {
+      "type": "sst.sst.Secret"
+      "value": string
+    }
+    "MoralisAPIKey": {
+      "type": "sst.sst.Secret"
+      "value": string
+    }
+    "ReownProjectID": {
+      "type": "sst.sst.Secret"
+      "value": string
+    }
+    "WebApp": {
+      "type": "sst.aws.StaticSite"
+      "url": string
+    }
+    "WinfoAPI": {
+      "type": "sst.aws.ApiGatewayV2"
+      "url": string
+    }
   }
 }
 /// <reference path="sst-env.d.ts" />

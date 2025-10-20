@@ -1,8 +1,13 @@
-import { coinGeckoAPIKey, moralisAPIKey } from "./secrets";
+import { coinGeckoAPIKey, databaseUrl, moralisAPIKey } from "./secrets";
 
 export const api = new sst.aws.ApiGatewayV2("WinfoAPI");
 
-const link = [coinGeckoAPIKey, moralisAPIKey];
+const link = [coinGeckoAPIKey, moralisAPIKey, databaseUrl];
+
+api.route("POST /wallet", {
+  handler: "packages/functions/src/wallet/add/post.handler",
+  link,
+});
 
 // GET wallet history
 api.route("GET /wallet/{address}/history", {

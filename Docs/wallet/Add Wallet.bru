@@ -1,18 +1,18 @@
 meta {
   name: Add Wallet
   type: http
-  seq: 10
+  seq: 1
 }
 
 post {
-  url: {{api}}/wallet/add
+  url: {{api}}/wallet
   body: json
   auth: inherit
 }
 
 body:json {
   {
-    "address": "Address new"
+    "address": "0x678a415fACA5aDB1f3197ecF7055459Dcc4Fb277"
   }
 }
 
