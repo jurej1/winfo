@@ -10,10 +10,6 @@ export default $config({
     };
   },
   async run() {
-    import("./infra/secrets");
-
-    import("./infra/api");
-
-    import("./infra/web");
+    await import("./infra");
   },
 });

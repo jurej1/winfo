@@ -1,0 +1,22 @@
+meta {
+  name: Add Wallet
+  type: http
+  seq: 10
+}
+
+post {
+  url: {{api}}/wallet/add
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "address": "Address new"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
