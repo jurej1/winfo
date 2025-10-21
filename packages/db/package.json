@@ -12,6 +12,7 @@
     "tsx": "^4.20.6"
   },
   "dependencies": {
+    "@middy/http-content-encoding": "^6.4.5",
     "@neondatabase/serverless": "^1.0.2",
     "dotenv": "^17.2.3",
     "drizzle-orm": "^0.44.6"
