@@ -1,6 +1,5 @@
 import { NftTransactions } from "@w-info-sst/types";
 import Moralis from "moralis";
-import { GetWalletNetWorthOperationRequest } from "moralis/common-evm-utils";
 import { Resource } from "sst";
 
 export class MoralisRepository {
@@ -32,8 +31,11 @@ export class MoralisRepository {
     });
   }
 
-  static getWalletNetWorth(params: GetWalletNetWorthOperationRequest) {
-    return Moralis.EvmApi.wallets.getWalletNetWorth(params);
+  static getWalletNetWorth(address: string) {
+    return Moralis.EvmApi.wallets.getWalletNetWorth({
+      address,
+      chains: [Moralis.EvmUtils.EvmChain.ETHEREUM],
+    });
   }
 
   static async getWalletApprovals(address: string) {
