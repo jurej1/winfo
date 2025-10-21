@@ -1,0 +1,121 @@
+{
+  "id": "e5a9f316-77a2-4374-963b-35bffd124593",
+  "prevId": "b9aa9a08-2cc7-42a0-aba3-a7db77309ab3",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.net-worths": {
+      "name": "net-worths",
+      "schema": "",
+      "columns": {
+        "address": {
+          "name": "address",
+          "type": "varchar(42)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "total_networth_usd": {
+          "name": "total_networth_usd",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "native_balance": {
+          "name": "native_balance",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "native_balance_formatted": {
+          "name": "native_balance_formatted",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "native_balance_usd": {
+          "name": "native_balance_usd",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "token_balance_usd": {
+          "name": "token_balance_usd",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "networth_usd": {
+          "name": "networth_usd",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "net-worths_address_wallets_address_fk": {
+          "name": "net-worths_address_wallets_address_fk",
+          "tableFrom": "net-worths",
+          "tableTo": "wallets",
+          "columnsFrom": [
+            "address"
+          ],
+          "columnsTo": [
+            "address"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.wallets": {
+      "name": "wallets",
+      "schema": "",
+      "columns": {
+        "address": {
+          "name": "address",
+          "type": "varchar(42)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

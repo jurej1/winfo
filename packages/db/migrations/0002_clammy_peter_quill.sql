@@ -1,0 +1,1 @@
+ALTER TABLE "net-worths" ADD PRIMARY KEY ("address");
