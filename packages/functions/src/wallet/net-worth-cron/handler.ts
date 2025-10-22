@@ -11,6 +11,8 @@ const baseHandler = async () => {
 
   const wallets = await getWallets();
 
+  if (wallets.length === 0) return { statusCode: 200 };
+
   let netWorths: InsertWalletNetWorth[] = [];
 
   for (const { address } of wallets) {

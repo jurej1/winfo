@@ -6,5 +6,5 @@ export const walletNetWorthsCron = new sst.aws.Cron("WalletNetWorths", {
     timeout: "60 seconds",
     link: secrets,
   },
-  schedule: "rate(5 minutes)",
+  schedule: "cron(0 * * * *)",
 });

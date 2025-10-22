@@ -1,10 +1,9 @@
 import { relations } from "drizzle-orm";
-import { pgTable, timestamp } from "drizzle-orm/pg-core";
-import { WalletColumnType } from "../types";
+import { pgTable, text, timestamp } from "drizzle-orm/pg-core";
 import { walletNetWorths } from "./net-worths.sql";
 
 export const wallets = pgTable("wallets", {
-  address: WalletColumnType.primaryKey().notNull(),
+  address: text("address").primaryKey(),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
 });
 

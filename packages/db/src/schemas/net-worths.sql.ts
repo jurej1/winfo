@@ -1,23 +1,32 @@
 import { relations } from "drizzle-orm";
-import { pgTable, text, timestamp } from "drizzle-orm/pg-core";
-import { WalletColumnType } from "../types";
+
+import { pgTable, primaryKey, text, timestamp } from "drizzle-orm/pg-core";
 import { wallets } from "./wallets.sql";
 
-export const walletNetWorths = pgTable("net-worths", {
-  address: WalletColumnType.notNull().references(() => wallets.address, {
-    onDelete: "cascade",
-  }),
+export const walletNetWorths = pgTable(
+  "net-worths",
+  {
+    address: text("address").references(() => wallets.address, {
+      onDelete: "cascade",
+    }),
 
-  totalNetWorthUsd: text("total_networth_usd").notNull(),
+    totalNetWorthUsd: text("total_networth_usd").notNull(),
 
-  nativeBalance: text("native_balance").notNull(),
-  nativeBalanceFormatted: text("native_balance_formatted").notNull(),
-  nativeBalanceUsd: text("native_balance_usd").notNull(),
-  tokenBalanceUsd: text("token_balance_usd"),
-  networthUsd: text("networth_usd").notNull(),
+    nativeBalance: text("native_balance").notNull(),
+    nativeBalanceFormatted: text("native_balance_formatted").notNull(),
+    nativeBalanceUsd: text("native_balance_usd").notNull(),
+    tokenBalanceUsd: text("token_balance_usd"),
+    networthUsd: text("networth_usd").notNull(),
 
-  createdAt: timestamp("created_at", { mode: "date" }).defaultNow(),
-});
+    createdAt: timestamp("created_at", { mode: "date" }).defaultNow(),
+  },
+  (table) => [
+    primaryKey({
+      name: "pk_address_createdAt",
+      columns: [table.address, table.createdAt],
+    }),
+  ],
+);
 
 // one to many
 // one wallet address can have many wallet net worths

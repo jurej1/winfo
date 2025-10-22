@@ -1,6 +1,6 @@
 {
-  "id": "e5a9f316-77a2-4374-963b-35bffd124593",
-  "prevId": "b9aa9a08-2cc7-42a0-aba3-a7db77309ab3",
+  "id": "97234448-3b7b-4cd3-a9cc-c9008408709b",
+  "prevId": "d20fea3a-abfc-42a0-b6d8-e88a4428cd42",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -10,9 +10,9 @@
       "columns": {
         "address": {
           "name": "address",
-          "type": "varchar(42)",
+          "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "total_networth_usd": {
           "name": "total_networth_usd",
@@ -74,7 +74,15 @@
           "onUpdate": "no action"
         }
       },
-      "compositePrimaryKeys": {},
+      "compositePrimaryKeys": {
+        "pk_address_createdAt": {
+          "name": "pk_address_createdAt",
+          "columns": [
+            "address",
+            "created_at"
+          ]
+        }
+      },
       "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},
@@ -86,7 +94,7 @@
       "columns": {
         "address": {
           "name": "address",
-          "type": "varchar(42)",
+          "type": "text",
           "primaryKey": true,
           "notNull": true
         },

@@ -1,16 +1,92 @@
 {
-  "id": "b9aa9a08-2cc7-42a0-aba3-a7db77309ab3",
+  "id": "d20fea3a-abfc-42a0-b6d8-e88a4428cd42",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
+    "public.net-worths": {
+      "name": "net-worths",
+      "schema": "",
+      "columns": {
+        "address": {
+          "name": "address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "total_networth_usd": {
+          "name": "total_networth_usd",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "native_balance": {
+          "name": "native_balance",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "native_balance_formatted": {
+          "name": "native_balance_formatted",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "native_balance_usd": {
+          "name": "native_balance_usd",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "token_balance_usd": {
+          "name": "token_balance_usd",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "networth_usd": {
+          "name": "networth_usd",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "net-worths_address_wallets_address_fk": {
+          "name": "net-worths_address_wallets_address_fk",
+          "tableFrom": "net-worths",
+          "tableTo": "wallets",
+          "columnsFrom": [
+            "address"
+          ],
+          "columnsTo": [
+            "address"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.wallets": {
       "name": "wallets",
       "schema": "",
       "columns": {
         "address": {
           "name": "address",
-          "type": "varchar(42)",
+          "type": "text",
           "primaryKey": true,
           "notNull": true
         },

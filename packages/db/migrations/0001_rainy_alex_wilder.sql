@@ -1,0 +1,1 @@
+ALTER TABLE "net-worths" ADD CONSTRAINT "pk_address_createdAt" PRIMARY KEY("address","created_at");
