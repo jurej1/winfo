@@ -9,6 +9,11 @@ api.route("POST /wallet", {
   link,
 });
 
+api.route("GET /wallet/{address}/net-worth-history", {
+  handler: "packages/functions/src/wallet/net-worth-history/get.handler",
+  link,
+});
+
 api.route("GET /wallets", {
   handler: "packages/functions/src/wallet/wallets/get.handler",
   link,

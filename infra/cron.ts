@@ -6,5 +6,7 @@ export const walletNetWorthsCron = new sst.aws.Cron("WalletNetWorths", {
     timeout: "60 seconds",
     link: secrets,
   },
-  schedule: "cron(0 * * * *)",
+  // day of the week: ?
+  // aws requires for day of the week or day of month to be "?" and other one "*"
+  schedule: "cron(0 * * * ? *)",
 });

@@ -1,2 +1,2 @@
-export * from "./net-worths";
-export * from "./wallets";
+export * from "./net-worths.query";
+export * from "./wallets.query";
