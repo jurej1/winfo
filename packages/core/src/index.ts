@@ -4,3 +4,5 @@ export * from "./moralis/moralis.repository";
 export * from "./coingecko/coingecko.repository";
 
 export * from "./middy/http.middy";
+
+export * from "./s3";
