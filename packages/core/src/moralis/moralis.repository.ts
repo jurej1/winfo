@@ -3,10 +3,11 @@ import Moralis from "moralis";
 import { Resource } from "sst";
 
 export class MoralisRepository {
-  static getWalletHistory(address: string) {
+  static getWalletHistory(address: string, cursor?: string) {
     return Moralis.EvmApi.wallets.getWalletHistory({
       address,
       limit: 10,
+      cursor,
     });
   }
 

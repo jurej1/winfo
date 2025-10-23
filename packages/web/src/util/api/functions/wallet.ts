@@ -32,8 +32,19 @@ export const fetchWalletNetWorth = async (address: Address) => {
   return body as GetWalletNetWorthResponse;
 };
 
-export const fetchWalletHistory = async (address: Address) => {
-  const response = await fetch(`${API}/wallet/${address}/history`);
+export const fetchWalletHistory = async (address: Address, cursor?: string) => {
+  const searchParams = new URLSearchParams();
+
+  let url = `${API}/wallet/${address}/history`;
+
+  if (cursor) {
+    searchParams.set("cursor", cursor);
+
+    const queryString = searchParams.toString();
+    url += `?${queryString}`;
+  }
+
+  const response = await fetch(url);
 
   if (!response.ok) {
     throw Error("Response was not OK");

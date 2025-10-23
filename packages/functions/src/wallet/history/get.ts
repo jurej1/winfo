@@ -13,11 +13,16 @@ const baseHandler = async (
     pathParameters: {
       address: string;
     };
+    queryStringParameters: {
+      cursor?: string;
+    };
   }>,
 ) => {
   const { address } = event.pathParameters;
 
-  const response = await MoralisRepository.getWalletHistory(address);
+  const cursor = event.queryStringParameters?.cursor;
+
+  const response = await MoralisRepository.getWalletHistory(address, cursor);
 
   return {
     statusCode: 200,

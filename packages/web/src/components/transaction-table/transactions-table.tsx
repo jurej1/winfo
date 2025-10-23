@@ -1,7 +1,7 @@
 "use client";
 
 import { useAccount } from "wagmi";
-import { WalletHistoryItem } from "../../../types/src/moralis/wallet.type";
+import { WalletHistoryItem } from "../../../../types/src/moralis/wallet.type";
 import {
   Table,
   TableBody,
@@ -10,7 +10,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "./ui/table";
+} from "../ui/table";
 import { shortenAddress } from "@/lib/shorten-address";
 import { getTransactionTimeAgo } from "@/lib/get-transaction-time-ago";
 
@@ -19,7 +19,7 @@ import {
   TransactionAddress,
   TransactionCategory,
   TransactionGasProgress,
-} from "./transaction-table";
+} from ".";
 
 type Props = {
   transactions: WalletHistoryItem[];

@@ -13,7 +13,7 @@ export interface GetWalletNetWorthResponse {
 }
 
 export interface WalletHistoryResponse {
-  cursor: string;
+  cursor: string | null;
   page_size: number;
   limit: string;
   result: WalletHistoryItem[];
@@ -50,7 +50,7 @@ export interface WalletHistoryItem {
   contract_interactions: ContractInteractions;
   summary: string;
   possible_spam: boolean;
-  category: "token swap" | "approve" | "send" | "token receive";
+  category: "token swap" | "approve" | "send" | "token receive" | "receive";
 }
 
 export interface ERC20Transfer {

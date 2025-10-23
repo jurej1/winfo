@@ -85,4 +85,15 @@ export function TranassctionValue({ tx }: Props) {
   if (category === "approve") {
     return <div></div>;
   }
+
+  if (category === "receive") {
+    return (
+      <TokenRow
+        val={nTx.value_formatted}
+        symbol={nTx.token_symbol}
+        logo={nTx.token_logo}
+        direction={nTx.direction}
+      />
+    );
+  }
 }
