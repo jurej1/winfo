@@ -4,3 +4,4 @@ export * from "./transaction-gas-progress";
 export * from "./transaction-value-column";
 export * from "./transaction-table-navigaton";
 export * from "./transactions-table";
+export * from "./transaction-value-item";

@@ -6,14 +6,15 @@ import {
 } from "@/components/transaction-table";
 
 import { useWalletHistory } from "@/util/api/hooks/useWalletHistory";
-import { useState } from "react";
-import { useAccount } from "wagmi";
+import { useEffect, useState } from "react";
+import { Address } from "viem";
 
-export function TransactionsPage() {
-  const { address, chainId } = useAccount();
+type Props = {
+  chainId: number;
+  address: Address;
+};
 
-  if (!address || !chainId) return <h1>not defined...</h1>;
-
+export function TransactionsPage({ address, chainId }: Props) {
   const [cursor, setCursor] = useState<string | undefined>();
   const [cursorHistory, setCursorHistory] = useState<string[]>([]);
 
@@ -22,6 +23,11 @@ export function TransactionsPage() {
     chainId,
     cursor,
   });
+
+  useEffect(() => {
+    setCursor(undefined);
+    setCursorHistory([]);
+  }, [chainId, setCursor, setCursorHistory]);
 
   if (isLoading || !data) {
     return <div>Loading transactions...</div>;
