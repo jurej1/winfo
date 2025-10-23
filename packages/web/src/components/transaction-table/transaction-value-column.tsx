@@ -7,11 +7,6 @@ type Props = {
   tx: WalletHistoryItem;
 };
 export function TranassctionValue({ tx }: Props) {
-  const { category } = tx;
-
-  const nTx = tx.native_transfers[0];
-  const ercTx = tx.erc20_transfers[0];
-
   const TokenRow = ({
     val,
     symbol,
@@ -21,79 +16,58 @@ export function TranassctionValue({ tx }: Props) {
     val: string;
     symbol: string;
     logo: string | null;
-    direction: "receive" | "send";
+    direction?: "receive" | "send";
   }) => {
     return (
       <div className="flex items-center gap-1 text-sm">
-        {direction === "receive" ? <MdCallReceived /> : <IoIosSend />}
+        {direction && direction === "receive" ? (
+          <MdCallReceived />
+        ) : (
+          <IoIosSend />
+        )}
         <span>{val}</span>
         <span>{symbol}</span>
         {logo && (
           <Image
             src={logo}
             alt="Token Logo"
-            width={16}
-            height={16}
-            className="rounded-full border border-blue-500 object-contain"
+            width={18}
+            height={18}
+            className="object-contain"
           />
         )}
       </div>
     );
   };
 
-  if (category === "token swap") {
-    return (
-      <div className="flex flex-col gap-1">
+  return (
+    <div className="flex flex-col gap-1">
+      {tx.erc20_transfers.map((tx) => (
         <TokenRow
-          logo={nTx.token_logo}
-          symbol={nTx.token_symbol}
-          val={nTx.value_formatted}
-          direction={nTx.direction}
+          key={tx.direction}
+          val={tx.value_formatted}
+          symbol={tx.token_symbol}
+          logo={tx.token_logo}
+          direction={tx.direction}
         />
+      ))}
+      {tx.native_transfers.map((tx) => (
         <TokenRow
-          val={ercTx.value_formatted}
-          symbol={ercTx.token_symbol}
-          logo={ercTx.token_logo}
-          direction={ercTx.direction}
+          key={tx.direction}
+          val={tx.value_formatted}
+          symbol={tx.token_symbol}
+          logo={tx.token_logo}
+          direction={tx.direction}
         />
-      </div>
-    );
-  }
-
-  if (category === "send") {
-    return (
-      <TokenRow
-        val={nTx.value_formatted}
-        symbol={nTx.token_symbol}
-        logo={nTx.token_logo}
-        direction={nTx.direction}
-      />
-    );
-  }
-
-  if (category === "token receive") {
-    return (
-      <TokenRow
-        val={ercTx.value_formatted}
-        symbol={ercTx.token_symbol}
-        logo={ercTx.token_logo}
-        direction={ercTx.direction}
-      />
-    );
-  }
-
-  if (category === "approve") {
-    return <div></div>;
-  }
-
-  if (category === "receive") {
-    return (
-      <TokenRow
-        val={nTx.value_formatted}
-        symbol={nTx.token_symbol}
-        logo={nTx.token_logo}
-        direction={nTx.direction}
-      />
-    );
-  }
+      ))}
+      {tx?.contract_interactions?.approvals?.map((tx, index) => (
+        <TokenRow
+          key={index}
+          val={tx.value_formatted}
+          symbol={tx.token.token_symbol}
+          logo={null}
+        />
+      ))}
+    </div>
+  );
 }

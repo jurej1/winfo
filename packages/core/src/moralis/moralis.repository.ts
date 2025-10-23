@@ -1,13 +1,15 @@
 import { NftTransactions } from "@w-info-sst/types";
 import Moralis from "moralis";
+import { EvmChain } from "moralis/common-evm-utils";
 import { Resource } from "sst";
 
 export class MoralisRepository {
-  static getWalletHistory(address: string, cursor?: string) {
+  static getWalletHistory(address: string, chain: EvmChain, cursor?: string) {
     return Moralis.EvmApi.wallets.getWalletHistory({
       address,
       limit: 10,
       cursor,
+      chain,
     });
   }
 

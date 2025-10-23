@@ -10,14 +10,18 @@ import { useState } from "react";
 import { useAccount } from "wagmi";
 
 export function TransactionsPage() {
-  const { address } = useAccount();
+  const { address, chainId } = useAccount();
 
-  if (!address) return <h1>not defined...</h1>;
+  if (!address || !chainId) return <h1>not defined...</h1>;
 
   const [cursor, setCursor] = useState<string | undefined>();
   const [cursorHistory, setCursorHistory] = useState<string[]>([]);
 
-  const { data, isLoading, isError } = useWalletHistory(address, cursor);
+  const { data, isLoading, isError } = useWalletHistory({
+    address,
+    chainId,
+    cursor,
+  });
 
   if (isLoading || !data) {
     return <div>Loading transactions...</div>;
@@ -57,7 +61,7 @@ export function TransactionsPage() {
         onBackDisabled={data.page == 0}
         onForwardPressed={onForwardPressed}
         onForwardDisabled={data.cursor == null}
-        page={data.page}
+        page={data.page + 1}
       />
     </div>
   );

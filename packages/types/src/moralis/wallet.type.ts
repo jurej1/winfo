@@ -47,10 +47,17 @@ export interface WalletHistoryItem {
   nft_transfers: any[];
   erc20_transfers: ERC20Transfer[];
   native_transfers: NativeTransfer[];
-  contract_interactions: ContractInteractions;
+  contract_interactions: ContractInteractions | undefined;
   summary: string;
   possible_spam: boolean;
-  category: "token swap" | "approve" | "send" | "token receive" | "receive";
+  category:
+    | "token swap"
+    | "approve"
+    | "send"
+    | "token receive"
+    | "receive"
+    | "deposit"
+    | "contract interaction";
 }
 
 export interface ERC20Transfer {
@@ -90,7 +97,7 @@ export interface NativeTransfer {
   direction: "receive" | "send";
   internal_transaction: boolean;
   token_symbol: string;
-  token_logo: string;
+  token_logo: string | null;
 }
 
 export interface ContractInteractions {

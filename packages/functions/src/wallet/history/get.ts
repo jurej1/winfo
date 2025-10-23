@@ -3,6 +3,7 @@ import middy from "@middy/core";
 import {
   httpLambdaMiddleware,
   initMoralisMiddleware,
+  mapToChain,
   MoralisRepository,
 } from "@w-info-sst/core";
 
@@ -15,14 +16,22 @@ const baseHandler = async (
     };
     queryStringParameters: {
       cursor?: string;
+      chain?: string;
     };
   }>,
 ) => {
   const { address } = event.pathParameters;
 
   const cursor = event.queryStringParameters?.cursor;
+  const chainId = event.queryStringParameters?.chain;
 
-  const response = await MoralisRepository.getWalletHistory(address, cursor);
+  let chain = mapToChain(chainId);
+
+  const response = await MoralisRepository.getWalletHistory(
+    address,
+    chain,
+    cursor,
+  );
 
   return {
     statusCode: 200,

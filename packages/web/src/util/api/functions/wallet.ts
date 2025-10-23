@@ -32,17 +32,17 @@ export const fetchWalletNetWorth = async (address: Address) => {
   return body as GetWalletNetWorthResponse;
 };
 
-export const fetchWalletHistory = async (address: Address, cursor?: string) => {
-  const searchParams = new URLSearchParams();
+export const fetchWalletHistory = async (
+  address: Address,
+  chain?: number,
+  cursor?: string,
+) => {
+  const searchParams = new URLSearchParams({
+    cursor: cursor ?? "",
+    chain: `${chain}`,
+  }).toString();
 
-  let url = `${API}/wallet/${address}/history`;
-
-  if (cursor) {
-    searchParams.set("cursor", cursor);
-
-    const queryString = searchParams.toString();
-    url += `?${queryString}`;
-  }
+  let url = `${API}/wallet/${address}/history?${searchParams}`;
 
   const response = await fetch(url);
 
