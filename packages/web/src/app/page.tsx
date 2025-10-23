@@ -1,5 +1,5 @@
-import TokensList from "@/components/token-list/tokens-list";
+import { WalletPage } from "@/pages/wallet-page";
 
 export default function Home() {
-  return <TokensList />;
+  return <WalletPage />;
 }

@@ -1,12 +1,11 @@
 "use client";
-
 import { useAccount } from "wagmi";
 
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { PortfolioGrid } from "@/components/wallet/portfolio-grid";
 
-export default function Page() {
+export function WalletPage() {
   const { address } = useAccount();
 
   const copyToCLipboard = async () => {
