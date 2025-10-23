@@ -11,15 +11,9 @@ export default function TokenListItem(props: Props) {
 
   return (
     <Link href={`/token/${token.id}`} key={token.id}>
-      <li className="my-2 gap-4 rounded-xl bg-gray-50 p-4 transition-colors duration-300 hover:bg-gray-200">
+      <li className="my-2 gap-4 rounded-xl bg-gray-50 p-2 transition-colors duration-300 hover:bg-gray-200">
         <div className="flex gap-x-2">
-          <Image
-            src={token.image}
-            alt={token.name}
-            width={20}
-            height={20}
-            style={{ objectFit: "contain" }}
-          />
+          <Image src={token.image} alt={token.name} width={20} height={20} />
           <div className="flex items-baseline gap-x-2">
             <h3 className="text-lg font-bold text-black">{token.name}</h3>
             <h3 className="text-sm text-gray-500 uppercase">{token.symbol}</h3>
