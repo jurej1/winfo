@@ -1,4 +1,4 @@
-import TokensList from "@/components/token-list/tokens-list";
+import TokensList from "@/pages/tokens-list-page";
 
 export default function Page() {
   return <TokensList />;

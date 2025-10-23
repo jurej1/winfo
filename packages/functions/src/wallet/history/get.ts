@@ -1,6 +1,11 @@
 import middy from "@middy/core";
 
-import { initMoralisMiddleware, MoralisRepository } from "@w-info-sst/core";
+import {
+  httpLambdaMiddleware,
+  initMoralisMiddleware,
+  MoralisRepository,
+} from "@w-info-sst/core";
+
 import { ApiGwRequest } from "@w-info-sst/types";
 
 const baseHandler = async (
@@ -16,8 +21,10 @@ const baseHandler = async (
 
   return {
     statusCode: 200,
-    body: JSON.stringify(response),
+    body: response,
   };
 };
 
-export const handler = middy(baseHandler).use([initMoralisMiddleware()]);
+export const handler = middy(baseHandler)
+  .use(httpLambdaMiddleware())
+  .use([initMoralisMiddleware()]);

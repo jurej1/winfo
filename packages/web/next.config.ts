@@ -11,6 +11,18 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "api.pudgypenguins.io",
       },
+      {
+        protocol: "https",
+        hostname: "cdn.moralis.io",
+      },
+      {
+        protocol: "https",
+        hostname: "logo.moralis.io",
+      },
+      {
+        protocol: "https",
+        hostname: "**",
+      },
     ],
   },
 };
