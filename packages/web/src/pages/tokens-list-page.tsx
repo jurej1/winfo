@@ -2,6 +2,7 @@
 
 import { useTokensList } from "@/util/api/hooks/useTokensList";
 import TokenListItem from "../components/token-list-item";
+import { TokenSearchDialog } from "@/components/token-search-dialog";
 
 export default function TokensList() {
   const { data, isLoading, error, isError } = useTokensList();
@@ -21,7 +22,8 @@ export default function TokensList() {
   const listItems = data?.map((token) => TokenListItem({ token }));
 
   return (
-    <div className="m-auto flex max-w-7xl">
+    <div className="m-auto flex max-w-7xl flex-col py-2">
+      <TokenSearchDialog />
       <ul className="w-full px-2">{listItems}</ul>
     </div>
   );
