@@ -19,7 +19,7 @@ export function PortfolioTokenCard({ token }: Props) {
   };
 
   return (
-    <li className="shado flex flex-col gap-1 rounded-xl border-2 bg-white p-2">
+    <li className="flex flex-col gap-1 rounded-xl border-2 bg-white p-2">
       <div className="mb-2 flex gap-x-2">
         {token.logo && (
           <img
