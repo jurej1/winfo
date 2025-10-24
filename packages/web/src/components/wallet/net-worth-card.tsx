@@ -3,11 +3,11 @@
 import { useWalletNetWorth } from "@/util/api/hooks/useWalletNetWorth";
 import { Address } from "viem";
 import { Progress } from "../ui/progress";
-import { useAccount } from "wagmi";
-import { add } from "date-fns";
+
 import { Button } from "../ui/button";
 import { IoIosCopy } from "react-icons/io";
 import { toast } from "sonner";
+import { Spinner } from "../ui/spinner";
 
 type Props = {
   address: Address;
@@ -27,7 +27,7 @@ export function NetWorthCard({ address }: Props) {
 
   return (
     <div className="m-2 h-full w-full rounded-2xl border p-3 shadow">
-      {isLoading && <span>LOADING...</span>}
+      {isLoading && <Loader />}
       {data && (
         <div className="flex h-full flex-col items-center justify-center font-bold">
           <div className="flex w-full flex-col pl-4">
@@ -68,3 +68,11 @@ export function NetWorthCard({ address }: Props) {
     </div>
   );
 }
+
+const Loader = () => {
+  return (
+    <div className="flex h-full items-center justify-center">
+      <Spinner />
+    </div>
+  );
+};

@@ -54,7 +54,10 @@ export function PortfolioTokenCard({ token }: Props) {
 
       <span>Change (24h): {format(token.usd_price_24hr_usd_change)} USD</span>
 
-      <Progress value={token.portfolio_percentage} />
+      <div className="mr-20 flex items-center gap-2">
+        <Progress value={token.portfolio_percentage} />
+        <span>{token.portfolio_percentage.toFixed(2)}%</span>
+      </div>
     </li>
   );
 }

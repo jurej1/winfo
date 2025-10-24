@@ -3,12 +3,17 @@
 import { useTokensList } from "@/util/api/hooks/useTokensList";
 import TokenListItem from "../components/token-list-item";
 import { TokenSearchDialog } from "@/components/token-search-dialog";
+import { Spinner } from "@/components/ui/spinner";
 
 export default function TokensList() {
   const { data, isLoading, error, isError } = useTokensList();
 
   if (isLoading) {
-    return <div>Loading Token</div>;
+    return (
+      <div className="mt-4 flex justify-center">
+        <Spinner />
+      </div>
+    );
   }
 
   if (isError) {

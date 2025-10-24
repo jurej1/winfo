@@ -11,6 +11,11 @@ import { WagmiProvider } from "wagmi";
 
 const queryClient = new QueryClient({
   queryCache: new QueryCache(),
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
 });
 
 type Props = {

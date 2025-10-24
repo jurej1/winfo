@@ -5,6 +5,7 @@ import { Address } from "viem";
 import { PortfolioPie } from "./portfolio-pie";
 import { TokensPortfolioList } from "./tokens-grid";
 import { NetWorthCard } from "./net-worth-card";
+import { Spinner } from "../ui/spinner";
 
 type Props = {
   address: Address;
@@ -13,8 +14,13 @@ type Props = {
 export function PortfolioGrid({ address }: Props) {
   const { data, isLoading, error, isError } = useWalletBalance(address);
 
-  if (!data) return <div>Loading data...</div>;
-  if (isLoading) return <div>Loading....</div>;
+  if (isLoading || !data) {
+    return (
+      <div className="flex justify-center">
+        <Spinner />
+      </div>
+    );
+  }
 
   return (
     <div className="mt-2 grid h-[700px] grid-cols-2">

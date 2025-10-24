@@ -3,18 +3,12 @@
 import { useAccount } from "wagmi";
 
 import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
 import { PortfolioGrid } from "@/components/wallet/portfolio-grid";
 
 export function WalletPage() {
   const { address } = useAccount();
 
   if (!address) return <div>Please connect your wallet...</div>;
-
-  const copyToCLipboard = async () => {
-    await navigator.clipboard.writeText(address ?? "");
-    toast.success("Copied to clipboard");
-  };
 
   return (
     <div className="m-auto flex max-w-7xl p-2">
