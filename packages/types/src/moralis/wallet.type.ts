@@ -1,3 +1,5 @@
+type Address = `0x${string}`;
+
 export interface ChainNetWorth {
   chain: string;
   native_balance: string;
@@ -119,7 +121,40 @@ export interface Token {
   token_symbol: string;
 }
 
+export interface TokenApproval {
+  address: Address;
+  address_label: string;
+  name: string;
+  symbol: string;
+  logo: string | null;
+  possible_spam: boolean;
+  verified_contract: boolean;
+  current_balance: string;
+  current_balance_formatted: string;
+  usd_price: string;
+  usd_at_risk: string;
+}
+
 export interface Spender {
-  address: string;
-  address_label: any;
+  address: Address;
+  address_label?: string;
+  entity?: string;
+  entity_logo?: string;
+}
+
+export interface ApprovalResult {
+  block_number: string;
+  block_timestamp: string;
+  transaction_hash: string;
+  value: string;
+  value_formatted: string;
+  token: TokenApproval;
+  spender: Spender;
+}
+
+export interface WalletApprovalsResponse {
+  limit: number;
+  page_size: number;
+  cursor: string | null;
+  result: ApprovalResult[];
 }

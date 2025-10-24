@@ -5,9 +5,13 @@ meta {
 }
 
 get {
-  url: {{api}}/wallet/:address/approvals
+  url: {{api}}/wallet/:address/approvals?chain=56
   body: none
   auth: inherit
+}
+
+params:query {
+  chain: 56
 }
 
 params:path {

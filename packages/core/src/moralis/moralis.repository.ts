@@ -44,7 +44,7 @@ export class MoralisRepository {
     });
   }
 
-  static async getWalletApprovals(address: string) {
+  static async getWalletApprovals(address: string, chain: string) {
     const options = {
       method: "GET",
       headers: {
@@ -54,7 +54,7 @@ export class MoralisRepository {
     };
 
     const response = await fetch(
-      `https://deep-index.moralis.io/api/v2.2/wallets/${address}/approvals?chain=eth&limit=25`,
+      `https://deep-index.moralis.io/api/v2.2/wallets/${address}/approvals?chain=${chain}&limit=25`,
       options,
     );
 
