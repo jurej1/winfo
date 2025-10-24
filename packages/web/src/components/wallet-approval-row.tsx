@@ -1,3 +1,5 @@
+"use client";
+
 import { ERC_20ABI } from "@/lib/web3/erc20ABI";
 import { ApprovalResult } from "@w-info-sst/types";
 import { Address } from "viem/accounts";
