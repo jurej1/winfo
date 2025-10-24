@@ -132,7 +132,7 @@ export interface TokenApproval {
   current_balance: string;
   current_balance_formatted: string;
   usd_price: string;
-  usd_at_risk: string;
+  usd_at_risk: string | null;
 }
 
 export interface Spender {

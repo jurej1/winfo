@@ -12,6 +12,7 @@ import {
 
 import { WalletApprovalRow } from "./wallet-approval-row";
 import { shortenAddress } from "@/lib/shorten-address";
+import { WalletApprovalsInfo } from "./wallet-approvals-info";
 
 type Props = {
   address: Address;
@@ -30,7 +31,10 @@ export function WalletApprovals({ address, chainId }: Props) {
 
   return (
     <div className="flex flex-col">
-      <h2 className="mb-2 text-xl">Approvals</h2>
+      <div className="flex justify-between">
+        <h2 className="mb-2 text-xl font-semibold">Approvals</h2>
+        <WalletApprovalsInfo approvals={data} />
+      </div>
       <Table>
         <TableCaption>
           A list of Approvals for {shortenAddress(address)}.{" "}
