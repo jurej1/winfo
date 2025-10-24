@@ -17,7 +17,7 @@ export function WalletApprovalsInfo({ approvals }: Props) {
   }, [approvals]);
 
   return (
-    <div className="grid grid-cols-2 gap-4 rounded-xl border p-2">
+    <div className="grid grid-cols-2 gap-4 rounded-xl border p-2 shadow">
       <div className="flex flex-col items-center">
         <span className="text-xs text-gray-400">Approvals</span>
         <span>{length}</span>
