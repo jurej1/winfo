@@ -37,7 +37,10 @@ export class MoralisRepository {
   static getWalletNetWorth(address: string) {
     return Moralis.EvmApi.wallets.getWalletNetWorth({
       address,
-      chains: [Moralis.EvmUtils.EvmChain.ETHEREUM],
+      chains: [
+        Moralis.EvmUtils.EvmChain.ETHEREUM,
+        Moralis.EvmUtils.EvmChain.BSC,
+      ],
     });
   }
 

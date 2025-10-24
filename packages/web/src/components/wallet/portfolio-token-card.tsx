@@ -2,6 +2,7 @@ import { formatCurrency } from "@coingecko/cryptoformat";
 import { TokenResult } from "@w-info-sst/types";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
+import { Progress } from "../ui/progress";
 
 type Props = {
   token: TokenResult;
@@ -18,7 +19,7 @@ export function PortfolioTokenCard({ token }: Props) {
   };
 
   return (
-    <li className="flex flex-col rounded-xl border-2 bg-white p-2 shadow">
+    <li className="shado flex flex-col gap-1 rounded-xl border-2 bg-white p-2">
       <div className="mb-2 flex gap-x-2">
         {token.logo && (
           <img
@@ -53,9 +54,7 @@ export function PortfolioTokenCard({ token }: Props) {
 
       <span>Change (24h): {format(token.usd_price_24hr_usd_change)} USD</span>
 
-      <span>
-        Portfolio Percentage: {token.portfolio_percentage.toFixed(2)}%
-      </span>
+      <Progress value={token.portfolio_percentage} />
     </li>
   );
 }
