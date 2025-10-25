@@ -1,15 +1,30 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { TokenListInfo } from "@w-info-sst/types";
+import { useTokensList } from "@/util/hooks/useTokensList";
+
 import Image from "next/image";
+import { Spinner } from "./ui/spinner";
 
 type Props = {
-  token: TokenListInfo;
+  id: string;
   className?: string;
 };
 
-export default function TokenDetails({ token, className }: Props) {
+export default function TokenDetails({ id, className }: Props) {
+  // THIS IS NOT NOT GOING TO work because what if the token is NOT in the first page of the list
+  const { data, isLoading, isError } = useTokensList();
+
+  if (isLoading) {
+    return <Spinner className="mx-auto mt-2" />;
+  }
+
+  if (isError) {
+    return <div className="mt-2">There was an error loading token data...</div>;
+  }
+
+  const token = data?.pages.flat().find((t) => t.id === id)!;
+
   return (
     <div
       className={cn(

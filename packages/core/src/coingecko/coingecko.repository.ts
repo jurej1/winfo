@@ -1,4 +1,4 @@
-import { TokenListInfo } from "@w-info-sst/types";
+import { OHLCDaysFilter, TokenListInfo } from "@w-info-sst/types";
 import { Resource } from "sst";
 
 export class CoingeckoRepository {
@@ -8,10 +8,16 @@ export class CoingeckoRepository {
     "x-cg-demo-api-key": Resource.CoinGeckoAPIKey.value,
   };
 
-  static async getOhlc({ coinId }: { coinId: string }) {
+  static async getOhlc({
+    coinId,
+    days = "1",
+  }: {
+    coinId: string;
+    days?: OHLCDaysFilter;
+  }) {
     const searchParams = new URLSearchParams({
       vs_currency: "usd",
-      days: "1",
+      days: days,
     }).toString();
 
     const response = await fetch(
