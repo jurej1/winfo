@@ -4,8 +4,8 @@ import {
   TransactionTableNavigation,
   TransactionsTable,
 } from "@/components/transaction-table";
+import { useWalletHistory } from "@/util/hooks/useWalletHistory";
 
-import { useWalletHistory } from "@/util/api/hooks/useWalletHistory";
 import { useEffect, useState } from "react";
 import { Address } from "viem";
 
