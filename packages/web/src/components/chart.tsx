@@ -13,19 +13,12 @@ import {
 } from "recharts";
 
 type Props = {
-  token: TokenListInfo;
+  data: any;
 };
 
-export default function Chart({ token }: Props) {
-  const { data, error, isLoading, isError } = useTokenPrice(token.id);
-
-  if (isLoading) return <div className="p-4">Loading Chart...</div>;
-  if (isError)
-    return <div className="p-4 text-red-600">Error: {error.message}</div>;
-
+export default function Chart({ data }: Props) {
   return (
     <div style={{ width: "100%", height: 400 }} className="p-4">
-      <h2 className="mb-4 text-xl font-bold uppercase">{token.symbol}</h2>
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
           data={data as any}
