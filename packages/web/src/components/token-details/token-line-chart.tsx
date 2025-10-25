@@ -33,6 +33,7 @@ export function TokenLineChart({ data, timeframe }: Props) {
       });
     }
   };
+
   return (
     <div style={{ width: "100%", height: 400 }} className="p-4">
       <ResponsiveContainer width="100%" height="100%">
