@@ -1,6 +1,6 @@
 import Chart from "@/components/chart";
 import TokenDetails from "@/components/token-details";
-import TokenDetailsPage from "@/components/token-details-page";
+import TokenDetailsPage from "@/pages/token-details-page";
 
 type TokenPageProps = {
   params: Promise<{

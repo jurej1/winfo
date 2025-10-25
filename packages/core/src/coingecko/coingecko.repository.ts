@@ -77,12 +77,13 @@ export class CoingeckoRepository {
     return body;
   }
 
-  static async getCoinListWithMarketData() {
+  static async getCoinListWithMarketData(page: string) {
     const searchParams = new URLSearchParams({
       vs_currency: "usd",
       category: "layer-1",
       price_change_percentage: "1h",
       per_page: "20",
+      page,
     }).toString();
 
     const url = `${this.API_URL}/coins/markets?${searchParams}`;

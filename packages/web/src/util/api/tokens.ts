@@ -43,9 +43,11 @@ export const fetchTokenPrice = async (coin: string) => {
   return rawData;
 };
 
-export const fetchTokenList = async () => {
+export const fetchTokenList = async (page: number) => {
+  const searchParams = new URLSearchParams({ page: page.toString() });
+
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/tokens/list`,
+    `${process.env.NEXT_PUBLIC_API_URL}/tokens/list?${searchParams}`,
   );
 
   if (!response.ok) {
