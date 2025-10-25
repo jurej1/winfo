@@ -1,4 +1,9 @@
-import { OHLCDaysFilter, OHLCItem, TokenListInfo } from "@w-info-sst/types";
+import {
+  CoingeckoTokenSimple,
+  OHLCDaysFilter,
+  OHLCItem,
+  TokenListInfo,
+} from "@w-info-sst/types";
 
 export const fetchTokenOHLC = async (coin: string, days: OHLCDaysFilter) => {
   const searchParams = new URLSearchParams({
@@ -34,9 +39,9 @@ export const fetchTokenPrice = async (coin: string) => {
     throw new Error("Nework response was not ok");
   }
 
-  const rawData = await response.json();
+  const rawData = (await response.json()) as TokenListInfo[];
 
-  return rawData;
+  return rawData[0];
 };
 
 export const fetchTokenList = async (page: number) => {

@@ -1,4 +1,8 @@
-import { OHLCDaysFilter, TokenListInfo } from "@w-info-sst/types";
+import {
+  CoingeckoPriceResponse,
+  OHLCDaysFilter,
+  TokenListInfo,
+} from "@w-info-sst/types";
 import { Resource } from "sst";
 
 export class CoingeckoRepository {
@@ -26,6 +30,18 @@ export class CoingeckoRepository {
         headers: this.headers,
       },
     );
+
+    const body = await response.json();
+
+    return body;
+  }
+
+  static async getCoinData(id: string) {
+    const url = `${this.API_URL}/coins/${id}`;
+
+    const response = await fetch(url, {
+      headers: this.headers,
+    });
 
     const body = await response.json();
 
@@ -64,7 +80,7 @@ export class CoingeckoRepository {
 
   static async getCoinPriceById(id: string) {
     const queryParams = new URLSearchParams({
-      vs_currencies: "usd,eth",
+      vs_currencies: "usd",
       ids: id,
       include_market_cap: "true",
       include_24hr_vol: "true",
@@ -80,19 +96,30 @@ export class CoingeckoRepository {
 
     const body = await response.json();
 
-    return body;
+    return body as CoingeckoPriceResponse;
   }
 
-  static async getCoinListWithMarketData(page: string) {
+  static async getCoinListWithMarketData({
+    page,
+    ids,
+  }: {
+    page: string;
+    ids?: string;
+  }) {
     const searchParams = new URLSearchParams({
       vs_currency: "usd",
       category: "layer-1",
       price_change_percentage: "1h",
       per_page: "20",
       page,
-    }).toString();
+    });
 
-    const url = `${this.API_URL}/coins/markets?${searchParams}`;
+    if (ids) {
+      searchParams.set("ids", ids);
+      searchParams.set("per_page", "1");
+    }
+
+    const url = `${this.API_URL}/coins/markets?${searchParams.toString()}`;
 
     const response = await fetch(url, {
       headers: this.headers,

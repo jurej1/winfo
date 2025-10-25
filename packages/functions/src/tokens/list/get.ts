@@ -7,7 +7,9 @@ const baseHandler = async (
 ) => {
   const page = event.queryStringParameters.page;
 
-  const response = await CoingeckoRepository.getCoinListWithMarketData(page);
+  const response = await CoingeckoRepository.getCoinListWithMarketData({
+    page,
+  });
 
   return {
     statusCode: 200,
