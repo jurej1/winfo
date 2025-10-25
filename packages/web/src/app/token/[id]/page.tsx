@@ -1,5 +1,3 @@
-import Chart from "@/components/chart";
-import TokenDetails from "@/components/token-details";
 import TokenDetailsPage from "@/pages/token-details-page";
 
 type TokenPageProps = {

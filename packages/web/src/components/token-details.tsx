@@ -1,15 +1,22 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import { TokenListInfo } from "@w-info-sst/types";
 import Image from "next/image";
 
 type Props = {
   token: TokenListInfo;
+  className?: string;
 };
 
-export default function TokenDetails({ token }: Props) {
+export default function TokenDetails({ token, className }: Props) {
   return (
-    <div className="flex w-full flex-col gap-y-2 rounded-2xl bg-gray-100 p-4">
+    <div
+      className={cn(
+        "flex w-full flex-col gap-y-2 rounded-2xl bg-gray-100 p-4",
+        className,
+      )}
+    >
       <div className="flex items-center gap-3">
         <Image src={token.image} alt={token.name} height={30} width={30} />
         <h2 className="font-bold">{token.name}</h2>

@@ -38,7 +38,7 @@ export default function TokensList() {
   }
 
   return (
-    <div className="m-auto flex max-w-7xl flex-col py-2">
+    <div className="m-auto flex max-w-7xl flex-col gap-4 py-2">
       <TokenSearchDialog />
       <Table>
         <TableCaption>

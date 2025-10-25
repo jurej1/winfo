@@ -1,33 +1,37 @@
 "use client";
 
+import Chart from "@/components/chart";
+import TokenDetails from "@/components/token-details";
+import { Spinner } from "@/components/ui/spinner";
 import { useTokensList } from "@/util/hooks/useTokensList";
+import { Divide } from "lucide-react";
 
 type Props = {
   id: string;
 };
 
 export default function TokenDetailsPage({ id }: Props) {
-  return <></>;
-  //   const { data, isLoading, isError, error } = useTokensList();
+  const { data, isLoading, isError } = useTokensList();
 
-  //   if (isLoading || !data) return <div>Loading data...</div>;
-  //   if (isError) return <div>Error: ${error.message}</div>;
+  const token = data?.pages.flat().find((t) => t.id === id);
 
-  //   const token = data.find((t) => t.id === id);
+  const Loading = () => <Spinner className="mx-auto mt-2" />;
 
-  //   if (!token) return <div>Token could not be found...</div>;
+  const Error = () => (
+    <div className="mt-2">There was an error loading token data...</div>
+  );
 
-  //   return (
-  //     <div className="p-6">
-  //       <div className="grid grid-cols-[400px_1fr] gap-8 max-lg:grid-cols-1">
-  //         <div className="min-w-0">
-  //           <TokenDetails token={token} />
-  //         </div>
+  return (
+    <div className="m-auto flex max-w-7xl">
+      {isLoading && <Loading />}
+      {isError && <Error />}
+      {token && (
+        <div className="flex w-full flex-col">
+          <Chart token={token} />
 
-  //         <div className="min-w-0">
-  //           <Chart token={token} />
-  //         </div>
-  //       </div>
-  //     </div>
-  //   );
+          <TokenDetails className="mt-10" token={token} />
+        </div>
+      )}
+    </div>
+  );
 }
