@@ -2,7 +2,7 @@
 
 import { useTokenChart } from "@/util/hooks/useTokenChart";
 import { OHLCDaysFilter } from "@w-info-sst/types";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 import { TokenChartTimeframeSelector } from "./token-chart-timeframe-selector";
 import { Card, CardAction, CardContent, CardHeader } from "../ui/card";
@@ -17,12 +17,19 @@ export function TokenChartCard({ id }: Props) {
 
   const { data } = useTokenChart(id, timeframe);
 
+  const handleOnSelected = useCallback(
+    (val?: OHLCDaysFilter) => {
+      if (val) setTimeframe(val);
+    },
+    [setTimeframe],
+  );
+
   return (
     <Card>
       <CardHeader>
         <CardAction>
           <TokenChartTimeframeSelector
-            onSelected={setTimeframe}
+            onSelected={handleOnSelected}
             val={timeframe}
           />
         </CardAction>
