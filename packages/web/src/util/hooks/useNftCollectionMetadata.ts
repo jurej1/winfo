@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchNftContractMetadata } from "../functions/nfts";
+import { fetchNftContractMetadata } from "../api/nfts";
 
 export const useNftCollectionMetadata = (address: string) => {
   const ONE_HOUR = 60 * 60 * 1000;

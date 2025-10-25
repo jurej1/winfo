@@ -1,4 +1,3 @@
-import { useWalletApprovals } from "@/util/api/hooks/useWalletApprovals";
 import { Address } from "viem";
 import { Spinner } from "./ui/spinner";
 import {
@@ -13,6 +12,7 @@ import {
 import { WalletApprovalRow } from "./wallet-approval-row";
 import { shortenAddress } from "@/lib/shorten-address";
 import { WalletApprovalsInfo } from "./wallet-approvals-info";
+import { useWalletApprovals } from "@/util/hooks/useWalletApprovals";
 
 type Props = {
   address: Address;

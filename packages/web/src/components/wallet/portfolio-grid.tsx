@@ -1,18 +1,22 @@
 "use client";
 
-import { useWalletBalance } from "@/util/api/hooks/useWalletBalance";
 import { Address } from "viem";
 import { PortfolioPie } from "./portfolio-pie";
 import { TokensPortfolioList } from "./tokens-grid";
 import { NetWorthCard } from "./net-worth-card";
 import { Spinner } from "../ui/spinner";
+import { useWalletBalance } from "@/util/hooks/useWalletBalance";
 
 type Props = {
   address: Address;
+  chainId: number;
 };
 
-export function PortfolioGrid({ address }: Props) {
-  const { data, isLoading, error, isError } = useWalletBalance(address);
+export function PortfolioGrid({ address, chainId }: Props) {
+  const { data, isLoading, error, isError } = useWalletBalance(
+    address,
+    chainId,
+  );
 
   if (isLoading || !data) {
     return (

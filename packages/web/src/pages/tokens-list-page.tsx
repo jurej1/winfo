@@ -1,9 +1,9 @@
 "use client";
 
-import { useTokensList } from "@/util/api/hooks/useTokensList";
 import TokenListItem from "../components/token-list-item";
 import { TokenSearchDialog } from "@/components/token-search-dialog";
 import { Spinner } from "@/components/ui/spinner";
+import { useTokensList } from "@/util/hooks/useTokensList";
 
 export default function TokensList() {
   const { data, isLoading, error, isError } = useTokensList();

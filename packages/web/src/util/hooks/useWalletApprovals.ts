@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchWalletApprovals } from "../functions/wallet";
+
 import { Address } from "viem";
 import { useCallback, useEffect, useState } from "react";
 import { ApprovalResult } from "@w-info-sst/types";
+import { fetchWalletApprovals } from "../api/wallet";
 
 export const useWalletApprovals = (address: Address, chainId: number) => {
   const ONE_HOUR = 60 * 60 * 1000;

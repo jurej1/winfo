@@ -1,6 +1,5 @@
 "use client";
 
-import { useWalletNetWorth } from "@/util/api/hooks/useWalletNetWorth";
 import { Address } from "viem";
 import { Progress } from "../ui/progress";
 
@@ -8,6 +7,7 @@ import { Button } from "../ui/button";
 import { IoIosCopy } from "react-icons/io";
 import { toast } from "sonner";
 import { Spinner } from "../ui/spinner";
+import { useWalletNetWorth } from "@/util/hooks/useWalletNetWorth";
 
 type Props = {
   address: Address;

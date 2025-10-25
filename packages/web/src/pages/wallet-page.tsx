@@ -13,7 +13,7 @@ export function WalletPage() {
   return (
     <div className="m-auto flex max-w-7xl flex-col gap-4 p-2">
       <div className="flex w-full flex-col gap-y-2 rounded-xl bg-white p-4 shadow-lg">
-        <PortfolioGrid address={address} />
+        <PortfolioGrid address={address} chainId={chainId} />
       </div>
       <div className="flex w-full flex-col gap-y-2 rounded-xl bg-white p-4 shadow-lg">
         <WalletApprovals address={address} chainId={chainId} />

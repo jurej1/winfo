@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchNftCollectionTransfers } from "../functions/nfts";
+import { fetchNftCollectionTransfers } from "../api/nfts";
 
 export const useNftCollectionTransfers = (address: string) => {
   const FIVE_MINUTES = 5 * 60 * 1000;

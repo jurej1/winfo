@@ -4,14 +4,20 @@ import {
   WalletApprovalsResponse,
   WalletHistoryResponse,
 } from "@w-info-sst/types";
-import { add } from "date-fns";
 
 import { Address } from "viem";
 
 const API = process.env.NEXT_PUBLIC_API_URL;
 
-export const fetchTokenBalancesByWallet = async (address: Address) => {
-  const response = await fetch(`${API}/wallet/${address}/tokens`);
+export const fetchTokenBalancesByWallet = async (
+  address: Address,
+  chain: number,
+) => {
+  const searchParams = new URLSearchParams({ chain: chain.toString() });
+
+  const response = await fetch(
+    `${API}/wallet/${address}/tokens?${searchParams}`,
+  );
 
   if (!response.ok) {
     throw Error("Response was not ok");
