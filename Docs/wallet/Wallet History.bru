@@ -5,13 +5,13 @@ meta {
 }
 
 get {
-  url: {{api}}/wallet/:address/history
+  url: {{api}}/wallet/:address/history?chain=56
   body: none
   auth: inherit
 }
 
 params:query {
-  ~chain: 56
+  chain: 56
   ~cursor: eyJhbGciOiJIUzI1NiJ9.eyJhc2NlbmRpbmciOmZhbHNlLCJsaW1pdCI6MTAsInBhZ2UiOjAsImxhc3RFdmFsdWF0ZWRLZXkiOnsid2FsbGV0QWRkcmVzcyI6IjB4Njc4YTQxNWZhY2E1YWRiMWYzMTk3ZWNmNzA1NTQ1OWRjYzRmYjI3NyIsInRpbWVzdGFtcF9ibG9ja051bWJlcl90eEluZGV4IjoiMDAwMDAwMTc0MTU5NzkxOTAwMDIyMDE1NDk2MDAwMjEifSwidGFibGVJbmRleCI6MH0.lKN_yfuLHHRcATHyxEotOInVYaIZFEpLCpuZBG9OMEc
 }
 

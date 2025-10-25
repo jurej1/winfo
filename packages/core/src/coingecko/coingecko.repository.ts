@@ -82,7 +82,7 @@ export class CoingeckoRepository {
       vs_currency: "usd",
       category: "layer-1",
       price_change_percentage: "1h",
-      per_page: "10",
+      per_page: "20",
     }).toString();
 
     const url = `${this.API_URL}/coins/markets?${searchParams}`;

@@ -1,6 +1,6 @@
 "use client";
 
-import { useTokenPrice } from "@/util/api/hooks/useTokenPrice";
+import { useTokenPrice } from "@/util/hooks/useTokenPrice";
 import { TokenListInfo } from "@w-info-sst/types";
 
 import {
