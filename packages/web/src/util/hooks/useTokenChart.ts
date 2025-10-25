@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchTokenOHLC } from "../api/tokens";
 
-export const useTokenPrice = (coin: string) => {
+export const useTokenChart = (coin: string) => {
   const FIVE_MINUTES = 5 * 60 * 1000;
 
   return useQuery({

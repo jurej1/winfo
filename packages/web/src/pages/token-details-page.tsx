@@ -3,9 +3,8 @@
 import Chart from "@/components/chart";
 import TokenDetails from "@/components/token-details";
 import { Spinner } from "@/components/ui/spinner";
-import { useTokenPrice } from "@/util/hooks/useTokenPrice";
+import { useTokenChart } from "@/util/hooks/useTokenChart";
 import { useTokensList } from "@/util/hooks/useTokensList";
-import { Divide } from "lucide-react";
 
 type Props = {
   id: string;
@@ -18,7 +17,7 @@ export default function TokenDetailsPage({ id }: Props) {
     isError: isTokensError,
   } = useTokensList();
 
-  const { data: chartData } = useTokenPrice(id);
+  const { data: chartData } = useTokenChart(id);
 
   const token = tokens?.pages.flat().find((t) => t.id === id);
 
