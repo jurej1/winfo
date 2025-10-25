@@ -41,6 +41,8 @@ export const fetchTokenPrice = async (coin: string) => {
 
   const rawData = (await response.json()) as TokenListInfo[];
 
+  if (rawData.length === 0) return undefined;
+
   return rawData[0];
 };
 
