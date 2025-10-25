@@ -27,10 +27,11 @@ export class MoralisRepository {
     });
   }
 
-  static getTokenBalancesByWallet(address: string) {
+  static getTokenBalancesByWallet(address: string, chain: EvmChain) {
     return Moralis.EvmApi.wallets.getWalletTokenBalancesPrice({
       address,
       limit: 10,
+      chain,
     });
   }
 
