@@ -27,18 +27,13 @@ export function PortfolioGrid({ address, chainId }: Props) {
   }
 
   return (
-    <div className="mt-2 grid h-[700px] grid-cols-2">
-      <TokensPortfolioList tokens={data.result} />
-
-      <div className="flex flex-col">
-        <div className="flex-1">
-          <NetWorthCard address={address} />
-        </div>
-
-        <div className="flex-1">
-          <PortfolioPie tokens={data.result} />
-        </div>
+    <div className="flex flex-col gap-8">
+      <div className="grid grid-cols-2">
+        <NetWorthCard address={address} />
+        <PortfolioPie tokens={data.result} />
       </div>
+
+      <TokensPortfolioList tokens={data.result} address={address} />
     </div>
   );
 }

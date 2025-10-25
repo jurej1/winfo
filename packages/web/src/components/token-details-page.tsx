@@ -1,7 +1,8 @@
 "use client";
-import { useTokensList } from "@/util/api/hooks/useTokensList";
+
 import TokenDetails from "./token-details";
 import Chart from "./chart";
+import { useTokensList } from "@/util/hooks/useTokensList";
 
 type Props = {
   id: string;

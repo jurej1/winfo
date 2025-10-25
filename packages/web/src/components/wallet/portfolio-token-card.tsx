@@ -1,7 +1,9 @@
 import { formatCurrency } from "@coingecko/cryptoformat";
 import { TokenResult } from "@w-info-sst/types";
-import { Button } from "../ui/button";
 import { toast } from "sonner";
+import { TableCell, TableRow } from "../ui/table";
+import Image from "next/image";
+import { IoIosArrowRoundDown, IoIosArrowRoundUp } from "react-icons/io";
 import { Progress } from "../ui/progress";
 
 type Props = {
@@ -18,46 +20,72 @@ export function PortfolioTokenCard({ token }: Props) {
     toast.success("Copied to clipboard");
   };
 
+  console.log("token", token);
+
   return (
-    <li className="flex flex-col gap-1 rounded-xl border-2 bg-white p-2">
-      <div className="mb-2 flex gap-x-2">
-        {token.logo && (
-          <img
-            src={token.logo}
-            alt={token.name}
-            draggable={false}
-            height={20}
-            width={20}
-            className="object-contain"
-          />
-        )}
-        <div className="font-bold">
-          {token.name} ({token.symbol})
+    <TableRow>
+      <TableCell>
+        <div className="flex gap-1">
+          {token.logo && (
+            <Image
+              src={token.logo}
+              alt={token.name}
+              width={15}
+              height={15}
+              className="object-contain"
+            />
+          )}
+          {token.name}
         </div>
-        {token.native_token && (
-          <img src={"badge.svg"} height={15} width={15} draggable={false} />
-        )}
-      </div>
-
-      <div className="my-1 flex flex-col">
-        <span className="text-xs text-gray-400">Address</span>
-        <Button variant="link" onClick={copyToClipboard}>
-          {token.token_address}
-        </Button>
-      </div>
-
-      <span>
-        Balance: {format(token.balance_formatted)} {token.symbol}
-      </span>
-
-      <span>Value: {format(token.usd_value)} USD</span>
-
-      <span>Change (24h): {format(token.usd_price_24hr_usd_change)} USD</span>
-
-      <div className="mr-20 flex items-center gap-2">
-        <Progress value={token.portfolio_percentage} />
-        <span>{token.portfolio_percentage.toFixed(2)}%</span>
-      </div>
-    </li>
+      </TableCell>
+      <TableCell>
+        <div className="flex items-center gap-2">
+          <span>{formatCurrency(token.usd_price, "$")}</span>
+          <PriceChangeIndicator
+            percentChange={token.usd_price_24hr_percent_change}
+          />
+        </div>
+      </TableCell>
+      <TableCell>
+        {formatCurrency(Number(token.balance_formatted), "")}
+      </TableCell>
+      <TableCell>
+        <div className="flex items-center gap-2">
+          <span>{token.portfolio_percentage.toFixed(2)}%</span>
+          <div className="w-10">
+            <Progress value={token.portfolio_percentage} />
+          </div>
+        </div>
+      </TableCell>
+      <TableCell>{formatCurrency(token.usd_value, "$")}</TableCell>
+    </TableRow>
   );
 }
+
+const PriceChangeIndicator = ({ percentChange }: { percentChange: number }) => {
+  const color = () => {
+    if (percentChange == 0) {
+      return "";
+    } else if (percentChange > 0) return "green";
+    else return "red";
+  };
+
+  const Icon = () => {
+    if (percentChange == 0) {
+      return <></>;
+    } else if (percentChange > 0) {
+      return <IoIosArrowRoundUp color={color()} />;
+    } else {
+      return <IoIosArrowRoundDown color={color()} />;
+    }
+  };
+
+  return (
+    <div className="flex items-center">
+      <Icon />
+      <span style={{ color: color() }}>
+        {Math.abs(percentChange).toFixed(2)}%
+      </span>
+    </div>
+  );
+};
