@@ -30,22 +30,6 @@ export const fetchTokenOHLC = async (coin: string, days: OHLCDaysFilter) => {
   })) as OHLCItem[];
 };
 
-export const fetchTokenPrice = async (coin: string) => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/tokens?coin=${coin}`,
-  );
-
-  if (!response.ok) {
-    throw new Error("Nework response was not ok");
-  }
-
-  const rawData = (await response.json()) as TokenListInfo[];
-
-  if (rawData.length === 0) return undefined;
-
-  return rawData[0];
-};
-
 export const fetchTokenList = async (page: number) => {
   const searchParams = new URLSearchParams({ page: page.toString() });
 
