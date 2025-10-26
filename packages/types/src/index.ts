@@ -7,3 +7,5 @@ export * from "./moralis/nft-transaction.type";
 export * from "./moralis/nfts.type";
 export * from "./moralis/tokens.type";
 export * from "./moralis/wallet.type";
+
+export * from "./zero-x";

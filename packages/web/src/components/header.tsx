@@ -14,8 +14,11 @@ const items = [
   <Link key="transactions" href="/transactions">
     Transactions
   </Link>,
-  <Link key="nfts" href="/">
-    Nfts
+  // <Link key="nfts" href="/">
+  //   Nfts
+  // </Link>,
+  <Link key="dex" href="/dex">
+    DEX
   </Link>,
 ];
 

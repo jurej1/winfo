@@ -4,6 +4,18 @@ export const api = new sst.aws.ApiGatewayV2("WinfoAPI");
 
 const link = secrets;
 
+// SWAPS
+api.route("GET /swap/price", {
+  handler: "packages/functions/src/swap/price/get.handler",
+  link,
+});
+
+api.route("GET /swap/quote", {
+  handler: "packages/functions/src/swap/quote/get.handler",
+  link,
+});
+
+// WALLET
 api.route("POST /wallet", {
   handler: "packages/functions/src/wallet/add/post.handler",
   link,
