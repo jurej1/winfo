@@ -15,6 +15,11 @@ api.route("GET /swap/quote", {
   link,
 });
 
+api.route("GET /swap/tokens", {
+  handler: "packages/functions/src/swap/tokens/get.handler",
+  link,
+});
+
 // WALLET
 api.route("POST /wallet", {
   handler: "packages/functions/src/wallet/add/post.handler",

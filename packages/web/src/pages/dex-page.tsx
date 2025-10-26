@@ -24,6 +24,8 @@ export function DexPage() {
     buyAmount,
     setBuyAmount,
     setSellAmount,
+    setBuyToken,
+    setSellToken,
   } = useSwapStore();
 
   const { address, chainId } = useAccount();
@@ -48,10 +50,11 @@ export function DexPage() {
 
     const handler = setTimeout(() => {
       fetchPrice({
-        buyToken: buyToken,
+        buyToken: buyToken.address,
         chainId: chainId,
         sellAmount: sellAmount,
-        sellToken: sellToken ?? "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        sellToken:
+          sellToken?.address ?? "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
         taker: address,
       });
     }, DEBOUNCE_DELAY);
@@ -69,15 +72,17 @@ export function DexPage() {
         <CardContent className="flex flex-col gap-2">
           <DexCardInput
             title="Sell"
-            tokenAddress={sellToken}
+            token={sellToken}
             value={sellAmount}
-            onChanged={setSellAmount}
+            onValChanged={setSellAmount}
+            onSetToken={setSellToken}
           />
           <DexCardInput
+            onSetToken={setBuyToken}
             title="Buy"
             value={buyAmount}
-            tokenAddress={buyToken}
-            onChanged={setBuyAmount}
+            token={buyToken}
+            onValChanged={setBuyAmount}
           />
         </CardContent>
         <CardFooter>

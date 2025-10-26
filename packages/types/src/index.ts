@@ -9,3 +9,5 @@ export * from "./moralis/tokens.type";
 export * from "./moralis/wallet.type";
 
 export * from "./zero-x";
+
+export * from "./uniswap/uniswap-tokens.type";

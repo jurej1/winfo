@@ -3,6 +3,7 @@ import {
   GetPrice0XResponse,
   GetQuote0XParams,
   GetQuote0XResponse,
+  TokenUniswap,
 } from "@w-info-sst/types";
 
 const API = process.env.NEXT_PUBLIC_API_URL;
@@ -41,4 +42,18 @@ export const getQuote = async (params: GetQuote0XParams) => {
   const body = await response.json();
 
   return body as GetQuote0XResponse;
+};
+
+export const getSwapTokensForChain = async (chain: number) => {
+  const searchParams = new URLSearchParams({
+    chain: chain.toString(),
+  });
+
+  const url = `${API}/swap/tokens?${searchParams}`;
+
+  const response = await fetch(url);
+
+  const body = await response.json();
+
+  return body as TokenUniswap[];
 };
