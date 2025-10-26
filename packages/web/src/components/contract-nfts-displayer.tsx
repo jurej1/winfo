@@ -2,8 +2,7 @@
 
 import { Address } from "viem";
 import { NftCard } from "./nft-card";
-
-import { useContractNFTs } from "@/util/api/hooks/useContractNfts";
+import { useContractNFTs } from "@/util/hooks/useContractNfts";
 
 type Props = {
   address: Address;

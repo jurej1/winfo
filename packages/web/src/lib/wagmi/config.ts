@@ -1,6 +1,6 @@
 "use client";
 import { getDefaultConfig } from "@rainbow-me/rainbowkit";
-import { bsc, mainnet } from "viem/chains";
+import { bsc, mainnet } from "wagmi/chains";
 
 export const config = getDefaultConfig({
   appName: "W-info",
