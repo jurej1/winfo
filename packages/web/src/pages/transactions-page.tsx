@@ -60,7 +60,7 @@ export function TransactionsPage({ address, chainId }: Props) {
   };
 
   return (
-    <div className="flex w-full flex-col">
+    <div className="mx-auto flex max-w-7xl flex-col">
       <TransactionsTable transactions={data.result} />
       <TransactionTableNavigation
         onBackPressed={onBackwardsPressed}

@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/table";
 import { useTokensList } from "@/util/hooks/useTokensList";
 
-export default function TokensList() {
+export default function TokensListPage() {
   const {
     data,
     isLoading,
@@ -38,7 +38,7 @@ export default function TokensList() {
   }
 
   return (
-    <div className="m-auto flex max-w-7xl flex-col gap-4 py-2">
+    <div className="mx-auto flex max-w-7xl flex-col gap-4 py-2">
       <TokenSearchDialog />
       <Table>
         <TableCaption>
