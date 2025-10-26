@@ -1,0 +1,44 @@
+import {
+  GetPrice0XParams,
+  GetPrice0XResponse,
+  GetQuote0XParams,
+  GetQuote0XResponse,
+} from "@w-info-sst/types";
+
+const API = process.env.NEXT_PUBLIC_API_URL;
+
+export const getPrice = async (params: GetPrice0XParams) => {
+  const searchParams = new URLSearchParams({
+    chainId: params.chainId.toString(),
+    buyToken: params.buyToken,
+    sellToken: params.sellToken,
+    sellAmount: params.sellAmount,
+    taker: params.taker,
+  });
+
+  const url = `${API}/swap/price?${searchParams}`;
+
+  const response = await fetch(url);
+
+  const body = await response.json();
+
+  return body as GetPrice0XResponse;
+};
+
+export const getQuote = async (params: GetQuote0XParams) => {
+  const searchParams = new URLSearchParams({
+    chainId: params.chainId.toString(),
+    buyToken: params.buyToken,
+    sellToken: params.sellToken,
+    sellAmount: params.sellAmount,
+    taker: params.taker,
+  });
+
+  const url = `${API}/swap/quote?${searchParams}`;
+
+  const response = await fetch(url);
+
+  const body = await response.json();
+
+  return body as GetQuote0XResponse;
+};
