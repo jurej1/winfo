@@ -13,10 +13,11 @@ import { DexTokenSelectRow } from "./dex-token-select-row";
 import { Button } from "../ui/button";
 
 import Image from "next/image";
+import { TokenDB } from "@w-info-sst/db";
 
 type Props = {
-  token?: TokenUniswap;
-  onSetToken: (token: TokenUniswap) => void;
+  token?: TokenDB;
+  onSetToken: (token: TokenDB) => void;
 };
 
 export function DexSelectToken({ token, onSetToken }: Props) {
@@ -27,7 +28,7 @@ export function DexSelectToken({ token, onSetToken }: Props) {
   const { data } = useSwapTokens(chainId!);
 
   const handleOnPressed = useCallback(
-    (token: TokenUniswap) => {
+    (token: TokenDB) => {
       setOpen((prev) => !prev);
       onSetToken(token);
     },
@@ -43,7 +44,7 @@ export function DexSelectToken({ token, onSetToken }: Props) {
           <Button>
             <div className="flex gap-2">
               <Image
-                src={token.logoURI}
+                src={token.image ?? ""}
                 height={20}
                 width={20}
                 alt={token.symbol}

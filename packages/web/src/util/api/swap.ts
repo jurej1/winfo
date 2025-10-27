@@ -3,8 +3,9 @@ import {
   GetPrice0XResponse,
   GetQuote0XParams,
   GetQuote0XResponse,
-  TokenUniswap,
 } from "@w-info-sst/types";
+
+import { TokenDB } from "@w-info-sst/db";
 
 const API = process.env.NEXT_PUBLIC_API_URL;
 
@@ -55,5 +56,5 @@ export const getSwapTokensForChain = async (chain: number) => {
 
   const body = await response.json();
 
-  return body as TokenUniswap[];
+  return body as TokenDB[];
 };

@@ -1,14 +1,15 @@
 import { Input } from "../ui/input";
 import { useAccount, useBalance } from "wagmi";
 import { formatCurrency } from "@coingecko/cryptoformat";
-import { TokenUniswap } from "@w-info-sst/types";
+
 import { DexSelectToken } from "./dex-select-token";
+import { TokenDB } from "@w-info-sst/db";
 
 type Props = {
   title: string;
-  token?: TokenUniswap;
+  token?: TokenDB;
   onValChanged: (val: string) => void;
-  onSetToken: (token: TokenUniswap) => void;
+  onSetToken: (token: TokenDB) => void;
   value: string;
 };
 
@@ -24,7 +25,7 @@ export function DexCardInput({
   const { data: balance } = useBalance({
     chainId: chainId,
     address: address,
-    token: token?.address,
+    token: token?.address as `0x${string}`,
     query: {
       refetchInterval: 1000 * 30,
     },

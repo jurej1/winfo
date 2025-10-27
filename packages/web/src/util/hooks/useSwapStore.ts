@@ -1,3 +1,4 @@
+import { TokenDB } from "@w-info-sst/db";
 import { TokenUniswap } from "@w-info-sst/types";
 import { create } from "zustand";
 
@@ -5,8 +6,8 @@ type Address = `0x${string}`;
 
 type State = {
   chainId?: number;
-  buyToken?: TokenUniswap;
-  sellToken?: TokenUniswap;
+  buyToken?: TokenDB;
+  sellToken?: TokenDB;
   sellAmount: string;
   buyAmount: string;
   taker?: Address;
@@ -14,8 +15,8 @@ type State = {
 
 type Action = {
   setChainId: (chainId?: number) => void;
-  setBuyToken: (buyToken?: TokenUniswap) => void;
-  setSellToken: (sellToken?: TokenUniswap) => void;
+  setBuyToken: (buyToken?: TokenDB) => void;
+  setSellToken: (sellToken?: TokenDB) => void;
   setSellAmount: (sellAmount: string) => void;
   setBuyAmount: (buyAmount: string) => void;
   setTaker: (taker?: Address) => void;

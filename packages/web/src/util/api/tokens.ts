@@ -1,9 +1,4 @@
-import {
-  CoingeckoTokenSimple,
-  OHLCDaysFilter,
-  OHLCItem,
-  TokenListInfo,
-} from "@w-info-sst/types";
+import { OHLCDaysFilter, OHLCItem, TokenListInfo } from "@w-info-sst/types";
 
 export const fetchTokenOHLC = async (coin: string, days: OHLCDaysFilter) => {
   const searchParams = new URLSearchParams({
