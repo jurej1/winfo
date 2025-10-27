@@ -1,4 +1,5 @@
 import {
+  boolean,
   integer,
   pgTable,
   primaryKey,
@@ -15,6 +16,7 @@ export const dexTokens = pgTable(
     symbol: text("symbol").notNull(),
     image: text("image"),
     decimals: smallint("decimals").notNull(),
+    native: boolean("native").notNull(),
   },
   (table) => [
     primaryKey({

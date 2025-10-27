@@ -1,0 +1,1 @@
+ALTER TABLE "dex-tokens" ADD COLUMN "native" boolean;

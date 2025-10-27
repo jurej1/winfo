@@ -1,0 +1,1 @@
+ALTER TABLE "dex-tokens" ALTER COLUMN "native" SET NOT NULL;

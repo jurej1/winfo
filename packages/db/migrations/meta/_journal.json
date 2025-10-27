@@ -29,6 +29,20 @@
       "when": 1761551572109,
       "tag": "0003_superb_the_leader",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1761553140082,
+      "tag": "0004_far_moondragon",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1761553210445,
+      "tag": "0005_huge_randall",
+      "breakpoints": true
     }
   ]
 }

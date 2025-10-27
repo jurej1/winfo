@@ -2,6 +2,7 @@ import { TokenUniswap } from "@w-info-sst/types";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
@@ -48,6 +49,7 @@ export function DexSelectToken({ token, onSetToken }: Props) {
                 height={20}
                 width={20}
                 alt={token.symbol}
+                draggable={false}
               />
               <p>{token.symbol}</p>
             </div>
@@ -56,6 +58,7 @@ export function DexSelectToken({ token, onSetToken }: Props) {
       </DialogTrigger>
       <DialogContent>
         <DialogTitle>Select Token</DialogTitle>
+        <DialogDescription>Please select a token for swap</DialogDescription>
         {data && (
           <ul className="flex max-h-96 flex-col gap-2 overflow-y-auto">
             {data.map((token) => (

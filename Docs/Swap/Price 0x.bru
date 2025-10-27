@@ -1,0 +1,25 @@
+meta {
+  name: Price 0x
+  type: http
+  seq: 4
+}
+
+get {
+  url: https://api.0x.org/swap/permit2/price?chainId=56&buyToken=0x55d398326f99059fF775485246999027B3197955&sellToken=0x776F9987D9DEED
+90eeD791cbD824D971FD5CCF09&sellAmount=20&taker=0x1ff4577f378115e8AeB638C218B541CE0c332B08
+  body: none
+  auth: inherit
+}
+
+params:query {
+  chainId: 56
+  buyToken: 0x55d398326f99059fF775485246999027B3197955
+  sellToken: 0x776F9987D9DEED
+  90eeD791cbD824D971FD5CCF09
+  sellAmount: 20
+  taker: 0x1ff4577f378115e8AeB638C218B541CE0c332B08
+}
+
+settings {
+  encodeUrl: true
+}

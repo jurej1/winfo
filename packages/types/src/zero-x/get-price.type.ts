@@ -9,7 +9,7 @@ export type GetPrice0XParams = {
 export type GetPrice0XResponse = {
   name: string; // error name in case something goes wrong
   blockNumber: string;
-  buyAmount: string;
+  buyAmount: BigInt;
   buyToken: string;
   fees: {
     integratorFee: null;

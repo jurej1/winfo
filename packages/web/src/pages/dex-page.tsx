@@ -10,6 +10,8 @@ import {
 import { useSwapPrice } from "@/util/hooks/useSwapPrice";
 import { useSwapStore } from "@/util/hooks/useSwapStore";
 import { useEffect } from "react";
+import { formatEther } from "viem";
+
 import { useAccount } from "wagmi";
 
 const DEBOUNCE_DELAY = 500;
@@ -32,7 +34,8 @@ export function DexPage() {
 
   const { mutate: fetchPrice } = useSwapPrice({
     onSuccess: (data) => {
-      setBuyAmount(data.buyAmount);
+      const result = formatEther(data.buyAmount as bigint);
+      setBuyAmount(result);
     },
   });
 
@@ -42,26 +45,27 @@ export function DexPage() {
   }, [address, chainId, setChainId, setTaker]);
 
   useEffect(() => {
-    if (!sellAmount || !buyToken || !chainId || !address) {
+    if (!sellAmount || !buyToken || !chainId || !address || !sellToken) {
       return;
     }
 
     if (!(Number(sellAmount) > 0)) return;
 
     const handler = setTimeout(() => {
+      const sellAmountInWei = BigInt(
+        Math.floor(parseFloat(sellAmount) * Math.pow(10, sellToken.decimals)),
+      );
+
       fetchPrice({
         buyToken: buyToken.address,
         chainId: chainId,
-        sellAmount: sellAmount,
-        sellToken:
-          sellToken?.address ?? "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+        sellAmount: sellAmountInWei.toString(),
+        sellToken: sellToken?.address,
         taker: address,
       });
     }, DEBOUNCE_DELAY);
 
-    return () => {
-      clearTimeout(handler);
-    };
+    return () => clearTimeout(handler);
   }, [sellToken, sellAmount, buyToken, chainId, address, fetchPrice]);
 
   return (
@@ -83,6 +87,7 @@ export function DexPage() {
             value={buyAmount}
             token={buyToken}
             onValChanged={setBuyAmount}
+            readonly
           />
         </CardContent>
         <CardFooter>

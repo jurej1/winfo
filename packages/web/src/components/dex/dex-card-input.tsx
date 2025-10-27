@@ -4,7 +4,7 @@ import { formatCurrency } from "@coingecko/cryptoformat";
 
 import { DexSelectToken } from "./dex-select-token";
 import { TokenDB } from "@w-info-sst/db";
-import { Address } from "viem";
+import { read } from "fs";
 
 type Props = {
   title: string;
@@ -12,6 +12,7 @@ type Props = {
   onValChanged: (val: string) => void;
   onSetToken: (token: TokenDB) => void;
   value: string;
+  readonly?: boolean;
 };
 
 export function DexCardInput({
@@ -20,18 +21,16 @@ export function DexCardInput({
   onValChanged,
   value,
   onSetToken,
+  readonly,
 }: Props) {
   const { chainId, address } = useAccount();
 
-  const tokenAddress =
-    token?.address === "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
-      ? undefined
-      : token?.address;
+  const tokenAddress = token?.native ? undefined : token?.address;
 
   const { data: balance } = useBalance({
     chainId: chainId,
     address: address,
-    token: tokenAddress as Address | undefined,
+    token: tokenAddress,
     query: {
       refetchInterval: 1000 * 30,
     },
@@ -48,19 +47,25 @@ export function DexCardInput({
 
       <div className="flex items-center gap-4">
         <Input
+          key={token?.address}
           type="number"
+          className="border-none text-black shadow-none focus-visible:border-none focus-visible:ring-0"
           placeholder="0.0"
           value={value}
+          style={{
+            fontSize: 28,
+          }}
           onChange={(event) => {
             const val = event.target.value;
             onValChanged(val);
           }}
+          readOnly={readonly}
         />
         <DexSelectToken token={token} onSetToken={onSetToken} />
       </div>
       <div className="flex items-center justify-between">
         <span></span>
-        <span>{formattedAmount}</span>
+        <span>{token && formattedAmount}</span>
       </div>
     </div>
   );
