@@ -1,4 +1,4 @@
-import { walletNetWorths } from "../schemas/net-worths.sql";
+import { walletNetWorths } from "../schemas";
 
 export type InsertWalletNetWorth = typeof walletNetWorths.$inferInsert;
 
