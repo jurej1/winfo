@@ -4,6 +4,7 @@ import { formatCurrency } from "@coingecko/cryptoformat";
 
 import { DexSelectToken } from "./dex-select-token";
 import { TokenDB } from "@w-info-sst/db";
+import { Address } from "viem";
 
 type Props = {
   title: string;
@@ -22,10 +23,15 @@ export function DexCardInput({
 }: Props) {
   const { chainId, address } = useAccount();
 
+  const tokenAddress =
+    token?.address === "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+      ? undefined
+      : token?.address;
+
   const { data: balance } = useBalance({
     chainId: chainId,
     address: address,
-    token: token?.address as `0x${string}`,
+    token: tokenAddress as Address | undefined,
     query: {
       refetchInterval: 1000 * 30,
     },
