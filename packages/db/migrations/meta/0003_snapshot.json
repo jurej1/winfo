@@ -1,0 +1,186 @@
+{
+  "id": "29a8e67d-95ed-4ceb-8dea-f8a3f42c2a2b",
+  "prevId": "8e2c9099-0948-4bd5-a8ca-fd58ba90b35d",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.dex-tokens": {
+      "name": "dex-tokens",
+      "schema": "",
+      "columns": {
+        "chainId": {
+          "name": "chainId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "address": {
+          "name": "address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "symbol": {
+          "name": "symbol",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "image": {
+          "name": "image",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "decimals": {
+          "name": "decimals",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "pk_chain_address": {
+          "name": "pk_chain_address",
+          "columns": [
+            "address",
+            "chainId"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.net-worths": {
+      "name": "net-worths",
+      "schema": "",
+      "columns": {
+        "address": {
+          "name": "address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "total_networth_usd": {
+          "name": "total_networth_usd",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "native_balance": {
+          "name": "native_balance",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "native_balance_formatted": {
+          "name": "native_balance_formatted",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "native_balance_usd": {
+          "name": "native_balance_usd",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "token_balance_usd": {
+          "name": "token_balance_usd",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "networth_usd": {
+          "name": "networth_usd",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "net-worths_address_wallets_address_fk": {
+          "name": "net-worths_address_wallets_address_fk",
+          "tableFrom": "net-worths",
+          "tableTo": "wallets",
+          "columnsFrom": [
+            "address"
+          ],
+          "columnsTo": [
+            "address"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "pk_address_createdAt": {
+          "name": "pk_address_createdAt",
+          "columns": [
+            "address",
+            "created_at"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.wallets": {
+      "name": "wallets",
+      "schema": "",
+      "columns": {
+        "address": {
+          "name": "address",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

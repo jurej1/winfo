@@ -1,0 +1,1 @@
+ALTER TABLE "dex-tokens" ADD COLUMN "decimals" smallint NOT NULL;

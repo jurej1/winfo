@@ -1,4 +1,10 @@
-import { integer, pgTable, primaryKey, text } from "drizzle-orm/pg-core";
+import {
+  integer,
+  pgTable,
+  primaryKey,
+  smallint,
+  text,
+} from "drizzle-orm/pg-core";
 
 export const dexTokens = pgTable(
   "dex-tokens",
@@ -8,6 +14,7 @@ export const dexTokens = pgTable(
     name: text("name").notNull(),
     symbol: text("symbol").notNull(),
     image: text("image"),
+    decimals: smallint("decimals").notNull(),
   },
   (table) => [
     primaryKey({
