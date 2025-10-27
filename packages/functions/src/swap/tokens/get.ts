@@ -1,7 +1,8 @@
 import middy from "@middy/core";
 import validator from "@middy/validator";
 import { transpileSchema } from "@middy/validator/transpile";
-import { httpLambdaMiddleware, UniswapRepository } from "@w-info-sst/core";
+import { httpLambdaMiddleware } from "@w-info-sst/core";
+import { getTokensByChainId } from "@w-info-sst/db";
 import { ApiGwRequest } from "@w-info-sst/types";
 
 const schema = {
@@ -29,15 +30,11 @@ const baseHandler = async (
 ) => {
   const { chain } = event.queryStringParameters;
 
-  const response = await UniswapRepository.getTokens();
-
-  const filteredTokens = response.filter((token) => token.chainId === chain);
-
-  const limitedTokens = filteredTokens.slice(0, 20);
+  const response = await getTokensByChainId(chain);
 
   return {
     statusCode: 200,
-    body: limitedTokens,
+    body: response,
   };
 };
 
