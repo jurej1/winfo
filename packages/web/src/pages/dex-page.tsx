@@ -7,19 +7,11 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-import { useSwapPrice } from "@/util/hooks/useSwapPrice";
-import { useSwapStore } from "@/util/hooks/useSwapStore";
-import { useEffect } from "react";
-import { formatEther } from "viem";
 
-import { useAccount } from "wagmi";
-
-const DEBOUNCE_DELAY = 500;
+import { useSwap } from "@/util/hooks/useSwapStore";
 
 export function DexPage() {
   const {
-    setChainId,
-    setTaker,
     sellToken,
     buyToken,
     sellAmount,
@@ -28,45 +20,7 @@ export function DexPage() {
     setSellAmount,
     setBuyToken,
     setSellToken,
-  } = useSwapStore();
-
-  const { address, chainId } = useAccount();
-
-  const { mutate: fetchPrice } = useSwapPrice({
-    onSuccess: (data) => {
-      const result = formatEther(data.buyAmount as bigint);
-      setBuyAmount(result);
-    },
-  });
-
-  useEffect(() => {
-    setChainId(chainId);
-    setTaker(address);
-  }, [address, chainId, setChainId, setTaker]);
-
-  useEffect(() => {
-    if (!sellAmount || !buyToken || !chainId || !address || !sellToken) {
-      return;
-    }
-
-    if (!(Number(sellAmount) > 0)) return;
-
-    const handler = setTimeout(() => {
-      const sellAmountInWei = BigInt(
-        Math.floor(parseFloat(sellAmount) * Math.pow(10, sellToken.decimals)),
-      );
-
-      fetchPrice({
-        buyToken: buyToken.address,
-        chainId: chainId,
-        sellAmount: sellAmountInWei.toString(),
-        sellToken: sellToken?.address,
-        taker: address,
-      });
-    }, DEBOUNCE_DELAY);
-
-    return () => clearTimeout(handler);
-  }, [sellToken, sellAmount, buyToken, chainId, address, fetchPrice]);
+  } = useSwap();
 
   return (
     <div className="mx-auto my-3 max-w-7xl">
