@@ -1,4 +1,3 @@
-import { TokenUniswap } from "@w-info-sst/types";
 import {
   Dialog,
   DialogContent,
@@ -6,15 +5,16 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
-import { useSwapTokens } from "@/util/hooks/useSwapTokens";
-import { useAccount } from "wagmi";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 import { DexTokenSelectRow } from "./dex-token-select-row";
 
 import { Button } from "../ui/button";
 
 import Image from "next/image";
 import { TokenDB } from "@w-info-sst/db";
+import { useSwapTokens } from "@/util/hooks/swap/useSwapTokens";
+import { useAccount } from "wagmi";
+import { useSwapStore } from "@/util/hooks/swap/useSwapStore";
 
 type Props = {
   token?: TokenDB;
@@ -22,11 +22,9 @@ type Props = {
 };
 
 export function DexSelectToken({ token, onSetToken }: Props) {
-  const { chainId } = useAccount();
-
   const [open, setOpen] = useState<boolean>(false);
 
-  const { data } = useSwapTokens(chainId!);
+  const { tokens } = useSwapStore();
 
   const handleOnPressed = useCallback(
     (token: TokenDB) => {
@@ -59,17 +57,15 @@ export function DexSelectToken({ token, onSetToken }: Props) {
       <DialogContent>
         <DialogTitle>Select Token</DialogTitle>
         <DialogDescription>Please select a token for swap</DialogDescription>
-        {data && (
-          <ul className="flex max-h-96 flex-col gap-2 overflow-y-auto">
-            {data.map((token) => (
-              <DexTokenSelectRow
-                token={token}
-                key={token.address}
-                onPressed={() => handleOnPressed(token)}
-              />
-            ))}
-          </ul>
-        )}
+        <ul className="flex max-h-96 flex-col gap-2 overflow-y-auto">
+          {tokens.map((token) => (
+            <DexTokenSelectRow
+              token={token}
+              key={token.address}
+              onPressed={() => handleOnPressed(token)}
+            />
+          ))}
+        </ul>
       </DialogContent>
     </Dialog>
   );

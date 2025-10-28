@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getSwapTokensForChain } from "../api/swap";
+import { getSwapTokensForChain } from "../../api/swap";
 
 export const useSwapTokens = (chainId: number) => {
   const ONE_DAY = 24 * 60 * 60 * 1000;

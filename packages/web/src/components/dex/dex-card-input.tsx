@@ -4,7 +4,6 @@ import { formatCurrency } from "@coingecko/cryptoformat";
 
 import { DexSelectToken } from "./dex-select-token";
 import { TokenDB } from "@w-info-sst/db";
-import { read } from "fs";
 
 type Props = {
   title: string;

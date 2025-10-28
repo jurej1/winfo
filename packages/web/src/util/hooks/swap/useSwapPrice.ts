@@ -1,5 +1,5 @@
+import { getPrice } from "@/util/api/swap";
 import { useMutation, UseMutationOptions } from "@tanstack/react-query";
-import { getPrice } from "../api/swap";
 import { GetPrice0XParams, GetPrice0XResponse } from "@w-info-sst/types";
 
 type SwapPriceOptions = UseMutationOptions<
@@ -15,6 +15,7 @@ export const useSwapPrice = (options?: SwapPriceOptions) => {
     mutationKey: ["swap-price"],
     mutationFn: getPrice,
     gcTime: FIVE_MINUTES,
+
     ...options,
   });
 };
