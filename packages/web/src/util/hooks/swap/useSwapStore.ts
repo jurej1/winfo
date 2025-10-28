@@ -1,20 +1,22 @@
 import { TokenDB } from "@w-info-sst/db";
 import { create } from "zustand";
 import { GetPrice0XResponse, GetQuote0XResponse } from "@w-info-sst/types";
+import { Address } from "viem";
 
-type Address = `0x${string}`;
-
-type State = {
-  chainId?: number;
-  buyToken?: TokenDB;
-  sellToken?: TokenDB;
-  sellAmount: string;
-  buyAmount: string;
-  taker?: Address;
-  quote?: GetQuote0XResponse;
-  price?: GetPrice0XResponse;
-  tokens: TokenDB[];
+const initialState = {
+  chainId: undefined as number | undefined,
+  buyToken: undefined as TokenDB | undefined,
+  sellToken: undefined as TokenDB | undefined,
+  sellAmount: "0",
+  buyAmount: "0",
+  taker: undefined as Address | undefined,
+  quote: undefined as GetQuote0XResponse | undefined,
+  price: undefined as GetPrice0XResponse | undefined,
+  tokens: [] as TokenDB[],
+  loadingPrice: false,
 };
+
+type State = typeof initialState;
 
 type Action = {
   setChainId: (chainId?: number) => void;
@@ -22,23 +24,17 @@ type Action = {
   setSellToken: (sellToken?: TokenDB) => void;
   setSellAmount: (sellAmount: string) => void;
   setBuyAmount: (buyAmount: string) => void;
-  setTaker: (taker?: Address) => void;
+  setTaker: (taker?: `0x${string}`) => void;
   setQuote: (quote?: GetQuote0XResponse) => void;
   setPrice: (price?: GetPrice0XResponse) => void;
   setTokens: (tokens: TokenDB[]) => void;
   resetStore: () => void;
+  setLoadingPrice: (val: boolean) => void;
 };
 
-export const useSwapStore = create<State & Action>((set, get, store) => ({
-  chainId: undefined,
-  buyToken: undefined,
-  sellToken: undefined,
-  sellAmount: "0",
-  buyAmount: "0",
-  taker: undefined,
-  quote: undefined,
-  price: undefined,
-  tokens: [],
+export const useSwapStore = create<State & Action>((set) => ({
+  ...initialState,
+
   setChainId: (chainId) => set({ chainId }),
   setBuyToken: (buyToken) => set({ buyToken }),
   setSellToken: (sellToken) => set({ sellToken }),
@@ -48,5 +44,8 @@ export const useSwapStore = create<State & Action>((set, get, store) => ({
   setQuote: (quote) => set({ quote }),
   setPrice: (price) => set({ price }),
   setTokens: (tokens) => set({ tokens }),
-  resetStore: () => set(store.getInitialState()),
+
+  setLoadingPrice: (val) => set({ loadingPrice: val }),
+
+  resetStore: () => set(initialState),
 }));

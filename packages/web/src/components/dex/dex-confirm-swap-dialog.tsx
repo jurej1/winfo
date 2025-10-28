@@ -5,6 +5,7 @@ import { useCallback } from "react";
 
 export function DexConfirmSwapDialog() {
   const transaction = useSwapStore((state) => state.quote?.transaction);
+  const loading = useSwapStore((state) => state.loadingPrice);
 
   const { sendTransaction } = useSendTransaction();
 
@@ -17,7 +18,11 @@ export function DexConfirmSwapDialog() {
   }, [sendTransaction, transaction]);
 
   return (
-    <Button className="w-full py-7" onClick={executeTransaction}>
+    <Button
+      className="w-full py-7"
+      onClick={executeTransaction}
+      disabled={loading}
+    >
       SWAP
     </Button>
   );

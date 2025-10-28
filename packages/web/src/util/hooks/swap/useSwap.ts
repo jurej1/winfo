@@ -25,11 +25,13 @@ export const useSwap = () => {
     setBuyToken,
     setSellToken,
     setQuote,
+    setLoadingPrice,
   } = store;
 
   useEffect(() => {
     if (tokensListData) {
       setTokens(tokensListData);
+
       const native = tokensListData.find((t) => t.native);
       setSellToken(native);
 
@@ -44,17 +46,21 @@ export const useSwap = () => {
   }, [address, chainId, setChainId, setTaker]);
 
   const { mutate: fetchPrice } = useSwapPrice({
-    onMutate: () => {},
+    onMutate: () => setLoadingPrice(true),
+
     onSuccess: (data) => {
       const result = formatEther(BigInt(data.buyAmount));
       setBuyAmount(result);
       setPrice(data);
+      setLoadingPrice(false);
     },
   });
 
   const { mutate: fetchQuote } = useSwapQuote({
+    onMutate: () => setLoadingPrice(true),
     onSuccess: (data) => {
       setQuote(data);
+      setLoadingPrice(false);
     },
   });
 
