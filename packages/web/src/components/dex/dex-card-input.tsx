@@ -41,7 +41,7 @@ export function DexCardInput({
   );
 
   return (
-    <div className="flex flex-col gap-2 border">
+    <div className="flex flex-col gap-2 rounded-2xl bg-blue-200/20 p-4">
       <p className="text-md text-gray-400">{title}</p>
 
       <div className="flex items-center gap-4">
