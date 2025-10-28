@@ -5,6 +5,7 @@ import { formatEther } from "viem";
 
 import { useSwapPrice } from "./useSwapPrice";
 import { useSwapTokens } from "./useSwapTokens";
+import { useSwapQuote } from "./useSwapQuote";
 
 export const useSwap = () => {
   const store = useSwapStore();
@@ -23,6 +24,7 @@ export const useSwap = () => {
     setTokens,
     setBuyToken,
     setSellToken,
+    setQuote,
   } = store;
 
   useEffect(() => {
@@ -41,11 +43,17 @@ export const useSwap = () => {
     setTaker(address);
   }, [address, chainId, setChainId, setTaker]);
 
-  const { mutate: fetchPrice, isPending: isLoadingPrice } = useSwapPrice({
+  const { mutate: fetchPrice } = useSwapPrice({
     onSuccess: (data) => {
       const result = formatEther(BigInt(data.buyAmount));
       setBuyAmount(result);
       setPrice(data);
+    },
+  });
+
+  const { mutate: fetchQuote } = useSwapQuote({
+    onSuccess: (data) => {
+      setQuote(data);
     },
   });
 
@@ -60,13 +68,16 @@ export const useSwap = () => {
         Math.floor(parseFloat(sellAmount) * Math.pow(10, sellToken.decimals)),
       );
 
-      fetchPrice({
+      const params = {
         buyToken: buyToken.address,
         chainId: chainId,
         sellAmount: sellAmountInWei.toString(),
         sellToken: sellToken?.address,
         taker: address,
-      });
+      };
+
+      fetchPrice(params);
+      fetchQuote(params);
     }, 500);
 
     return () => clearTimeout(handler);

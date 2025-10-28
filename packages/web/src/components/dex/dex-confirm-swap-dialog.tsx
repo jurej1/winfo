@@ -1,23 +1,24 @@
+import { useSwapStore } from "@/util/hooks/swap/useSwapStore";
 import { Button } from "../ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "../ui/dialog";
+import { useSendTransaction } from "wagmi";
+import { useCallback } from "react";
 
 export function DexConfirmSwapDialog() {
+  const transaction = useSwapStore((state) => state.quote?.transaction);
+
+  const { sendTransaction } = useSendTransaction();
+
+  const executeTransaction = useCallback(() => {
+    if (!transaction) return;
+
+    sendTransaction({
+      ...transaction,
+    });
+  }, [sendTransaction, transaction]);
+
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button className="w-full py-7">Review Swap</Button>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Review Swap</DialogTitle>
-        </DialogHeader>
-      </DialogContent>
-    </Dialog>
+    <Button className="w-full py-7" onClick={executeTransaction}>
+      SWAP
+    </Button>
   );
 }

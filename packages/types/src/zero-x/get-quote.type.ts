@@ -54,11 +54,11 @@ export type GetQuote0XResponse = {
   };
   totalNetworkFee: string;
   transaction: {
-    to: string;
-    data: string;
-    gas: string;
-    gasPrice: string;
-    value: string;
+    to: `0x${string}`;
+    data: `0x${string}`;
+    gas: bigint | null | undefined;
+    gasPrice: bigint | undefined;
+    value: bigint | undefined;
   };
   zid: string;
 };
