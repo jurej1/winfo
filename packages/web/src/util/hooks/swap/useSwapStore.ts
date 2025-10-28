@@ -31,6 +31,7 @@ type Action = {
   setPrice: (price?: GetPrice0XResponse) => void;
   setTokens: (tokens: TokenDB[]) => void;
   resetStore: () => void;
+  clearForm: () => void;
   setLoadingPrice: (val: boolean) => void;
   setLoadingQuote: (val: boolean) => void;
   setLoadingTokens: (val: boolean) => void;
@@ -64,5 +65,8 @@ export const useSwapStore = create<State & Action>((set) => ({
       sellToken: state.buyToken,
     })),
 
+  clearForm: () => {
+    // TODO
+  },
   resetStore: () => set(initialState),
 }));

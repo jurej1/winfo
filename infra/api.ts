@@ -20,6 +20,11 @@ api.route("GET /swap/tokens", {
   link,
 });
 
+api.route("POST /swap/transactions", {
+  handler: "packages/functions/src/swap/transactions/post.handler",
+  link,
+});
+
 // WALLET
 api.route("POST /wallet", {
   handler: "packages/functions/src/wallet/add/post.handler",

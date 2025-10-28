@@ -5,18 +5,23 @@ import {
   useWriteContract,
 } from "wagmi";
 import { useSwapStore } from "./useSwapStore";
-import { useCallback, useMemo } from "react";
-import { concat, erc20Abi, Hex, numberToHex, size } from "viem";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { concat, erc20Abi, Hash, Hex, numberToHex, size } from "viem";
 import { SignTypedDataVariables } from "wagmi/query";
+import { toast } from "sonner";
 
 const REQUIRED_SPENDER_ADDRESS = "0x000000000022d473030f116ddee9f6b43ac78ba3";
 
 export const useSwapExecute = () => {
+  const clearSwapForm = useSwapStore((state) => state.clearForm);
+
   const transaction = useSwapStore((state) => state.quote?.transaction);
   const permit2 = useSwapStore((state) => state.quote?.permit2);
 
   const sellToken = useSwapStore((state) => state.sellToken);
   const sellAmount = useSwapStore((state) => state.sellAmount);
+
+  const [waitHash, setWaitHash] = useState<Hash>();
 
   const allowanceIssue = useSwapStore(
     (state) => state.price?.issues?.allowance,
@@ -26,7 +31,13 @@ export const useSwapExecute = () => {
   );
 
   // After hash
-  const {} = useWaitForTransactionReceipt();
+  const { isSuccess: isSwapSuccess, data: swapTransactionData } =
+    useWaitForTransactionReceipt({
+      hash: waitHash,
+      query: {
+        enabled: !!waitHash,
+      },
+    });
 
   const { sendTransactionAsync } = useSendTransaction();
   const { signTypedDataAsync } = useSignTypedData();
@@ -88,7 +99,9 @@ export const useSwapExecute = () => {
 
     signSwapTransaction();
 
-    await sendTransactionAsync(transaction);
+    const hash = await sendTransactionAsync(transaction);
+
+    setWaitHash(hash);
   }, [
     sendTransactionAsync,
     transaction,
@@ -96,7 +109,19 @@ export const useSwapExecute = () => {
     signSwapTransaction,
     approveToken,
     isApprovalNeeded,
+    setWaitHash,
   ]);
+
+  useEffect(() => {
+    if (isSwapSuccess) {
+      toast.success(`Transaction Successfull ${waitHash}`);
+      clearSwapForm();
+    }
+  }, [isSwapSuccess, waitHash, clearSwapForm]);
+
+  useEffect(() => {
+    console.log("swapTransaction", swapTransactionData);
+  }, [swapTransactionData]);
 
   return {
     isApprovalNeeded,

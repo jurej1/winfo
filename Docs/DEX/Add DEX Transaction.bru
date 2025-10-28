@@ -1,0 +1,24 @@
+meta {
+  name: Add DEX Transaction
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{api}}/swap/transactions
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+      "chainId": 1,
+      "transactionHash": "0x58c0c978b273b06927a4e69b50b99187127e997f6c6d321591f4d896b78f451f",
+      "blockHash": "0x12a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
