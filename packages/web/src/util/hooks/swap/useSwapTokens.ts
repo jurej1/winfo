@@ -1,7 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, UseQueryOptions } from "@tanstack/react-query";
 import { getSwapTokensForChain } from "../../api/swap";
+import { TokenDB } from "@w-info-sst/db";
 
-export const useSwapTokens = (chainId: number) => {
+type SwapTokenOptions = UseQueryOptions<TokenDB[], Error>;
+
+export const useSwapTokens = (chainId: number, options?: SwapTokenOptions) => {
   const ONE_DAY = 24 * 60 * 60 * 1000;
 
   return useQuery({

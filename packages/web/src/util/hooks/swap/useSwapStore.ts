@@ -15,6 +15,7 @@ const initialState = {
   tokens: [] as TokenDB[],
   loadingPrice: false,
   loadingQuote: false,
+  loadingTokens: true,
 };
 
 type State = typeof initialState;
@@ -32,6 +33,7 @@ type Action = {
   resetStore: () => void;
   setLoadingPrice: (val: boolean) => void;
   setLoadingQuote: (val: boolean) => void;
+  setLoadingTokens: (val: boolean) => void;
 };
 
 export const useSwapStore = create<State & Action>((set) => ({
@@ -53,6 +55,7 @@ export const useSwapStore = create<State & Action>((set) => ({
 
   setLoadingPrice: (loadingPrice) => set({ loadingPrice }),
   setLoadingQuote: (loadingQuote) => set({ loadingQuote }),
+  setLoadingTokens: (loadingTokens) => set({ loadingTokens }),
 
   resetStore: () => set(initialState),
 }));

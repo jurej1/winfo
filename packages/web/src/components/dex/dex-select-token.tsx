@@ -12,8 +12,6 @@ import { Button } from "../ui/button";
 
 import Image from "next/image";
 import { TokenDB } from "@w-info-sst/db";
-import { useSwapTokens } from "@/util/hooks/swap/useSwapTokens";
-import { useAccount } from "wagmi";
 import { useSwapStore } from "@/util/hooks/swap/useSwapStore";
 
 type Props = {
@@ -24,7 +22,7 @@ type Props = {
 export function DexSelectToken({ token, onSetToken }: Props) {
   const [open, setOpen] = useState<boolean>(false);
 
-  const { tokens } = useSwapStore();
+  const { tokens, loadingTokens } = useSwapStore();
 
   const handleOnPressed = useCallback(
     (token: TokenDB) => {
@@ -36,7 +34,7 @@ export function DexSelectToken({ token, onSetToken }: Props) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
+      <DialogTrigger asChild disabled={loadingTokens}>
         {!token ? (
           <Button>Select Token</Button>
         ) : (

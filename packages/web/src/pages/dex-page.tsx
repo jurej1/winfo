@@ -9,6 +9,7 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
+import { Spinner } from "@/components/ui/spinner";
 
 import { useSwap } from "@/util/hooks/swap/useSwap";
 import { useEffect } from "react";
@@ -24,6 +25,7 @@ export function DexPage() {
     setBuyToken,
     setSellToken,
     resetStore,
+    loadingTokens,
   } = useSwap();
 
   // CLEANUP on DISPOSE
@@ -34,7 +36,13 @@ export function DexPage() {
   return (
     <div className="mx-auto my-3 max-w-7xl">
       <Card className="mx-auto max-w-xl">
-        <CardHeader className="text-xl font-bold">Swap</CardHeader>
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <span className="text-xl font-bold">Swap</span>
+
+            {loadingTokens && <Spinner />}
+          </div>
+        </CardHeader>
 
         <CardContent className="flex flex-col gap-2">
           <DexCardInput

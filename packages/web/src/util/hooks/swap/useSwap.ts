@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useAccount } from "wagmi";
 import { useSwapStore } from "./useSwapStore";
-import { formatEther } from "viem";
 
 import { useSwapPrice } from "./useSwapPrice";
 import { useSwapTokens } from "./useSwapTokens";
@@ -27,11 +26,13 @@ export const useSwap = () => {
     setQuote,
     setLoadingPrice,
     setLoadingQuote,
+    setLoadingTokens,
   } = store;
 
   useEffect(() => {
     if (tokensListData) {
       setTokens(tokensListData);
+      setLoadingTokens(false);
 
       const native = tokensListData.find((t) => t.native);
       setSellToken(native);
