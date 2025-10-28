@@ -3,22 +3,24 @@
 import { useSwapStore } from "@/util/hooks/swap/useSwapStore";
 import { useMemo } from "react";
 import { useAccount } from "wagmi";
+import { formatUnits } from "viem";
 
 export function DexNetworkCost() {
   const { chain } = useAccount();
 
-  const { price } = useSwapStore();
-
-  if (!price || !chain) return <></>;
-
-  const { totalNetworkFee } = price;
+  const totalNetworkFee = useSwapStore((state) => state.price?.totalNetworkFee);
 
   const formattedAmount = useMemo(() => {
-    const { decimals, symbol } = chain.nativeCurrency;
-    const amount = +totalNetworkFee / Math.pow(10, decimals);
+    if (!totalNetworkFee || !chain?.nativeCurrency) return null;
 
-    return `${amount} ${symbol}`;
-  }, [chain.nativeCurrency, totalNetworkFee]);
+    const { decimals, symbol } = chain.nativeCurrency;
+
+    const amountString = formatUnits(BigInt(totalNetworkFee), decimals);
+
+    return `${amountString} ${symbol}`;
+  }, [totalNetworkFee, chain?.nativeCurrency]);
+
+  if (!formattedAmount) return <></>;
 
   return (
     <div className="flex w-full justify-between">

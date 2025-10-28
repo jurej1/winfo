@@ -6,12 +6,12 @@ import { CollapsibleTrigger } from "@radix-ui/react-collapsible";
 import { DexNetworkCost } from "./dex-network-cost";
 
 export function DexSwapCollapsibleInfo() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   return (
     <Collapsible open={open} onOpenChange={setOpen} className="w-full">
       <CollapsibleTrigger className="w-full">
-        <div className="flex w-full justify-between bg-yellow-50 py-2">
+        <div className="flex w-full justify-between py-2">
           <span>Info</span>
         </div>
       </CollapsibleTrigger>
