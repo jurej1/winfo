@@ -3,6 +3,9 @@
 import { DexCardInput } from "@/components/dex/dex-card-input";
 import { DexConfirmSwapDialog } from "@/components/dex/dex-confirm-swap-dialog";
 import { DexSwapCollapsibleInfo } from "@/components/dex/dex-swap-collapsible-info";
+
+import { IoSwapVerticalSharp } from "react-icons/io5";
+
 import {
   Card,
   CardContent,
@@ -13,6 +16,8 @@ import { Spinner } from "@/components/ui/spinner";
 
 import { useSwap } from "@/util/hooks/swap/useSwap";
 import { useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { DexSwapTokensButton } from "@/components/dex/dex-swap-tokens-button";
 
 export function DexPage() {
   const {
@@ -44,7 +49,10 @@ export function DexPage() {
           </div>
         </CardHeader>
 
-        <CardContent className="flex flex-col gap-2">
+        <CardContent className="relative flex flex-col gap-2">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+            <DexSwapTokensButton />
+          </div>
           <DexCardInput
             title="Sell"
             token={sellToken}

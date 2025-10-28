@@ -34,6 +34,7 @@ type Action = {
   setLoadingPrice: (val: boolean) => void;
   setLoadingQuote: (val: boolean) => void;
   setLoadingTokens: (val: boolean) => void;
+  swapTokens: () => void;
 };
 
 export const useSwapStore = create<State & Action>((set) => ({
@@ -56,6 +57,12 @@ export const useSwapStore = create<State & Action>((set) => ({
   setLoadingPrice: (loadingPrice) => set({ loadingPrice }),
   setLoadingQuote: (loadingQuote) => set({ loadingQuote }),
   setLoadingTokens: (loadingTokens) => set({ loadingTokens }),
+
+  swapTokens: () =>
+    set((state) => ({
+      buyToken: state.sellToken,
+      sellToken: state.buyToken,
+    })),
 
   resetStore: () => set(initialState),
 }));
