@@ -26,7 +26,37 @@ export type GetQuote0XResponse = {
   permit2: {
     type: string;
     hash: string;
-    eip712: Record<string, never>;
+    eip712: {
+      types: {
+        PermitTransferFrom: Array<{
+          name: string;
+          type: string;
+        }>;
+        TokenPermissions: Array<{
+          name: string;
+          type: string;
+        }>;
+        EIP712Domain: Array<{
+          name: string;
+          type: string;
+        }>;
+      };
+      domain: {
+        name: string;
+        chainId: number;
+        verifyingContract: string;
+      };
+      message: {
+        permitted: {
+          token: string;
+          amount: string;
+        };
+        spender: string;
+        nonce: string;
+        deadline: string;
+      };
+      primaryType: "PermitTransferFrom";
+    };
   };
   route: {
     fills: Array<{
