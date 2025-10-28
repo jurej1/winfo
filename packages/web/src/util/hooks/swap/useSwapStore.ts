@@ -26,9 +26,10 @@ type Action = {
   setQuote: (quote?: GetQuote0XResponse) => void;
   setPrice: (price?: GetPrice0XResponse) => void;
   setTokens: (tokens: TokenDB[]) => void;
+  resetStore: () => void;
 };
 
-export const useSwapStore = create<State & Action>((set, get) => ({
+export const useSwapStore = create<State & Action>((set, get, store) => ({
   chainId: undefined,
   buyToken: undefined,
   sellToken: undefined,
@@ -47,4 +48,5 @@ export const useSwapStore = create<State & Action>((set, get) => ({
   setQuote: (quote) => set({ quote }),
   setPrice: (price) => set({ price }),
   setTokens: (tokens) => set({ tokens }),
+  resetStore: () => set(store.getInitialState()),
 }));

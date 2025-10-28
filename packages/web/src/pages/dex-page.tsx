@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/card";
 
 import { useSwap } from "@/util/hooks/swap/useSwap";
+import { useEffect } from "react";
 
 export function DexPage() {
   const {
@@ -22,7 +23,13 @@ export function DexPage() {
     setSellAmount,
     setBuyToken,
     setSellToken,
+    resetStore,
   } = useSwap();
+
+  // CLEANUP on DISPOSE
+  useEffect(() => {
+    return () => resetStore();
+  }, [resetStore]);
 
   return (
     <div className="mx-auto my-3 max-w-7xl">

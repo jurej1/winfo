@@ -44,6 +44,7 @@ export const useSwap = () => {
   }, [address, chainId, setChainId, setTaker]);
 
   const { mutate: fetchPrice } = useSwapPrice({
+    onMutate: () => {},
     onSuccess: (data) => {
       const result = formatEther(BigInt(data.buyAmount));
       setBuyAmount(result);
