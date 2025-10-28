@@ -1,0 +1,1 @@
+ALTER TABLE "dex-transactions" ALTER COLUMN "chainId" SET NOT NULL;
