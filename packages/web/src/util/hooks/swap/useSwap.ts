@@ -26,6 +26,7 @@ export const useSwap = () => {
     setSellToken,
     setQuote,
     setLoadingPrice,
+    setLoadingQuote,
   } = store;
 
   useEffect(() => {
@@ -47,21 +48,16 @@ export const useSwap = () => {
 
   const { mutate: fetchPrice } = useSwapPrice({
     onMutate: () => setLoadingPrice(true),
-
     onSuccess: (data) => {
-      const result = formatEther(BigInt(data.buyAmount));
-      setBuyAmount(result);
+      setBuyAmount(data.buyAmount);
       setPrice(data);
       setLoadingPrice(false);
     },
   });
 
   const { mutate: fetchQuote } = useSwapQuote({
-    onMutate: () => setLoadingPrice(true),
-    onSuccess: (data) => {
-      setQuote(data);
-      setLoadingPrice(false);
-    },
+    onMutate: () => setLoadingQuote(true),
+    onSuccess: (data) => (setQuote(data), setLoadingQuote(false)),
   });
 
   useEffect(() => {

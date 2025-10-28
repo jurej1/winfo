@@ -1,7 +1,7 @@
 import { TokenDB } from "@w-info-sst/db";
 import { create } from "zustand";
 import { GetPrice0XResponse, GetQuote0XResponse } from "@w-info-sst/types";
-import { Address } from "viem";
+import { Address, formatEther } from "viem";
 
 const initialState = {
   chainId: undefined as number | undefined,
@@ -14,6 +14,7 @@ const initialState = {
   price: undefined as GetPrice0XResponse | undefined,
   tokens: [] as TokenDB[],
   loadingPrice: false,
+  loadingQuote: false,
 };
 
 type State = typeof initialState;
@@ -24,12 +25,13 @@ type Action = {
   setSellToken: (sellToken?: TokenDB) => void;
   setSellAmount: (sellAmount: string) => void;
   setBuyAmount: (buyAmount: string) => void;
-  setTaker: (taker?: `0x${string}`) => void;
+  setTaker: (taker?: Address) => void;
   setQuote: (quote?: GetQuote0XResponse) => void;
   setPrice: (price?: GetPrice0XResponse) => void;
   setTokens: (tokens: TokenDB[]) => void;
   resetStore: () => void;
   setLoadingPrice: (val: boolean) => void;
+  setLoadingQuote: (val: boolean) => void;
 };
 
 export const useSwapStore = create<State & Action>((set) => ({
@@ -39,13 +41,18 @@ export const useSwapStore = create<State & Action>((set) => ({
   setBuyToken: (buyToken) => set({ buyToken }),
   setSellToken: (sellToken) => set({ sellToken }),
   setSellAmount: (sellAmount) => set({ sellAmount }),
-  setBuyAmount: (buyAmount) => set({ buyAmount }),
+  setBuyAmount: (buyAmount) => {
+    const result = formatEther(BigInt(buyAmount));
+
+    set({ buyAmount: result });
+  },
   setTaker: (taker) => set({ taker }),
   setQuote: (quote) => set({ quote }),
   setPrice: (price) => set({ price }),
   setTokens: (tokens) => set({ tokens }),
 
-  setLoadingPrice: (val) => set({ loadingPrice: val }),
+  setLoadingPrice: (loadingPrice) => set({ loadingPrice }),
+  setLoadingQuote: (loadingQuote) => set({ loadingQuote }),
 
   resetStore: () => set(initialState),
 }));
