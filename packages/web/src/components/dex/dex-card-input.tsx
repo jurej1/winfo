@@ -67,8 +67,7 @@ export function DexCardInput({
         />
         <DexSelectToken token={token} onSetToken={onSetToken} />
       </div>
-      <div className="flex items-center justify-between">
-        <span></span>
+      <div className="flex items-center justify-end">
         <span>
           {token && formattedValue} {token && balance?.symbol}
         </span>

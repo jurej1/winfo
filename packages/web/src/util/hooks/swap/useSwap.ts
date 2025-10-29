@@ -67,7 +67,6 @@ export const useSwap = () => {
     if (!(Number(sellAmount) > 0)) return;
 
     const handler = setTimeout(() => {
-      console.log("fetchPrice invoked");
       const sellAmountInWei = BigInt(
         Math.floor(parseFloat(sellAmount) * Math.pow(10, sellToken.decimals)),
       );
@@ -85,7 +84,15 @@ export const useSwap = () => {
     }, 500);
 
     return () => clearTimeout(handler);
-  }, [sellAmount, chainId, address, fetchPrice, fetchQuote, sellToken]);
+  }, [
+    sellAmount,
+    chainId,
+    address,
+    fetchPrice,
+    fetchQuote,
+    sellToken,
+    buyToken,
+  ]);
 
   return {
     ...store,
