@@ -39,7 +39,7 @@ export function DexPage() {
   }, [resetStore]);
 
   return (
-    <div className="mx-auto my-3 max-w-7xl">
+    <div className="mx-auto my-3 flex max-w-7xl">
       <Card className="mx-auto max-w-xl">
         <CardHeader>
           <div className="flex items-center justify-between">
