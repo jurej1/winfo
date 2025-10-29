@@ -6,6 +6,7 @@ import { TokenDBwithPrice } from "@w-info-sst/db";
 import { useFormattedBigNumber } from "@/util/formatter/useFormattedBigNumber";
 import { NumberType } from "@/util/formatter/types";
 import { useMemo } from "react";
+import { useSwapStore } from "@/util/hooks/swap/useSwapStore";
 
 type Props = {
   title: string;
@@ -57,12 +58,15 @@ export function DexCardInput({
     return `$${totalUsd.toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
   }, [value, token?.priceUsd]);
 
+  const isLoadingTokens = useSwapStore((store) => store.loadingTokens);
+
   return (
     <div className="flex flex-col gap-2 rounded-2xl bg-blue-200/20 p-4">
       <p className="text-md text-gray-400">{title}</p>
 
       <div className="flex items-center gap-4">
         <Input
+          disabled={isLoadingTokens}
           key={token?.address}
           type={isNumberInput ? "number" : undefined}
           className="border-none text-black shadow-none focus-visible:border-none focus-visible:ring-0"

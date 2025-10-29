@@ -16,6 +16,8 @@ import {
   numberToHex,
   size,
   maxUint256,
+  UserRejectedRequestError,
+  TransactionExecutionError,
 } from "viem";
 import { SignTypedDataVariables } from "wagmi/query";
 import { toast } from "sonner";
@@ -85,19 +87,28 @@ export const useSwapExecute = () => {
       transaction.data,
     );
 
-    transaction.data = newData;
+    return newData;
   }, [transaction, permit2, signTypedDataAsync]);
 
   const executeSwapTransaction = useCallback(async () => {
     if (!transaction) return;
 
-    if (isApprovalNeeded) await approvePermit2ForSpending();
+    try {
+      if (isApprovalNeeded) await approvePermit2ForSpending();
 
-    signSwapTransaction();
+      const data = await signSwapTransaction();
 
-    const hash = await sendTransactionAsync(transaction);
+      const hash = await sendTransactionAsync({ ...transaction, data });
+      setWaitHash(hash);
+    } catch (err) {
+      const isDenied =
+        err instanceof UserRejectedRequestError ||
+        err instanceof TransactionExecutionError;
 
-    setWaitHash(hash);
+      if (isDenied) {
+        toast.error("Denied 😭");
+      }
+    }
   }, [
     sendTransactionAsync,
     transaction,
