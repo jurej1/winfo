@@ -31,11 +31,6 @@ api.route("POST /wallet", {
   link,
 });
 
-api.route("GET /wallet/{address}/upload-url", {
-  handler: "packages/functions/src/wallet/upload-url/get.handler",
-  link,
-});
-
 api.route("GET /wallet/{address}/net-worth-history", {
   handler: "packages/functions/src/wallet/net-worth-history/get.handler",
   link,

@@ -17,10 +17,6 @@ declare module "sst" {
       "type": "sst.sst.Secret"
       "value": string
     }
-    "ImagesBucket": {
-      "name": string
-      "type": "sst.aws.Bucket"
-    }
     "MoralisAPIKey": {
       "type": "sst.sst.Secret"
       "value": string
