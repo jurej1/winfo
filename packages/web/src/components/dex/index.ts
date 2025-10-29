@@ -9,3 +9,4 @@ export * from "./dex-swap-collapsible-info";
 export * from "./dex-swap-tokens-button";
 export * from "./dex-token-select-row";
 export * from "./dex-card-header";
+export * from "./dex-token-value-comparison";

@@ -4,10 +4,10 @@ import {
   DexSellCard,
   DexSwapTokensButton,
   DexCardHeader,
-  DexCardInput,
   DexConfirmSwapDialog,
   DexSwapCollapsibleInfo,
   DexBuyCard,
+  DexTokenValueComparison,
 } from "@/components/dex";
 
 import {
@@ -45,8 +45,9 @@ export function DexPage() {
             <DexSellCard />
             <DexBuyCard />
           </CardContent>
-          <CardFooter className="flex flex-col">
+          <CardFooter className="flex flex-col items-start gap-2">
             <DexConfirmSwapDialog />
+            <DexTokenValueComparison />
             <DexSwapCollapsibleInfo />
           </CardFooter>
         </Card>
