@@ -16,7 +16,7 @@ import { Spinner } from "../ui/spinner";
 export function DexRecentTransactions() {
   const { chainId } = useAccount();
 
-  const { data, isLoading, isError } = useSwapRecentTransactions(chainId);
+  const { data, isLoading } = useSwapRecentTransactions(chainId);
 
   return (
     <div className="flex flex-col">

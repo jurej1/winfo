@@ -3,11 +3,10 @@
 import { DexTransactionDB } from "@w-info-sst/db";
 import { TableCell, TableRow } from "../ui/table";
 import { useAccount, useTransactionReceipt } from "wagmi";
-import { Address, formatEther } from "viem"; // Import formatEther for formatting gas fees
+import { Address, formatEther } from "viem";
 import { shortenAddress } from "@/lib/shorten-address";
 import { FaCheck } from "react-icons/fa";
 import { ImCross } from "react-icons/im";
-import { Progress } from "@/components/ui/progress"; // 👈 Import Progress
 
 type Props = {
   tx: DexTransactionDB;

@@ -2,13 +2,8 @@
 
 import { useNftCollectionMetadata } from "@/util/hooks/useNftCollectionMetadata";
 import { Button } from "./ui/button";
-import { Address } from "viem";
 
-type Props = {
-  address: Address;
-};
-
-export function NftCollectionMetadata({ address }: Props) {
+export function NftCollectionMetadata() {
   const {
     data: metadata,
     isLoading,

@@ -1,5 +1,4 @@
 import { FullNftData, NftMetadata } from "@w-info-sst/types";
-import Image from "next/image";
 
 type Props = {
   nft: FullNftData;

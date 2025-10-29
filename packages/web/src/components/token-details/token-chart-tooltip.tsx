@@ -3,7 +3,7 @@ import { OHLCDaysFilter, OHLCItem } from "@w-info-sst/types";
 
 interface CustomTooltipProps {
   active?: boolean;
-  payload?: any[];
+  payload?: Array<{ payload: OHLCItem }>;
   label?: number;
   timeframe: OHLCDaysFilter;
 }

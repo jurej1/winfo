@@ -3,8 +3,7 @@
 import { useSwapStore } from "@/util/hooks/swap/useSwapStore";
 import { Button } from "../ui/button";
 import { formatCurrency } from "@coingecko/cryptoformat";
-import { useCallback, useMemo, useState } from "react";
-import { useCall } from "wagmi";
+import { useCallback, useState } from "react";
 
 export function DexTokenValueComparison() {
   const [showSell, setShowSell] = useState(true);

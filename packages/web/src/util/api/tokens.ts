@@ -16,7 +16,7 @@ export const fetchTokenOHLC = async (coin: string, days: OHLCDaysFilter) => {
 
   const rawData = await response.json();
 
-  return rawData.map((d: any) => ({
+  return rawData.map((d: [number, number, number, number, number]) => ({
     date: d[0],
     open: d[1],
     high: d[2],

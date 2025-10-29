@@ -5,7 +5,6 @@ import { DexSelectToken } from "./dex-select-token";
 import { TokenDBwithPrice } from "@w-info-sst/db";
 import { useFormattedBigNumber } from "@/util/formatter/useFormattedBigNumber";
 import { NumberType } from "@/util/formatter/types";
-import { useMemo } from "react";
 import { useSwapStore } from "@/util/hooks/swap/useSwapStore";
 import { useSwapTokenUsdPrice } from "@/util/hooks/swap/util/useSwapTokenUsdPrice";
 import { Skeleton } from "../ui/skeleton";
