@@ -8,6 +8,7 @@ import { NumberType } from "@/util/formatter/types";
 import { useMemo } from "react";
 import { useSwapStore } from "@/util/hooks/swap/useSwapStore";
 import { useSwapTokenUsdPrice } from "@/util/hooks/swap/util/useSwapTokenUsdPrice";
+import { Skeleton } from "../ui/skeleton";
 
 type Props = {
   title: string;
@@ -17,6 +18,7 @@ type Props = {
   value: string;
   readonly?: boolean;
   isNumberInput?: boolean;
+  isLoading?: boolean;
 };
 
 export function DexCardInput({
@@ -26,6 +28,7 @@ export function DexCardInput({
   value,
   onSetToken,
   readonly,
+  isLoading = false,
   isNumberInput = false,
 }: Props) {
   const { chainId, address } = useAccount();
@@ -58,23 +61,27 @@ export function DexCardInput({
     <div className="flex flex-col gap-2 rounded-2xl bg-blue-200/20 p-4">
       <p className="text-md text-gray-400">{title}</p>
 
-      <div className="flex items-center gap-4">
-        <Input
-          disabled={isLoadingTokens}
-          key={token?.address}
-          type={isNumberInput ? "number" : undefined}
-          className="border-none text-black shadow-none focus-visible:border-none focus-visible:ring-0"
-          placeholder="0.0"
-          value={value}
-          style={{
-            fontSize: 28,
-          }}
-          onChange={(event) => {
-            const val = event.target.value;
-            onValChanged(val);
-          }}
-          readOnly={readonly}
-        />
+      <div className="flex items-center justify-between gap-4">
+        {isLoading ? (
+          <Skeleton className="h-8 w-40 rounded-full bg-gray-300" />
+        ) : (
+          <Input
+            disabled={isLoadingTokens}
+            key={token?.address}
+            type={isNumberInput ? "number" : undefined}
+            className="border-none text-black shadow-none focus-visible:border-none focus-visible:ring-0"
+            placeholder="0.0"
+            value={value}
+            style={{
+              fontSize: 28,
+            }}
+            onChange={(event) => {
+              const val = event.target.value;
+              onValChanged(val);
+            }}
+            readOnly={readonly}
+          />
+        )}
         <DexSelectToken token={token} onSetToken={onSetToken} />
       </div>
       {token && (

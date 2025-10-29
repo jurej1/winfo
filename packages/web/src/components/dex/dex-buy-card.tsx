@@ -8,6 +8,10 @@ import { NumberType } from "@/util/formatter/types";
 export function DexBuyCard() {
   const { buyAmount, buyToken, setBuyAmount, setBuyToken } = useSwapStore();
 
+  const isLoading = useSwapStore(
+    (store) => store.loadingPrice || store.loadingQuote,
+  );
+
   const formattedBuyAmount = useFormattedBigNumber({
     decimals: buyToken?.decimals,
     value: BigInt(buyAmount),
@@ -22,6 +26,7 @@ export function DexBuyCard() {
       onSetToken={setBuyToken}
       onValChanged={setBuyAmount}
       readonly
+      isLoading={isLoading}
     />
   );
 }
