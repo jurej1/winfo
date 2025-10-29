@@ -4,6 +4,8 @@ import { formatCurrency } from "@coingecko/cryptoformat";
 
 import { DexSelectToken } from "./dex-select-token";
 import { TokenDB } from "@w-info-sst/db";
+import { useFormattedBigNumber } from "@/util/formatter/useFormattedBigNumber";
+import { NumberType } from "@/util/formatter/types";
 
 type Props = {
   title: string;
@@ -12,6 +14,7 @@ type Props = {
   onSetToken: (token: TokenDB) => void;
   value: string;
   readonly?: boolean;
+  isNumberInput?: boolean;
 };
 
 export function DexCardInput({
@@ -21,6 +24,7 @@ export function DexCardInput({
   value,
   onSetToken,
   readonly,
+  isNumberInput = false,
 }: Props) {
   const { chainId, address } = useAccount();
 
@@ -31,14 +35,15 @@ export function DexCardInput({
     address: address,
     token: tokenAddress,
     query: {
-      refetchInterval: 1000 * 30,
+      refetchInterval: 1000 * 10, // 10sec
     },
   });
 
-  const formattedAmount = formatCurrency(
-    Number(balance?.formatted),
-    balance?.symbol ?? "",
-  );
+  const formattedValue = useFormattedBigNumber({
+    decimals: balance?.decimals,
+    value: balance?.value,
+    type: NumberType.TokenTx,
+  });
 
   return (
     <div className="flex flex-col gap-2 rounded-2xl bg-blue-200/20 p-4">
@@ -47,7 +52,7 @@ export function DexCardInput({
       <div className="flex items-center gap-4">
         <Input
           key={token?.address}
-          type="number"
+          type={isNumberInput ? "number" : undefined}
           className="border-none text-black shadow-none focus-visible:border-none focus-visible:ring-0"
           placeholder="0.0"
           value={value}
@@ -64,7 +69,9 @@ export function DexCardInput({
       </div>
       <div className="flex items-center justify-between">
         <span></span>
-        <span>{token && formattedAmount}</span>
+        <span>
+          {token && formattedValue} {token && balance?.symbol}
+        </span>
       </div>
     </div>
   );

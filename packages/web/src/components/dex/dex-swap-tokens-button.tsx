@@ -1,3 +1,5 @@
+"use client";
+
 import { IoSwapVerticalSharp } from "react-icons/io5";
 import { Button } from "../ui/button";
 import { useSwapStore } from "@/util/hooks/swap/useSwapStore";

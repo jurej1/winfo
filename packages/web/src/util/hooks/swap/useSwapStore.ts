@@ -46,9 +46,7 @@ export const useSwapStore = create<State & Action>((set) => ({
   setSellToken: (sellToken) => set({ sellToken }),
   setSellAmount: (sellAmount) => set({ sellAmount }),
   setBuyAmount: (buyAmount) => {
-    const result = formatEther(BigInt(buyAmount));
-
-    set({ buyAmount: result });
+    set({ buyAmount: buyAmount });
   },
   setTaker: (taker) => set({ taker }),
   setQuote: (quote) => set({ quote }),

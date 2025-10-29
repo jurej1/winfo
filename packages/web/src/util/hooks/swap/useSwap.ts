@@ -85,14 +85,7 @@ export const useSwap = () => {
     }, 500);
 
     return () => clearTimeout(handler);
-  }, [
-    sellToken?.address,
-    sellAmount,
-    buyToken?.address,
-    chainId,
-    address,
-    fetchPrice,
-  ]);
+  }, [sellAmount, chainId, address, fetchPrice, fetchQuote, sellToken]);
 
   return {
     ...store,
