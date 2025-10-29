@@ -25,6 +25,11 @@ api.route("POST /swap/transactions", {
   link,
 });
 
+api.route("GET /swap/recent", {
+  handler: "packages/functions/src/swap/recent-transactions/get.handler",
+  link,
+});
+
 // WALLET
 api.route("POST /wallet", {
   handler: "packages/functions/src/wallet/add/post.handler",

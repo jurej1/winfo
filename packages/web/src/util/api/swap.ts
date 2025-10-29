@@ -76,3 +76,5 @@ export const addSwapTransaction = async (tx: InsertDexTransactionDB) => {
 
   return response;
 };
+
+export const getRecentTransactions = async () => {};
