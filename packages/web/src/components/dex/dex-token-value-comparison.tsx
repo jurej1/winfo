@@ -49,7 +49,7 @@ export function DexTokenValueComparison() {
   return (
     <Button
       variant="link"
-      className="px-0"
+      className="cursor-pointer px-0"
       onClick={() => setShowSell((prev) => !prev)}
     >
       1 {tokenSymbolLeading()} = {sellTokenAmount()} {tokenSymbolTrailing()}
