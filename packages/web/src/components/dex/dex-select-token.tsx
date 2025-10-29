@@ -13,12 +13,12 @@ import { DexTokenSelectRow } from "./dex-token-select-row";
 import { Button } from "../ui/button";
 
 import Image from "next/image";
-import { TokenDB } from "@w-info-sst/db";
+import { TokenDBwithPrice } from "@w-info-sst/db";
 import { useSwapStore } from "@/util/hooks/swap/useSwapStore";
 
 type Props = {
-  token?: TokenDB;
-  onSetToken: (token: TokenDB) => void;
+  token?: TokenDBwithPrice;
+  onSetToken: (token: TokenDBwithPrice) => void;
 };
 
 export function DexSelectToken({ token, onSetToken }: Props) {
@@ -27,7 +27,7 @@ export function DexSelectToken({ token, onSetToken }: Props) {
   const { tokens, loadingTokens } = useSwapStore();
 
   const handleOnPressed = useCallback(
-    (token: TokenDB) => {
+    (token: TokenDBwithPrice) => {
       setOpen((prev) => !prev);
       onSetToken(token);
     },

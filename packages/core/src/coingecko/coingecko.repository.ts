@@ -135,12 +135,33 @@ export class CoingeckoRepository {
       exchange_ids: "binance",
     }).toString();
 
-    const url = `https://api.coingecko.com/api/v3/coins/${id}/tickers?${searchParams}`;
+    const url = `${this.API_URL}/coins/${id}/tickers?${searchParams}`;
 
     const response = await fetch(url, { headers: this.headers });
 
     const data = await response.json();
 
     return data;
+  }
+
+  static async getCoinPriceDexByAddresses(
+    network: string,
+    addresses: string[],
+  ) {
+    const pathTokens = addresses.join(",");
+
+    const url = `${this.API_URL}/onchain/networks/${network}/tokens/multi/${pathTokens}`;
+
+    const response = await fetch(url, { headers: this.headers });
+
+    const body = (await response.json()) as {
+      data: {
+        attributes: {
+          price_usd: number;
+        };
+      }[];
+    };
+
+    return body.data.map((t) => t.attributes.price_usd);
   }
 }

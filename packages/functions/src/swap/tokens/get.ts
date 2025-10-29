@@ -1,8 +1,8 @@
 import middy from "@middy/core";
 import validator from "@middy/validator";
 import { transpileSchema } from "@middy/validator/transpile";
-import { httpLambdaMiddleware } from "@w-info-sst/core";
-import { getTokensByChainId } from "@w-info-sst/db";
+import { CoingeckoRepository, httpLambdaMiddleware } from "@w-info-sst/core";
+import { getTokensByChainId, TokenDBwithPrice } from "@w-info-sst/db";
 import { ApiGwRequest } from "@w-info-sst/types";
 
 const schema = {
@@ -32,9 +32,23 @@ const baseHandler = async (
 
   const response = await getTokensByChainId(chain);
 
+  const tokenAddresses = response.map((token) => {
+    const nativeCoingecko = "0x0000000000000000000000000000000000000000";
+    return token.native ? nativeCoingecko : token.address;
+  });
+
+  const prices = await CoingeckoRepository.getCoinPriceDexByAddresses(
+    "bsc",
+    tokenAddresses,
+  );
+
+  const mappedTokens = response.map((token, index) => {
+    return { ...token, priceUsd: prices[index] } as TokenDBwithPrice;
+  });
+
   return {
     statusCode: 200,
-    body: response,
+    body: mappedTokens,
   };
 };
 

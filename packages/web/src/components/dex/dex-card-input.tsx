@@ -1,17 +1,17 @@
 import { Input } from "../ui/input";
 import { useAccount, useBalance } from "wagmi";
-import { formatCurrency } from "@coingecko/cryptoformat";
 
 import { DexSelectToken } from "./dex-select-token";
-import { TokenDB } from "@w-info-sst/db";
+import { TokenDBwithPrice } from "@w-info-sst/db";
 import { useFormattedBigNumber } from "@/util/formatter/useFormattedBigNumber";
 import { NumberType } from "@/util/formatter/types";
+import { useMemo } from "react";
 
 type Props = {
   title: string;
-  token?: TokenDB;
+  token?: TokenDBwithPrice;
   onValChanged: (val: string) => void;
-  onSetToken: (token: TokenDB) => void;
+  onSetToken: (token: TokenDBwithPrice) => void;
   value: string;
   readonly?: boolean;
   isNumberInput?: boolean;
@@ -45,6 +45,18 @@ export function DexCardInput({
     type: NumberType.TokenTx,
   });
 
+  const usdPrice = useMemo(() => {
+    if (!token?.priceUsd || !value) return "0.00";
+
+    const valNumber = Number(value);
+    const tokenPrice = Number(token.priceUsd);
+
+    if (isNaN(valNumber) || isNaN(tokenPrice)) return "0.00";
+
+    const totalUsd = valNumber * tokenPrice;
+    return `$${totalUsd.toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
+  }, [value, token?.priceUsd]);
+
   return (
     <div className="flex flex-col gap-2 rounded-2xl bg-blue-200/20 p-4">
       <p className="text-md text-gray-400">{title}</p>
@@ -67,11 +79,14 @@ export function DexCardInput({
         />
         <DexSelectToken token={token} onSetToken={onSetToken} />
       </div>
-      <div className="flex items-center justify-end">
-        <span>
-          {token && formattedValue} {token && balance?.symbol}
-        </span>
-      </div>
+      {token && (
+        <div className="flex items-center justify-between text-gray-400">
+          <span>{usdPrice}</span>
+          <span>
+            {formattedValue} {balance?.symbol}
+          </span>
+        </div>
+      )}
     </div>
   );
 }
