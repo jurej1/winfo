@@ -7,6 +7,7 @@ import { useFormattedBigNumber } from "@/util/formatter/useFormattedBigNumber";
 import { NumberType } from "@/util/formatter/types";
 import { useMemo } from "react";
 import { useSwapStore } from "@/util/hooks/swap/useSwapStore";
+import { useSwapTokenUsdPrice } from "@/util/hooks/swap/util/useSwapTokenUsdPrice";
 
 type Props = {
   title: string;
@@ -46,17 +47,10 @@ export function DexCardInput({
     type: NumberType.TokenTx,
   });
 
-  const usdPrice = useMemo(() => {
-    if (!token?.priceUsd || !value) return "0.00";
-
-    const valNumber = Number(value);
-    const tokenPrice = Number(token.priceUsd);
-
-    if (isNaN(valNumber) || isNaN(tokenPrice)) return "0.00";
-
-    const totalUsd = valNumber * tokenPrice;
-    return `$${totalUsd.toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
-  }, [value, token?.priceUsd]);
+  const usdPrice = useSwapTokenUsdPrice({
+    price: token?.priceUsd,
+    value,
+  });
 
   const isLoadingTokens = useSwapStore((store) => store.loadingTokens);
 
