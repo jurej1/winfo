@@ -9,18 +9,6 @@ declare module "sst" {
       "type": "sst.sst.Secret"
       "value": string
     }
-    "CoinGeckoAPIKey": {
-      "type": "sst.sst.Secret"
-      "value": string
-    }
-    "DatabaseUrl": {
-      "type": "sst.sst.Secret"
-      "value": string
-    }
-    "MoralisAPIKey": {
-      "type": "sst.sst.Secret"
-      "value": string
-    }
     "ReownProjectID": {
       "type": "sst.sst.Secret"
       "value": string

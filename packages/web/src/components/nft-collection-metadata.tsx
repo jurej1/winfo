@@ -1,6 +1,6 @@
 "use client";
 
-import { useNftCollectionMetadata } from "@/util/api/hooks/useNftCollectionMetadata";
+import { useNftCollectionMetadata } from "@/util/hooks/useNftCollectionMetadata";
 import { Button } from "./ui/button";
 import { Address } from "viem";
 

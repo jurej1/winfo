@@ -1,6 +1,6 @@
 "use client";
 
-import { useNftCollectionSalePrices } from "@/util/api/hooks/useNftCollectionSalePrices";
+import { useNftCollectionSalePrices } from "@/util/hooks/useNftCollectionSalePrices";
 import { Address } from "viem";
 
 type Props = {
