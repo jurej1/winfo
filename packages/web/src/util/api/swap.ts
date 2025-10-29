@@ -6,6 +6,7 @@ import {
 } from "@w-info-sst/types";
 
 import {
+  DexTransactionDB,
   InsertDexTransactionDB,
   TokenDB,
   TokenDBwithPrice,
@@ -77,4 +78,12 @@ export const addSwapTransaction = async (tx: InsertDexTransactionDB) => {
   return response;
 };
 
-export const getRecentTransactions = async () => {};
+export const getRecentDexTransactions = async (chain: number) => {
+  const url = `${API}/swap/recent?chain=${chain}`;
+
+  const response = await fetch(url);
+
+  const body = await response.json();
+
+  return body as DexTransactionDB[];
+};

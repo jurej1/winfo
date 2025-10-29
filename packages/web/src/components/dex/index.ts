@@ -10,3 +10,5 @@ export * from "./dex-swap-tokens-button";
 export * from "./dex-token-select-row";
 export * from "./dex-card-header";
 export * from "./dex-token-value-comparison";
+export * from "./dex-recent-transactions";
+export * from "./dex-recent-transaction-row";
