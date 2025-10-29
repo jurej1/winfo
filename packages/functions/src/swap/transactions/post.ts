@@ -1,4 +1,6 @@
 import middy from "@middy/core";
+import httpJsonBodyParser from "@middy/http-json-body-parser";
+import validator from "@middy/validator";
 import { transpileSchema } from "@middy/validator/transpile";
 import { httpLambdaMiddleware } from "@w-info-sst/core";
 import { addDexTransaction, InsertDexTransactionDB } from "@w-info-sst/db";
@@ -29,12 +31,7 @@ const baseHandler = async (
 ) => {
   const transaction = event.body;
 
-  console.log("transaction", transaction);
-
-  const response = await addDexTransaction({
-    transactionHash: transaction.transactionHash,
-    chainId: transaction.chainId,
-  });
+  const response = await addDexTransaction(transaction);
 
   return {
     statusCode: 200,
@@ -42,4 +39,7 @@ const baseHandler = async (
   };
 };
 
-export const handler = middy(baseHandler).use(httpLambdaMiddleware());
+export const handler = middy(baseHandler)
+  .use(httpLambdaMiddleware())
+  .use(httpJsonBodyParser())
+  .use(validator({ eventSchema }));

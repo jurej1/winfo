@@ -5,7 +5,11 @@ import {
   GetQuote0XResponse,
 } from "@w-info-sst/types";
 
-import { TokenDB, TokenDBwithPrice } from "@w-info-sst/db";
+import {
+  InsertDexTransactionDB,
+  TokenDB,
+  TokenDBwithPrice,
+} from "@w-info-sst/db";
 
 const API = process.env.NEXT_PUBLIC_API_URL;
 
@@ -57,4 +61,18 @@ export const getSwapTokensForChain = async (chain: number) => {
   const body = await response.json();
 
   return body as TokenDBwithPrice[];
+};
+
+export const addSwapTransaction = async (tx: InsertDexTransactionDB) => {
+  const url = `${API}/swap/transactions`;
+
+  const response = await fetch(url, {
+    body: JSON.stringify(tx),
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  return response;
 };

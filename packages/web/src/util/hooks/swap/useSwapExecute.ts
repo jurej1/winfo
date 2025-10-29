@@ -22,6 +22,7 @@ import {
 import { SignTypedDataVariables } from "wagmi/query";
 import { toast } from "sonner";
 import { attachSignatureToTransactionData } from "./actions/attach-signature-to-transaction-data";
+import { useSwapAddTransaction } from "./useSwapAddTransaction";
 
 const PERMIT2_SPENDER: Address = "0x000000000022d473030f116ddee9f6b43ac78ba3";
 
@@ -39,9 +40,12 @@ export const useSwapExecute = () => {
   const allowanceIssue = useSwapStore(
     (state) => state.price?.issues?.allowance,
   );
+
   const loading = useSwapStore(
     (state) => state.loadingPrice || state.loadingQuote,
   );
+
+  const { mutateAsync: sendTransactionToDB } = useSwapAddTransaction();
 
   // After hash
   const { isSuccess: isSwapSuccess, data: swapTransactionData } =
@@ -123,12 +127,12 @@ export const useSwapExecute = () => {
     if (isSwapSuccess) {
       toast.success(`Transaction Successfull ${waitHash}`);
       clearSwapForm();
-    }
-  }, [isSwapSuccess, waitHash, clearSwapForm]);
 
-  useEffect(() => {
-    console.log("swapTransaction", swapTransactionData);
-  }, [swapTransactionData]);
+      const { chainId, transactionHash, blockHash } = swapTransactionData;
+
+      sendTransactionToDB({ chainId, transactionHash, blockHash });
+    }
+  }, [isSwapSuccess, waitHash, clearSwapForm, sendTransactionToDB]);
 
   return {
     isApprovalNeeded,
