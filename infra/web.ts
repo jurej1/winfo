@@ -6,6 +6,10 @@ export const webapp = new sst.aws.StaticSite("WebApp", {
   dev: {
     command: "npm run dev",
   },
+  build: {
+    output: "out",
+    command: "npm run build",
+  },
   environment: {
     NEXT_PUBLIC_API_URL: api.url,
     NEXT_PUBLIC_REOWN_PROJECT_ID: reownProjectID.value,
