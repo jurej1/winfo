@@ -36,7 +36,7 @@ export function DexSelectToken({ token, onSetToken }: Props) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild disabled={loadingTokens}>
+      <DialogTrigger asChild disabled={loadingTokens} className="h-10 w-30">
         {!token ? (
           <Button>Select Token</Button>
         ) : (
@@ -48,6 +48,7 @@ export function DexSelectToken({ token, onSetToken }: Props) {
                 width={20}
                 alt={token.symbol}
                 draggable={false}
+                referrerPolicy="no-referrer"
               />
               <p>{token.symbol}</p>
             </div>

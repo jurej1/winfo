@@ -22,6 +22,7 @@ export function DexTokenSelectRow({ token, onPressed }: Props) {
             width={30}
             height={30}
             className="object-contain"
+            referrerPolicy="no-referrer"
           />
         )}
         <div className="flex flex-col items-start">

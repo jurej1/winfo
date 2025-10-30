@@ -1,3 +1,5 @@
+"use client";
+
 import { Input } from "../ui/input";
 import { useAccount, useBalance } from "wagmi";
 
@@ -10,7 +12,8 @@ import { useSwapTokenUsdPrice } from "@/util/hooks/swap/util/useSwapTokenUsdPric
 import { Skeleton } from "../ui/skeleton";
 import { cn } from "@/lib/utils";
 import { DexTokenAmountSelector } from "./dex-token-amount-selector";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { DexAdditionalTokensDisplayer } from "./dex-additional-tokens-displayer";
 
 type Props = {
   title: string;
@@ -23,6 +26,7 @@ type Props = {
   isLoading?: boolean;
   showAmountSelector?: boolean;
   amountToLow?: boolean;
+  additionalTokens?: TokenDBwithPrice[];
 };
 
 export function DexCardInput({
@@ -36,6 +40,7 @@ export function DexCardInput({
   isNumberInput = false,
   showAmountSelector = false,
   amountToLow,
+  additionalTokens,
 }: Props) {
   const { chainId, address } = useAccount();
 
@@ -71,7 +76,7 @@ export function DexCardInput({
       onMouseLeave={() => setIsHover(false)}
       className={cn(
         "flex flex-col gap-2 rounded-2xl bg-blue-200/20 p-4",
-        "transition-colors duration-200 hover:bg-blue-200/15",
+        "transition-colors duration-200 hover:bg-blue-200/40",
       )}
     >
       <div className="flex justify-between">
@@ -81,6 +86,13 @@ export function DexCardInput({
             balance={balance}
             show={isHover}
             onSelect={(val) => onValChanged(val.toString())}
+          />
+        )}
+        {additionalTokens && (
+          <DexAdditionalTokensDisplayer
+            tokens={additionalTokens}
+            show={isHover}
+            onSelect={onSetToken}
           />
         )}
       </div>

@@ -11,7 +11,6 @@ import {
   TableRow,
 } from "../ui/table";
 import { DexRecentTransactionRow } from "./dex-recent-transaction-row";
-import { Spinner } from "../ui/spinner";
 
 export function DexRecentTransactions() {
   const { chainId } = useAccount();
@@ -22,11 +21,11 @@ export function DexRecentTransactions() {
     <div className="flex flex-col">
       <p className="text-xl font-bold">Recent Transactions</p>
 
-      {isLoading && (
+      {/* {isLoading && (
         <div className="flex justify-center">
           <Spinner />
         </div>
-      )}
+      )} */}
       {data && !isLoading && (
         <Table>
           <TableCaption>

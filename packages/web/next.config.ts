@@ -23,7 +23,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "cryptologos.cc",
+        hostname: "cryptologos.cc/logos",
       },
       {
         protocol: "https",
