@@ -68,6 +68,8 @@ export const useSwapStore = create<State & Action>((set, get) => ({
     set((state) => ({
       buyToken: state.sellToken,
       sellToken: state.buyToken,
+      price: undefined,
+      quote: undefined,
     })),
 
   clearForm: () => {
