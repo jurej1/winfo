@@ -46,6 +46,8 @@ export function DexCardInput({
 
   const tokenAddress = token?.native ? undefined : token?.address;
 
+  const { tokens, loadingTokens } = useSwapStore();
+
   const { data: balance } = useBalance({
     chainId,
     address,
@@ -124,7 +126,12 @@ export function DexCardInput({
             readOnly={readonly}
           />
         )}
-        <DexSelectToken token={token} onSetToken={onSetToken} />
+        <DexSelectToken
+          token={token}
+          onSetToken={onSetToken}
+          tokens={tokens}
+          loadingTokens={loadingTokens}
+        />
       </div>
       {token && (
         <div className="flex items-center justify-between text-gray-400">

@@ -25,6 +25,7 @@ export function DexSwapCard() {
   const resetStore = useSwapStore((store) => store.resetStore);
 
   const loading = useSwapStore((store) => store.loadingTokens);
+  const swapTokens = useSwapStore((state) => state.swapTokens);
 
   useSwap();
   // CLEANUP on DISPOSE
@@ -39,7 +40,7 @@ export function DexSwapCard() {
       </CardHeader>
       <CardContent className="relative flex flex-col gap-2">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-          <DexSwapTokensButton />
+          <DexSwapTokensButton onClick={swapTokens} />
         </div>
         <DexSellCard />
         <DexBuyCard />

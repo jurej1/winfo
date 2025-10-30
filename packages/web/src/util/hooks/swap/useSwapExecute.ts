@@ -20,8 +20,6 @@ import { toast } from "sonner";
 import { attachSignatureToTransactionData } from "./actions/attach-signature-to-transaction-data";
 import { useSwapAddTransaction } from "./useSwapAddTransaction";
 
-const PERMIT2_SPENDER: Address = "0x000000000022d473030f116ddee9f6b43ac78ba3";
-
 export const useSwapExecute = () => {
   const clearSwapForm = useSwapStore((state) => state.clearForm);
 

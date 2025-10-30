@@ -11,12 +11,14 @@ export default function DexPage() {
           <TabsTrigger value="swap">Swap</TabsTrigger>
           <TabsTrigger value="limit-order">Limit Order</TabsTrigger>
         </TabsList>
-        <TabsContent value="swap">
-          <DexSwapCard />
-        </TabsContent>
-        <TabsContent value="limit-order">
-          <DexLimitOrderCard />
-        </TabsContent>
+        <div>
+          <TabsContent value="swap">
+            <DexSwapCard />
+          </TabsContent>
+          <TabsContent value="limit-order">
+            <DexLimitOrderCard />
+          </TabsContent>
+        </div>
       </Tabs>
       <DexRecentTransactions />
     </div>

@@ -5,26 +5,17 @@ import { DexCardInput } from "./dex-card-input";
 import { useFormattedBigNumber } from "@/util/formatter/useFormattedBigNumber";
 import { NumberType } from "@/util/formatter/types";
 import { useMemo } from "react";
+import { useDexAdditionalTokens } from "@/util/hooks/useDexAdditionalTokens";
 
 export function DexBuyCard() {
   const { buyAmount, buyToken, setBuyAmount, setBuyToken, tokens, sellToken } =
     useSwapStore();
 
-  const filteredTokens = useMemo(() => {
-    const limit = tokens.slice(0, 6);
-
-    const filtered = limit.filter((token) => {
-      if (
-        token.address != sellToken?.address &&
-        token.address != buyToken?.address
-      ) {
-        return true;
-      }
-      return false;
-    });
-
-    return filtered.slice(0, 3);
-  }, [sellToken, buyToken, tokens]);
+  const filteredTokens = useDexAdditionalTokens({
+    tokens,
+    buyToken,
+    sellToken,
+  });
 
   const isLoading = useSwapStore(
     (store) => store.loadingPrice || store.loadingQuote,

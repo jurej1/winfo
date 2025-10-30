@@ -19,12 +19,17 @@ import { useSwapStore } from "@/util/hooks/swap/useSwapStore";
 type Props = {
   token?: TokenDBwithPrice;
   onSetToken: (token: TokenDBwithPrice) => void;
+  tokens: TokenDBwithPrice[];
+  loadingTokens: boolean;
 };
 
-export function DexSelectToken({ token, onSetToken }: Props) {
+export function DexSelectToken({
+  token,
+  onSetToken,
+  loadingTokens,
+  tokens,
+}: Props) {
   const [open, setOpen] = useState<boolean>(false);
-
-  const { tokens, loadingTokens } = useSwapStore();
 
   const handleOnPressed = useCallback(
     (token: TokenDBwithPrice) => {
@@ -36,7 +41,11 @@ export function DexSelectToken({ token, onSetToken }: Props) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild disabled={loadingTokens} className="h-10 w-30">
+      <DialogTrigger
+        asChild
+        disabled={loadingTokens}
+        className="h-10 w-30 cursor-pointer"
+      >
         {!token ? (
           <Button>Select Token</Button>
         ) : (

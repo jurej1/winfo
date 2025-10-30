@@ -1,13 +1,15 @@
 "use client";
 
 import { Button } from "../ui/button";
-import { useSwapStore } from "@/util/hooks/swap/useSwapStore";
 import { IoIosArrowDown } from "react-icons/io";
 
-export function DexSwapTokensButton() {
-  const swapTokens = useSwapStore((state) => state.swapTokens);
+type Props = {
+  onClick: () => void;
+};
+
+export function DexSwapTokensButton({ onClick }: Props) {
   return (
-    <Button className="cursor-pointer" onClick={swapTokens}>
+    <Button className="cursor-pointer" onClick={onClick}>
       <IoIosArrowDown />
     </Button>
   );
