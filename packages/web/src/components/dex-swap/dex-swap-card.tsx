@@ -12,7 +12,7 @@ import {
   DexSwapCollapsibleInfo,
   DexTokenValueComparison,
   DexBuyCard,
-} from "@/components/dex";
+} from "@/components/dex-swap";
 
 import {
   Card,

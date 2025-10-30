@@ -1,5 +1,5 @@
-import { DexRecentTransactions } from "@/components/dex";
-import { DexSwapCard } from "@/components/dex/dex-swap-card";
+import { DexRecentTransactions } from "@/components/dex-swap";
+import { DexSwapCard } from "@/components/dex-swap/dex-swap-card";
 
 export default function DexPage() {
   return (
