@@ -81,7 +81,7 @@ export function DexCardInput({
     >
       <div className="flex justify-between">
         <p className="text-md text-gray-400">{title}</p>
-        {showAmountSelector && balance && (
+        {showAmountSelector && !isLoading && balance && (
           <DexTokenAmountSelector
             balance={balance}
             show={isHover}
