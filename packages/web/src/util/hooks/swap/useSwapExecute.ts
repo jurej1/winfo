@@ -9,12 +9,8 @@ import { useSwapStore } from "./useSwapStore";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Address,
-  concat,
   erc20Abi,
   Hash,
-  Hex,
-  numberToHex,
-  size,
   maxUint256,
   UserRejectedRequestError,
   TransactionExecutionError,

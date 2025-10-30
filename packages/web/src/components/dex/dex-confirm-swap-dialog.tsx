@@ -3,18 +3,29 @@
 import { Button } from "../ui/button";
 import { useSwapExecute } from "@/util/hooks/swap/useSwapExecute";
 import { Spinner } from "../ui/spinner";
+import { useSwapStore } from "@/util/hooks/swap/useSwapStore";
+import { useSwapSellBalanceToLow } from "@/util/hooks/swap/useSwapSellBalanceToLow";
 
 export function DexConfirmSwapDialog() {
   const { executeSwapTransaction, loading, transaction } = useSwapExecute();
+
+  const sellToken = useSwapStore((store) => store.sellToken);
+
+  const balanceToLow = useSwapSellBalanceToLow();
 
   return (
     <Button
       className="w-full cursor-pointer py-7 text-lg"
       onClick={executeSwapTransaction}
-      disabled={loading || !transaction}
+      disabled={loading || !transaction || balanceToLow}
     >
-      {loading && <LoadingQuote />}
-      {!loading && "Swap"}
+      {balanceToLow ? (
+        <p>Not enough {sellToken?.symbol}</p>
+      ) : loading ? (
+        <LoadingQuote />
+      ) : (
+        "Swap"
+      )}
     </Button>
   );
 }

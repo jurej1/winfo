@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useAccount } from "wagmi";
+import { useAccount, useBalance } from "wagmi";
 import { useSwapStore } from "./useSwapStore";
 
 import { useSwapPrice } from "./useSwapPrice";

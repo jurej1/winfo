@@ -2,9 +2,14 @@
 
 import { useSwapStore } from "@/util/hooks/swap/useSwapStore";
 import { DexCardInput } from "./dex-card-input";
+import { useAccount } from "wagmi";
+import { useEffect } from "react";
+import { useSwapSellBalanceToLow } from "@/util/hooks/swap/useSwapSellBalanceToLow";
 
 export function DexSellCard() {
   const { sellToken, sellAmount, setSellAmount, setSellToken } = useSwapStore();
+
+  const amountToLow = useSwapSellBalanceToLow();
 
   return (
     <DexCardInput
@@ -15,6 +20,7 @@ export function DexSellCard() {
       onSetToken={setSellToken}
       isNumberInput
       showAmountSelector
+      amountToLow={amountToLow}
     />
   );
 }

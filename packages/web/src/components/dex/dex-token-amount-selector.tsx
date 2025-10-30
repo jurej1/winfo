@@ -2,6 +2,7 @@
 
 import { GetBalanceData } from "wagmi/query";
 import { DexTokenValuePercentButton } from "./dex-token-value-percent-button";
+import { useCallback } from "react";
 
 type Props = {
   balance?: GetBalanceData;
@@ -12,14 +13,17 @@ type Props = {
 export function DexTokenAmountSelector({ balance, show, onSelect }: Props) {
   const percentages = [0.25, 0.5, 0.75, 1];
 
-  const handleOnPressed = (val: number) => {
-    if (!balance) return;
+  const handleOnPressed = useCallback(
+    (val: number) => {
+      if (!balance) return;
 
-    const normalAmount =
-      (Number(balance.value) * val) / Math.pow(10, balance.decimals);
+      const normalAmount =
+        (Number(balance.value) * val) / Math.pow(10, balance.decimals);
 
-    onSelect(normalAmount);
-  };
+      onSelect(normalAmount);
+    },
+    [balance],
+  );
 
   return (
     <div className="flex flex-row gap-2">

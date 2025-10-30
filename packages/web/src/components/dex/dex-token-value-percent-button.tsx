@@ -30,7 +30,7 @@ export const DexTokenValuePercentButton = ({
     <button
       onClick={onClick}
       className={cn(
-        "cursor-pointer rounded-lg border bg-white p-1 text-sm text-gray-500 hover:bg-white/55",
+        "cursor-pointer rounded-lg bg-white p-1 text-sm text-gray-500 hover:bg-blue-400/10",
         "transition-opacity duration-300 ease-out",
         "transition duration-150",
         {

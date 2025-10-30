@@ -10,7 +10,7 @@ import { useSwapTokenUsdPrice } from "@/util/hooks/swap/util/useSwapTokenUsdPric
 import { Skeleton } from "../ui/skeleton";
 import { cn } from "@/lib/utils";
 import { DexTokenAmountSelector } from "./dex-token-amount-selector";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 type Props = {
   title: string;
@@ -22,7 +22,7 @@ type Props = {
   isNumberInput?: boolean;
   isLoading?: boolean;
   showAmountSelector?: boolean;
-  showAmountError?: boolean;
+  amountToLow?: boolean;
 };
 
 export function DexCardInput({
@@ -35,15 +35,15 @@ export function DexCardInput({
   isLoading = false,
   isNumberInput = false,
   showAmountSelector = false,
-  showAmountError = true,
+  amountToLow,
 }: Props) {
   const { chainId, address } = useAccount();
 
   const tokenAddress = token?.native ? undefined : token?.address;
 
   const { data: balance } = useBalance({
-    chainId: chainId,
-    address: address,
+    chainId,
+    address,
     token: tokenAddress,
     query: {
       refetchInterval: 1000 * 10,
@@ -64,24 +64,6 @@ export function DexCardInput({
   const isLoadingTokens = useSwapStore((store) => store.loadingTokens);
 
   const [isHover, setIsHover] = useState(false);
-  const [isBalanceToLow, setIsBalanceToLow] = useState(false);
-
-  useEffect(() => {
-    if (!showAmountError) {
-      setIsBalanceToLow(false);
-    }
-
-    if (!balance) return;
-
-    const balanceFormatted =
-      Number(balance.value) / Math.pow(10, balance.decimals);
-
-    if (balanceFormatted < Number(value)) {
-      setIsBalanceToLow(true);
-    } else {
-      setIsBalanceToLow(false);
-    }
-  }, [balance, value, showAmountError]);
 
   return (
     <div
@@ -111,7 +93,13 @@ export function DexCardInput({
             disabled={isLoadingTokens}
             key={token?.address}
             type={isNumberInput ? "number" : undefined}
-            className="border-none text-black shadow-none focus-visible:border-none focus-visible:ring-0"
+            className={cn(
+              "border-none text-black shadow-none focus-visible:border-none focus-visible:ring-0",
+              "transition-colors duration-300 ease-in-out",
+              {
+                "text-red-400": amountToLow,
+              },
+            )}
             placeholder="0.0"
             value={value}
             style={{
@@ -129,7 +117,16 @@ export function DexCardInput({
       {token && (
         <div className="flex items-center justify-between text-gray-400">
           <span>{usdPrice}</span>
-          <span className={cn("")}>
+          <span
+            className={cn(
+              "text-base",
+              "transition-colors duration-300 ease-in-out",
+              {
+                "text-red-400": amountToLow,
+                "text-gray-400": !amountToLow,
+              },
+            )}
+          >
             {formattedValue} {balance?.symbol}
           </span>
         </div>

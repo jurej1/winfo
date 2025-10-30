@@ -16,6 +16,7 @@ const initialState = {
   loadingPrice: false,
   loadingQuote: false,
   loadingTokens: true,
+  sellBalanceToLow: undefined as boolean | undefined,
 };
 
 type State = typeof initialState;
@@ -30,6 +31,7 @@ type Action = {
   setQuote: (quote?: GetQuote0XResponse) => void;
   setPrice: (price?: GetPrice0XResponse) => void;
   setTokens: (tokens: TokenDBwithPrice[]) => void;
+  setSellBalanceToLow: (val?: boolean) => void;
   resetStore: () => void;
   clearForm: () => void;
   setLoadingPrice: (val: boolean) => void;
@@ -56,6 +58,7 @@ export const useSwapStore = create<State & Action>((set) => ({
   setLoadingPrice: (loadingPrice) => set({ loadingPrice }),
   setLoadingQuote: (loadingQuote) => set({ loadingQuote }),
   setLoadingTokens: (loadingTokens) => set({ loadingTokens }),
+  setSellBalanceToLow: (sellBalanceToLow) => set({ sellBalanceToLow }),
 
   swapTokens: () =>
     set((state) => ({
