@@ -1,4 +1,5 @@
-import TokensListPage from "@/pages/tokens-list-page";
+"use client";
+import TokensListPage from "@/components/pages/tokens-list-page";
 
 export default function Page() {
   return <TokensListPage />;

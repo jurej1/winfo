@@ -40,3 +40,13 @@ export const fetchTokenList = async (page: number) => {
 
   return rawData as TokenListInfo[];
 };
+
+export const fetchAllTokens = async () => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/tokens/list/all`,
+  );
+
+  const rawData = await response.json();
+
+  return rawData as { id: string }[];
+};

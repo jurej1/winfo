@@ -5,11 +5,16 @@ meta {
 }
 
 get {
-  url: {{api}}/swap/recent
+  url: {{api}}/swap/recent?chain=56
   body: none
   auth: inherit
 }
 
+params:query {
+  chain: 56
+}
+
 settings {
   encodeUrl: true
+  timeout: 0
 }

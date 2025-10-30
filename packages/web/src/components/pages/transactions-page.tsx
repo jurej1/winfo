@@ -14,7 +14,7 @@ type Props = {
   address: Address;
 };
 
-export function TransactionsPage({ address, chainId }: Props) {
+export default function TransactionsPage({ address, chainId }: Props) {
   const [cursor, setCursor] = useState<string | undefined>();
   const [cursorHistory, setCursorHistory] = useState<string[]>([]);
 

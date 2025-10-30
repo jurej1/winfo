@@ -48,6 +48,18 @@ export class CoingeckoRepository {
     return body;
   }
 
+  static async getAllCoins() {
+    const url = `${this.API_URL}/coins/list`;
+
+    const response = await fetch(url, {
+      headers: this.headers,
+    });
+
+    const body = await response.json();
+
+    return body;
+  }
+
   static async getMarketChart(coinId: string) {
     const searchParams = new URLSearchParams({
       vs_currency: "usd",

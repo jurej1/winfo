@@ -5,7 +5,7 @@ import { useAccount } from "wagmi";
 import { PortfolioGrid } from "@/components/wallet/portfolio-grid";
 import { WalletApprovals } from "@/components/wallet-approvals";
 
-export function WalletPage() {
+export default function WalletPage() {
   const { address, chainId } = useAccount();
 
   if (!address || !chainId) return <div>Please connect your wallet...</div>;

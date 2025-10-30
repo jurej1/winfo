@@ -1,6 +1,4 @@
-"use client";
-
-import { WalletPage } from "@/pages/wallet-page";
+import WalletPage from "@/components/pages/wallet-page";
 
 export default function Home() {
   return <WalletPage />;

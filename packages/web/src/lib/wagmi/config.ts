@@ -4,6 +4,6 @@ import { bsc, mainnet } from "wagmi/chains";
 
 export const config = getDefaultConfig({
   appName: "W-info",
-  projectId: process.env.NEXT_PUBLIC_REOWN_PROJECT_ID!,
+  projectId: "3626a3f46c91a37ac5462c34284b5820",
   chains: [mainnet, bsc],
 });

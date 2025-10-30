@@ -4,6 +4,12 @@ export const api = new sst.aws.ApiGatewayV2("WinfoAPI");
 
 const link = secrets;
 
+// ALL TOKENS
+api.route("GET /tokens/list/all", {
+  handler: "packages/functions/src/tokens/all/get.handler",
+  link,
+});
+
 // SWAPS
 api.route("GET /swap/price", {
   handler: "packages/functions/src/swap/price/get.handler",

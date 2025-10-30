@@ -1,4 +1,4 @@
-import { formatCurrency } from "@coingecko/cryptoformat";
+"use client";
 import { OHLCDaysFilter, OHLCItem } from "@w-info-sst/types";
 
 import {

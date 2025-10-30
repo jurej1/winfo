@@ -11,7 +11,7 @@ export default function Page() {
   return (
     <div className="m-auto mb-[64px] flex w-7xl flex-col gap-y-4">
       {/* Header */}
-      <NftCollectionMetadata address={address} />
+      <NftCollectionMetadata />
 
       <Tabs defaultValue="nfts">
         {/* TABS */}

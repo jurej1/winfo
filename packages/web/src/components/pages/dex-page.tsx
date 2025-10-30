@@ -1,3 +1,5 @@
+"use client";
+
 import { DexRecentTransactions } from "@/components/dex";
 import { DexSwapCard } from "@/components/dex/dex-swap-card";
 

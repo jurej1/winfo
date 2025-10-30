@@ -1,6 +1,6 @@
 "use client";
 
-import { TransactionsPage } from "@/pages/transactions-page";
+import TransactionsPage from "@/components/pages/transactions-page";
 import { useAccount } from "wagmi";
 
 export default function Page() {
