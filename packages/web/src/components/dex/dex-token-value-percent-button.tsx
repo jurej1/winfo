@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { useCallback } from "react";
 
-const BASE_DELAY_MS = 100;
+const BASE_DELAY_MS = 50;
 const STEP_DELAY_MS = 50;
 
 type ButtonItemProps = {
