@@ -24,6 +24,8 @@ import {
 export function DexSwapCard() {
   const resetStore = useSwapStore((store) => store.resetStore);
 
+  const loading = useSwapStore((store) => store.loadingTokens);
+
   useSwap();
   // CLEANUP on DISPOSE
   useEffect(() => {
@@ -31,9 +33,9 @@ export function DexSwapCard() {
   }, [resetStore]);
 
   return (
-    <Card className="mx-auto max-w-xl">
+    <Card>
       <CardHeader>
-        <DexCardHeader />
+        <DexCardHeader isLoading={loading} title="Swap" />
       </CardHeader>
       <CardContent className="relative flex flex-col gap-2">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
