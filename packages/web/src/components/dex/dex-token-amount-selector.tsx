@@ -1,9 +1,7 @@
 "use client";
 
-import { cn } from "@/lib/utils";
-import { useCallback } from "react";
-
 import { GetBalanceData } from "wagmi/query";
+import { DexTokenValuePercentButton } from "./dex-token-value-percent-button";
 
 type Props = {
   balance?: GetBalanceData;
@@ -12,7 +10,7 @@ type Props = {
 };
 
 export function DexTokenAmountSelector({ balance, show, onSelect }: Props) {
-  const percentages = useCallback(() => [0.25, 0.5, 0.75, 1], []);
+  const percentages = [0.25, 0.5, 0.75, 1];
 
   const handleOnPressed = (val: number) => {
     if (!balance) return;
@@ -24,39 +22,16 @@ export function DexTokenAmountSelector({ balance, show, onSelect }: Props) {
   };
 
   return (
-    <div
-      className={cn("flex flex-row gap-2 transition-opacity duration-200", {
-        "opacity-100": show,
-        "opacity-0": !show,
-      })}
-    >
-      {percentages().map((p) => (
-        <ButtonItem percentage={p} onClick={() => handleOnPressed(p)} key={p} />
+    <div className="flex flex-row gap-2">
+      {percentages.map((p, index) => (
+        <DexTokenValuePercentButton
+          percentage={p}
+          onClick={() => handleOnPressed(p)}
+          key={p}
+          index={index}
+          show={show}
+        />
       ))}
     </div>
   );
 }
-
-const ButtonItem = ({
-  percentage,
-  onClick,
-}: {
-  percentage: number;
-  onClick: () => void;
-}) => {
-  const displayPercentage = useCallback(() => {
-    if (percentage === 1) return "MAX";
-    const result = percentage * 100;
-
-    return result + "%";
-  }, [percentage]);
-
-  return (
-    <button
-      onClick={onClick}
-      className="hover: cursor-pointer rounded-lg border bg-white p-1 text-sm text-gray-500 hover:bg-white/55"
-    >
-      {displayPercentage()}
-    </button>
-  );
-};

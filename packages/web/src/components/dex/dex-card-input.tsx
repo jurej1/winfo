@@ -10,7 +10,7 @@ import { useSwapTokenUsdPrice } from "@/util/hooks/swap/util/useSwapTokenUsdPric
 import { Skeleton } from "../ui/skeleton";
 import { cn } from "@/lib/utils";
 import { DexTokenAmountSelector } from "./dex-token-amount-selector";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type Props = {
   title: string;
@@ -22,6 +22,7 @@ type Props = {
   isNumberInput?: boolean;
   isLoading?: boolean;
   showAmountSelector?: boolean;
+  showAmountError?: boolean;
 };
 
 export function DexCardInput({
@@ -34,6 +35,7 @@ export function DexCardInput({
   isLoading = false,
   isNumberInput = false,
   showAmountSelector = false,
+  showAmountError = true,
 }: Props) {
   const { chainId, address } = useAccount();
 
@@ -44,7 +46,7 @@ export function DexCardInput({
     address: address,
     token: tokenAddress,
     query: {
-      refetchInterval: 1000 * 10, // 10sec
+      refetchInterval: 1000 * 10,
     },
   });
 
@@ -62,6 +64,24 @@ export function DexCardInput({
   const isLoadingTokens = useSwapStore((store) => store.loadingTokens);
 
   const [isHover, setIsHover] = useState(false);
+  const [isBalanceToLow, setIsBalanceToLow] = useState(false);
+
+  useEffect(() => {
+    if (!showAmountError) {
+      setIsBalanceToLow(false);
+    }
+
+    if (!balance) return;
+
+    const balanceFormatted =
+      Number(balance.value) / Math.pow(10, balance.decimals);
+
+    if (balanceFormatted < Number(value)) {
+      setIsBalanceToLow(true);
+    } else {
+      setIsBalanceToLow(false);
+    }
+  }, [balance, value, showAmountError]);
 
   return (
     <div
@@ -109,7 +129,7 @@ export function DexCardInput({
       {token && (
         <div className="flex items-center justify-between text-gray-400">
           <span>{usdPrice}</span>
-          <span>
+          <span className={cn("")}>
             {formattedValue} {balance?.symbol}
           </span>
         </div>
