@@ -60,20 +60,20 @@ export const useSwapExecute = () => {
     return !!allowanceIssue && allowanceIssue.actual === "0";
   }, [allowanceIssue]);
 
-  const approvePermit2ForSpending = useCallback(async () => {
-    if (!sellToken) return;
+  // const approvePermit2ForSpending = useCallback(async () => {
+  //   if (!sellToken) return;
 
-    try {
-      await writeContractAsync({
-        address: sellToken.address,
-        abi: erc20Abi,
-        functionName: "approve",
-        args: [PERMIT2_SPENDER, maxUint256],
-      });
-    } catch (error) {
-      console.error("Approval transaction failed:", error);
-    }
-  }, [sellToken, sellAmount, writeContractAsync]);
+  //   try {
+  //     await writeContractAsync({
+  //       address: sellToken.address,
+  //       abi: erc20Abi,
+  //       functionName: "approve",
+  //       args: [PERMIT2_SPENDER, maxUint256],
+  //     });
+  //   } catch (error) {
+  //     console.error("Approval transaction failed:", error);
+  //   }
+  // }, [sellToken, sellAmount, writeContractAsync]);
 
   const signSwapTransaction = useCallback(async () => {
     if (!transaction || !permit2?.eip712) return;
@@ -94,7 +94,7 @@ export const useSwapExecute = () => {
     if (!transaction) return;
 
     try {
-      if (isApprovalNeeded) await approvePermit2ForSpending();
+      // if (isApprovalNeeded) await approvePermit2ForSpending();
 
       const data = await signSwapTransaction();
 
@@ -114,7 +114,6 @@ export const useSwapExecute = () => {
     transaction,
     signTypedDataAsync,
     signSwapTransaction,
-    approvePermit2ForSpending,
     isApprovalNeeded,
     setWaitHash,
   ]);
