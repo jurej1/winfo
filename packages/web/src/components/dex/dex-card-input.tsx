@@ -8,6 +8,9 @@ import { NumberType } from "@/util/formatter/types";
 import { useSwapStore } from "@/util/hooks/swap/useSwapStore";
 import { useSwapTokenUsdPrice } from "@/util/hooks/swap/util/useSwapTokenUsdPrice";
 import { Skeleton } from "../ui/skeleton";
+import { cn } from "@/lib/utils";
+import { DexTokenAmountSelector } from "./dex-token-amount-selector";
+import { useRef, useState } from "react";
 
 type Props = {
   title: string;
@@ -18,6 +21,7 @@ type Props = {
   readonly?: boolean;
   isNumberInput?: boolean;
   isLoading?: boolean;
+  showAmountSelector?: boolean;
 };
 
 export function DexCardInput({
@@ -29,6 +33,7 @@ export function DexCardInput({
   readonly,
   isLoading = false,
   isNumberInput = false,
+  showAmountSelector = false,
 }: Props) {
   const { chainId, address } = useAccount();
 
@@ -56,9 +61,27 @@ export function DexCardInput({
 
   const isLoadingTokens = useSwapStore((store) => store.loadingTokens);
 
+  const [isHover, setIsHover] = useState(false);
+
   return (
-    <div className="flex flex-col gap-2 rounded-2xl bg-blue-200/20 p-4">
-      <p className="text-md text-gray-400">{title}</p>
+    <div
+      onMouseEnter={() => setIsHover(true)}
+      onMouseLeave={() => setIsHover(false)}
+      className={cn(
+        "flex flex-col gap-2 rounded-2xl bg-blue-200/20 p-4",
+        "transition-colors duration-200 hover:bg-blue-200/15",
+      )}
+    >
+      <div className="flex justify-between">
+        <p className="text-md text-gray-400">{title}</p>
+        {showAmountSelector && balance && (
+          <DexTokenAmountSelector
+            balance={balance}
+            show={isHover}
+            onSelect={(val) => onValChanged(val.toString())}
+          />
+        )}
+      </div>
 
       <div className="flex items-center justify-between gap-4">
         {isLoading ? (

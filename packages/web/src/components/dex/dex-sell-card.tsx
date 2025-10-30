@@ -14,6 +14,7 @@ export function DexSellCard() {
       onValChanged={setSellAmount}
       onSetToken={setSellToken}
       isNumberInput
+      showAmountSelector
     />
   );
 }
