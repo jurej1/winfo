@@ -40,12 +40,16 @@ type Action = {
   swapTokens: () => void;
 };
 
-export const useSwapStore = create<State & Action>((set) => ({
+export const useSwapStore = create<State & Action>((set, get) => ({
   ...initialState,
 
   setChainId: (chainId) => set({ chainId }),
-  setBuyToken: (buyToken) => set({ buyToken }),
-  setSellToken: (sellToken) => set({ sellToken }),
+  setBuyToken: (buyToken) => {
+    if (buyToken?.address !== get().sellToken?.address) set({ buyToken });
+  },
+  setSellToken: (sellToken) => {
+    if (sellToken?.address !== get().buyToken?.address) set({ sellToken });
+  },
   setSellAmount: (sellAmount) => set({ sellAmount }),
   setBuyAmount: (buyAmount) => {
     set({ buyAmount: buyAmount });
