@@ -60,7 +60,6 @@ export function DexCardInput({
   const formattedValue = useFormattedBigNumber({
     decimals: balance?.decimals,
     value: balance?.value,
-    type: NumberType.TokenTx,
   });
 
   const usdPrice = useSwapTokenUsdPrice({

@@ -8,10 +8,7 @@ import {
 import { useSwapStore } from "./useSwapStore";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
-  Address,
-  erc20Abi,
   Hash,
-  maxUint256,
   UserRejectedRequestError,
   TransactionExecutionError,
 } from "viem";
@@ -58,21 +55,6 @@ export const useSwapExecute = () => {
     return !!allowanceIssue && allowanceIssue.actual === "0";
   }, [allowanceIssue]);
 
-  // const approvePermit2ForSpending = useCallback(async () => {
-  //   if (!sellToken) return;
-
-  //   try {
-  //     await writeContractAsync({
-  //       address: sellToken.address,
-  //       abi: erc20Abi,
-  //       functionName: "approve",
-  //       args: [PERMIT2_SPENDER, maxUint256],
-  //     });
-  //   } catch (error) {
-  //     console.error("Approval transaction failed:", error);
-  //   }
-  // }, [sellToken, sellAmount, writeContractAsync]);
-
   const signSwapTransaction = useCallback(async () => {
     if (!transaction || !permit2?.eip712) return;
 
@@ -92,11 +74,12 @@ export const useSwapExecute = () => {
     if (!transaction) return;
 
     try {
-      // if (isApprovalNeeded) await approvePermit2ForSpending();
+      let txData = transaction.data;
 
       const data = await signSwapTransaction();
+      if (data) txData = data;
 
-      const hash = await sendTransactionAsync({ ...transaction, data });
+      const hash = await sendTransactionAsync({ ...transaction, data: txData });
       setWaitHash(hash);
     } catch (err) {
       const isDenied =

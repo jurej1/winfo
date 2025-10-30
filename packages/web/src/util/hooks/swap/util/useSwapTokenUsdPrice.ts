@@ -18,6 +18,6 @@ export const useSwapTokenUsdPrice = ({
     if (isNaN(valNumber) || isNaN(tokenPrice)) return "$0.0";
 
     const totalUsd = valNumber * tokenPrice;
-    return `$${totalUsd.toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
+    return `$${totalUsd.toLocaleString(undefined, { maximumFractionDigits: 4, minimumFractionDigits: 1 })}`;
   }, [price, value]);
 };
