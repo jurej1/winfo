@@ -1,7 +1,7 @@
 import { TokenDBwithPrice } from "@w-info-sst/db";
 import { create } from "zustand";
 import { GetPrice0XResponse, GetQuote0XResponse } from "@w-info-sst/types";
-import { Address, formatEther } from "viem";
+import { Address } from "viem";
 
 const initialState = {
   chainId: undefined as number | undefined,
@@ -71,7 +71,15 @@ export const useSwapStore = create<State & Action>((set, get) => ({
     })),
 
   clearForm: () => {
-    // TODO
+    set({
+      sellAmount: "0",
+      buyAmount: "0",
+      quote: undefined,
+      price: undefined,
+      loadingPrice: false,
+      loadingQuote: false,
+      sellBalanceToLow: undefined,
+    });
   },
   resetStore: () => set(initialState),
 }));
