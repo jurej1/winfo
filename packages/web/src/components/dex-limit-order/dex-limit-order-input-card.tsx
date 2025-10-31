@@ -107,12 +107,7 @@ export function DexLimitOrderInputCard({
           }}
           readOnly={readonly}
         />
-        <DexSelectToken
-          token={token}
-          onSetToken={setToken}
-          tokens={tokens}
-          loadingTokens={tokensLoading}
-        />
+        <DexSelectToken token={token} onSetToken={setToken} />
       </div>
       {token && (
         <div className="flex items-center justify-between text-gray-400">
