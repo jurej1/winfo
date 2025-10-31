@@ -2,9 +2,12 @@ import { useAccount } from "wagmi";
 import { useSwapTokens } from "../swap/useSwapTokens";
 import { useCallback, useEffect, useState } from "react";
 import { TokenDBwithPrice } from "@w-info-sst/db";
+import { CreateOneInchOrderParams } from "@w-info-sst/types";
+
+export type LimitOrderExpiry = "1d" | "1w" | "1m" | "1y";
 
 export const useLimitOrder = () => {
-  const { chainId } = useAccount();
+  const { address, chainId } = useAccount();
 
   const [sellToken, setSellToken] = useState<TokenDBwithPrice | undefined>(
     undefined,
@@ -18,12 +21,14 @@ export const useLimitOrder = () => {
 
   const [buyAmount, setBuyAmount] = useState("0");
 
+  const [expiry, setExpiry] = useState<LimitOrderExpiry>("1d");
+
   const {
     data: tokens,
     isLoading: isTokensLoading,
     isError: isTokensError,
     isSuccess: isTokensLoadSuccess,
-  } = useSwapTokens(chainId);
+  } = useSwapTokens();
 
   useEffect(() => {
     if (isTokensLoadSuccess && tokens) {
@@ -45,6 +50,44 @@ export const useLimitOrder = () => {
     }
   }, [sellToken, buyToken, setSellToken, setBuyToken]);
 
+  const calcualteExpiryAddOn = useCallback(() => {
+    switch (expiry) {
+      case "1d":
+        return 60 * 60 * 24;
+      case "1w":
+        return 60 * 60 * 24 * 7;
+      case "1m":
+        return 60 * 60 * 24 * 30;
+      case "1y":
+        return 60 * 60 * 24 * 365;
+      default:
+        return 0;
+    }
+  }, [expiry]);
+
+  const createLimitOrderParams = useCallback(() => {
+    if (chainId && address && sellToken && buyToken) {
+      const expiration = Date.now() / 1000 + calcualteExpiryAddOn();
+      return {
+        chainId,
+        maker: address,
+        makerAsset: sellToken.address,
+        takerAsset: buyToken.address,
+        makingAmount: sellAmount,
+        takingAmount: buyAmount,
+        expiration,
+      } as CreateOneInchOrderParams;
+    }
+  }, [
+    sellToken,
+    buyToken,
+    address,
+    chainId,
+    sellAmount,
+    buyAmount,
+    calcualteExpiryAddOn,
+  ]);
+
   return {
     tokens: tokens ?? [],
     isTokensLoading,
@@ -58,5 +101,6 @@ export const useLimitOrder = () => {
     setSellAmount,
     buyAmount,
     setBuyAmount,
+    limitOrder: createLimitOrderParams,
   };
 };

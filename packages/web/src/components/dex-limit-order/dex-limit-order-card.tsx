@@ -28,6 +28,15 @@ export function DexLimitOrderCard() {
     sellToken,
   });
 
+  // 1. Input field ->  takingAmount / makingAmount
+  // once changed it updates the "Buy" field
+
+  // 2. Input field -> makerAsset & making Amount
+
+  // 3. Input field -> takingAmount & takerAsset
+
+  // 4. Input field -> expiration
+
   return (
     <Card>
       <CardHeader>
