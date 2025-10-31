@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { Collapsible, CollapsibleContent } from "../ui/collapsible";
 import { CollapsibleTrigger } from "@radix-ui/react-collapsible";
-import { DexNetworkCost } from "./dex-network-cost";
 
 export function DexSwapCollapsibleInfo() {
   const [open] = useState(true);
@@ -15,9 +14,7 @@ export function DexSwapCollapsibleInfo() {
           <span>Info</span>
         </div>
       </CollapsibleTrigger>
-      <CollapsibleContent className="flex flex-col gap-2">
-        <DexNetworkCost />
-      </CollapsibleContent>
+      <CollapsibleContent className="flex flex-col gap-2"></CollapsibleContent>
     </Collapsible>
   );
 }

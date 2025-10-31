@@ -1,64 +1,34 @@
-import { useEffect } from "react";
-import { useAccount, useBalance } from "wagmi";
-import { useSwapStore } from "./useSwapStore";
+import { useCallback, useEffect, useState } from "react";
+import { useAccount } from "wagmi";
 
-import { useSwapPrice } from "./useSwapPrice";
 import { useSwapTokens } from "./useSwapTokens";
 import { useSwapQuote } from "./useSwapQuote";
-
+import { TokenDBwithPrice } from "@w-info-sst/db";
+import { GetQuote0XResponse } from "@w-info-sst/types";
 export const useSwap = () => {
-  const store = useSwapStore();
   const { address, chainId } = useAccount();
 
-  const { data: tokensListData } = useSwapTokens(chainId!);
+  const [sellToken, setSellToken] = useState<TokenDBwithPrice | undefined>();
+  const [buyToken, setBuyToken] = useState<TokenDBwithPrice | undefined>();
 
-  const {
-    setChainId,
-    setTaker,
-    sellToken,
-    buyToken,
-    sellAmount,
-    setBuyAmount,
-    setPrice,
-    setTokens,
-    setBuyToken,
-    setSellToken,
-    setQuote,
-    setLoadingPrice,
-    setLoadingQuote,
-    setLoadingTokens,
-  } = store;
+  const [sellAmount, setSellAmount] = useState("0");
+
+  const [quote, setQuote] = useState<GetQuote0XResponse | undefined>();
+
+  const { data: tokens, isLoading: isLoadingTokens } = useSwapTokens();
 
   useEffect(() => {
-    if (tokensListData) {
-      setTokens(tokensListData);
-      setLoadingTokens(false);
-
-      const native = tokensListData.find((t) => t.native);
+    if (tokens && !isLoadingTokens) {
+      const native = tokens.find((t) => t.native);
       setSellToken(native);
 
-      const buyToken = tokensListData.find((t) => t.symbol === "USDT");
+      const buyToken = tokens.find((t) => t.symbol === "USDT");
       setBuyToken(buyToken);
     }
-  }, [tokensListData, setTokens, setSellToken, setBuyToken]);
+  }, [tokens, setSellToken, setBuyToken, isLoadingTokens]);
 
-  useEffect(() => {
-    setChainId(chainId);
-    setTaker(address);
-  }, [address, chainId, setChainId, setTaker]);
-
-  const { mutate: fetchPrice } = useSwapPrice({
-    onMutate: () => setLoadingPrice(true),
-    onSuccess: (data) => {
-      setBuyAmount(data.buyAmount);
-      setPrice(data);
-      setLoadingPrice(false);
-    },
-  });
-
-  const { mutate: fetchQuote } = useSwapQuote({
-    onMutate: () => setLoadingQuote(true),
-    onSuccess: (data) => (setQuote(data), setLoadingQuote(false)),
+  const { mutate: fetchQuote, isPending: isFetchingQuote } = useSwapQuote({
+    onSuccess: (data) => setQuote(data),
   });
 
   useEffect(() => {
@@ -79,22 +49,31 @@ export const useSwap = () => {
         taker: address,
       };
 
-      fetchPrice(params);
       fetchQuote(params);
     }, 500);
 
     return () => clearTimeout(handler);
-  }, [
-    sellAmount,
-    chainId,
-    address,
-    fetchPrice,
-    fetchQuote,
-    sellToken,
-    buyToken,
-  ]);
+  }, [sellAmount, chainId, address, fetchQuote, sellToken, buyToken]);
+
+  const swapTokens = useCallback(() => {
+    let a = sellToken;
+    let b = buyToken;
+
+    setBuyToken(a);
+    setSellToken(b);
+  }, [sellToken, buyToken, setSellToken, setBuyToken]);
 
   return {
-    ...store,
+    sellToken,
+    buyToken,
+    setSellToken,
+    setBuyToken,
+    isFetchingQuote,
+    quote,
+    setSellAmount,
+    isLoadingTokens,
+    tokens: tokens ?? [],
+    swapTokens,
+    sellAmount,
   };
 };

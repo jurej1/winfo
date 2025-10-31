@@ -1,17 +1,23 @@
+import { TokenDBwithPrice } from "@w-info-sst/db";
 import { useEffect, useState } from "react";
-import { useSwapStore } from "./useSwapStore";
+
 import { useAccount, useBalance } from "wagmi";
 
-export const useSwapSellBalanceToLow = () => {
-  const [balanceToLow, setBalanceToLow] = useState(false);
+type UseSwapSellBalanceToLowProps = {
+  token: TokenDBwithPrice | undefined;
+  amount: string;
+};
 
-  const sellToken = useSwapStore((store) => store.sellToken);
-  const sellAmount = useSwapStore((store) => store.sellAmount);
+export const useSwapSellBalanceToLow = ({
+  token,
+  amount,
+}: UseSwapSellBalanceToLowProps) => {
+  const [balanceToLow, setBalanceToLow] = useState(false);
 
   const { chainId, address } = useAccount();
 
   const { data: balance } = useBalance({
-    token: sellToken?.native ? undefined : sellToken?.address,
+    token: token?.native ? undefined : token?.address,
     address,
     chainId,
   });
@@ -22,12 +28,12 @@ export const useSwapSellBalanceToLow = () => {
     const balanceFormatted =
       Number(balance.value) / Math.pow(10, balance.decimals);
 
-    if (balanceFormatted < Number(sellAmount)) {
+    if (balanceFormatted < Number(amount)) {
       setBalanceToLow(true);
     } else {
       setBalanceToLow(false);
     }
-  }, [balance, sellAmount, setBalanceToLow]);
+  }, [balance, amount, setBalanceToLow]);
 
   return balanceToLow;
 };

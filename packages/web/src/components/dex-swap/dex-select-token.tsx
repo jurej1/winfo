@@ -13,22 +13,15 @@ import { DexTokenSelectRow } from "./dex-token-select-row";
 import { Button } from "../ui/button";
 
 import Image from "next/image";
-import { TokenDBwithPrice } from "@w-info-sst/db";
-import { useSwapStore } from "@/util/hooks/swap/useSwapStore";
+import { TokenDB, TokenDBwithPrice } from "@w-info-sst/db";
+import { useSwapTokens } from "@/util/hooks/swap/useSwapTokens";
 
 type Props = {
   token?: TokenDBwithPrice;
   onSetToken: (token: TokenDBwithPrice) => void;
-  tokens: TokenDBwithPrice[];
-  loadingTokens: boolean;
 };
 
-export function DexSelectToken({
-  token,
-  onSetToken,
-  loadingTokens,
-  tokens,
-}: Props) {
+export function DexSelectToken({ token, onSetToken }: Props) {
   const [open, setOpen] = useState<boolean>(false);
 
   const handleOnPressed = useCallback(
@@ -38,6 +31,8 @@ export function DexSelectToken({
     },
     [setOpen, onSetToken],
   );
+
+  const { data: tokens, isLoading: loadingTokens } = useSwapTokens();
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -68,7 +63,7 @@ export function DexSelectToken({
         <DialogTitle>Select Token</DialogTitle>
         <DialogDescription>Please select a token for swap</DialogDescription>
         <ul className="flex max-h-96 flex-col gap-2 overflow-y-auto">
-          {tokens.map((token) => (
+          {tokens?.map((token) => (
             <DexTokenSelectRow
               token={token}
               key={token.address}

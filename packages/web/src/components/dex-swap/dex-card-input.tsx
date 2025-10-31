@@ -6,8 +6,7 @@ import { useAccount, useBalance } from "wagmi";
 import { DexSelectToken } from "./dex-select-token";
 import { TokenDBwithPrice } from "@w-info-sst/db";
 import { useFormattedBigNumber } from "@/util/formatter/useFormattedBigNumber";
-import { NumberType } from "@/util/formatter/types";
-import { useSwapStore } from "@/util/hooks/swap/useSwapStore";
+
 import { useSwapTokenUsdPrice } from "@/util/hooks/swap/util/useSwapTokenUsdPrice";
 import { Skeleton } from "../ui/skeleton";
 import { cn } from "@/lib/utils";
@@ -18,7 +17,7 @@ import { DexAdditionalTokensDisplayer } from "./dex-additional-tokens-displayer"
 type Props = {
   title: string;
   token?: TokenDBwithPrice;
-  onValChanged: (val: string) => void;
+  onValChanged?: (val: string) => void;
   onSetToken: (token: TokenDBwithPrice) => void;
   value: string;
   readonly?: boolean;
@@ -46,8 +45,6 @@ export function DexCardInput({
 
   const tokenAddress = token?.native ? undefined : token?.address;
 
-  const { tokens, loadingTokens } = useSwapStore();
-
   const { data: balance } = useBalance({
     chainId,
     address,
@@ -67,8 +64,6 @@ export function DexCardInput({
     value,
   });
 
-  const isLoadingTokens = useSwapStore((store) => store.loadingTokens);
-
   const [isHover, setIsHover] = useState(false);
 
   return (
@@ -86,7 +81,9 @@ export function DexCardInput({
           <DexTokenAmountSelector
             balance={balance}
             show={isHover}
-            onSelect={(val) => onValChanged(val.toString())}
+            onSelect={(val) => {
+              if (onValChanged != undefined) onValChanged(val.toString());
+            }}
           />
         )}
         {additionalTokens && (
@@ -103,7 +100,7 @@ export function DexCardInput({
           <Skeleton className="h-8 w-40 rounded-full bg-gray-300" />
         ) : (
           <Input
-            disabled={isLoadingTokens}
+            disabled={isLoading}
             key={token?.address}
             type={isNumberInput ? "number" : undefined}
             className={cn(
@@ -119,18 +116,14 @@ export function DexCardInput({
               fontSize: 28,
             }}
             onChange={(event) => {
+              if (onValChanged === undefined) return;
               const val = event.target.value;
               onValChanged(val);
             }}
             readOnly={readonly}
           />
         )}
-        <DexSelectToken
-          token={token}
-          onSetToken={onSetToken}
-          tokens={tokens}
-          loadingTokens={loadingTokens}
-        />
+        <DexSelectToken token={token} onSetToken={onSetToken} />
       </div>
       {token && (
         <div className="flex items-center justify-between text-gray-400">

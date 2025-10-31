@@ -4,7 +4,6 @@ import {
   useWaitForTransactionReceipt,
 } from "wagmi";
 
-import { useSwapStore } from "./useSwapStore";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   Hash,
@@ -15,25 +14,19 @@ import { SignTypedDataVariables } from "wagmi/query";
 import { toast } from "sonner";
 import { attachSignatureToTransactionData } from "./actions/attach-signature-to-transaction-data";
 import { useSwapAddTransaction } from "./useSwapAddTransaction";
+import { GetQuote0XResponse } from "@w-info-sst/types";
 
-export const useSwapExecute = () => {
-  const clearSwapForm = useSwapStore((state) => state.clearForm);
+type UseSwapExecuteProps = {
+  quote: GetQuote0XResponse | undefined;
+};
 
-  const transaction = useSwapStore((state) => state.quote?.transaction);
-  const permit2 = useSwapStore((state) => state.quote?.permit2);
-
-  const sellToken = useSwapStore((state) => state.sellToken);
-  const sellAmount = useSwapStore((state) => state.sellAmount);
+export const useSwapExecute = ({ quote }: UseSwapExecuteProps) => {
+  const transaction = quote?.transaction;
+  const permit2 = quote?.permit2;
 
   const [waitHash, setWaitHash] = useState<Hash>();
 
-  const allowanceIssue = useSwapStore(
-    (state) => state.price?.issues?.allowance,
-  );
-
-  const loading = useSwapStore(
-    (state) => state.loadingPrice || state.loadingQuote,
-  );
+  const allowanceIssue = quote?.issues.allowance;
 
   const { mutateAsync: sendTransactionToDB } = useSwapAddTransaction();
 
@@ -100,20 +93,15 @@ export const useSwapExecute = () => {
   useEffect(() => {
     if (isSwapSuccess) {
       toast.success(`Transaction Successfull ${waitHash}`);
-      clearSwapForm();
 
       const { chainId, transactionHash, blockHash } = swapTransactionData;
 
       sendTransactionToDB({ chainId, transactionHash, blockHash });
     }
-  }, [isSwapSuccess, waitHash, clearSwapForm, sendTransactionToDB]);
+  }, [isSwapSuccess, waitHash, sendTransactionToDB]);
 
   return {
     isApprovalNeeded,
     executeSwapTransaction,
-    loading,
-    transaction,
-    sellToken,
-    sellAmount,
   };
 };

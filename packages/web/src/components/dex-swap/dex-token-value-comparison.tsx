@@ -1,15 +1,17 @@
 "use client";
 
-import { useSwapStore } from "@/util/hooks/swap/useSwapStore";
 import { Button } from "../ui/button";
 import { formatCurrency } from "@coingecko/cryptoformat";
+import { TokenDBwithPrice } from "@w-info-sst/db";
 import { useCallback, useState } from "react";
 
-export function DexTokenValueComparison() {
-  const [showSell, setShowSell] = useState(true);
+type Props = {
+  sellToken: TokenDBwithPrice | undefined;
+  buyToken: TokenDBwithPrice | undefined;
+};
 
-  const sellToken = useSwapStore((store) => store.sellToken);
-  const buyToken = useSwapStore((store) => store.buyToken);
+export function DexTokenValueComparison({ sellToken, buyToken }: Props) {
+  const [showSell, setShowSell] = useState(true);
 
   const formattedCurrencyAmount = useCallback(() => {
     if (!sellToken || !buyToken) return;

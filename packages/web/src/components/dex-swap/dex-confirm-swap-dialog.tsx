@@ -3,25 +3,40 @@
 import { Button } from "../ui/button";
 import { useSwapExecute } from "@/util/hooks/swap/useSwapExecute";
 import { Spinner } from "../ui/spinner";
-import { useSwapStore } from "@/util/hooks/swap/useSwapStore";
-import { useSwapSellBalanceToLow } from "@/util/hooks/swap/useSwapSellBalanceToLow";
 
-export function DexConfirmSwapDialog() {
-  const { executeSwapTransaction, loading, transaction } = useSwapExecute();
+import { TokenDBwithPrice } from "@w-info-sst/db";
+import { GetQuote0XResponse } from "@w-info-sst/types";
 
-  const sellToken = useSwapStore((store) => store.sellToken);
+type Props = {
+  sellToken?: TokenDBwithPrice;
+  balanceToLow: boolean;
+  quote?: GetQuote0XResponse;
+  loadingQuote: boolean;
+};
 
-  const balanceToLow = useSwapSellBalanceToLow();
+export function DexConfirmSwapDialog({
+  sellToken,
+  balanceToLow,
+  quote,
+  loadingQuote,
+}: Props) {
+  const { executeSwapTransaction } = useSwapExecute({
+    quote,
+  });
+
+  console.log("loadingQuote", loadingQuote);
+  console.log("transaction", quote);
+  console.log("balanceToLow", balanceToLow);
 
   return (
     <Button
       className="w-full cursor-pointer py-7 text-lg"
       onClick={executeSwapTransaction}
-      disabled={loading || !transaction || balanceToLow}
+      disabled={loadingQuote || !quote?.transaction || balanceToLow}
     >
       {balanceToLow ? (
         <p>Not enough {sellToken?.symbol}</p>
-      ) : loading ? (
+      ) : loadingQuote ? (
         <LoadingQuote />
       ) : (
         "Swap"
