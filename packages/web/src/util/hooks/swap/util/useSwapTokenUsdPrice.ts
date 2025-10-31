@@ -12,7 +12,12 @@ export const useSwapTokenUsdPrice = ({
   return useMemo(() => {
     if (!price || !value) return "$0.0";
 
-    const valNumber = Number(value);
+    const valueSubtring =
+      typeof value === "string" && (value.endsWith(".") || value.endsWith(","))
+        ? value.slice(0, -1)
+        : value;
+
+    const valNumber = Number(valueSubtring);
     const tokenPrice = Number(price);
 
     if (isNaN(valNumber) || isNaN(tokenPrice)) return "$0.0";
