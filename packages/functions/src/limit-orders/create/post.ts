@@ -65,11 +65,14 @@ const baseHandler = async (
 
   const typedData = order.getTypedData(chainId);
 
+  const orderHash = order.getOrderHash(chainId);
+
   return {
     statusCode: 200,
     body: {
       order,
       typedData,
+      orderHash,
     },
   };
 };
