@@ -11,17 +11,6 @@ type Props = {
 };
 
 export function PortfolioTokenCard({ token }: Props) {
-  const format = (amount: string | number) => {
-    return `${formatCurrency(Number(amount), "")}`;
-  };
-
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(token.token_address);
-    toast.success("Copied to clipboard");
-  };
-
-  console.log("token", token);
-
   return (
     <TableRow>
       <TableCell>
