@@ -1,7 +1,6 @@
 export * from "./dex-card-input";
 export * from "./dex-confirm-swap-dialog";
 export * from "./dex-select-token";
-export * from "./dex-swap-collapsible-info";
 export * from "./dex-swap-tokens-button";
 export * from "./dex-token-select-row";
 export * from "./dex-card-header";
