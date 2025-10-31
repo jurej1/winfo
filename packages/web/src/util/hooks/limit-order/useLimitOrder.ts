@@ -3,6 +3,7 @@ import { useSwapTokens } from "../swap/useSwapTokens";
 import { useCallback, useEffect, useState } from "react";
 import { TokenDBwithPrice } from "@w-info-sst/db";
 import { CreateOneInchOrderParams } from "@w-info-sst/types";
+import { useLocalizedFormatter } from "@/util/formatter/useLocalizedFormatter";
 
 export type LimitOrderExpiry = "1d" | "1w" | "1m" | "1y";
 
@@ -14,6 +15,8 @@ export const useLimitOrder = () => {
   const [sellToken, setSellToken] = useState<TokenDBwithPrice | undefined>(
     undefined,
   );
+
+  const { formatNumberOrString } = useLocalizedFormatter();
 
   const [sellAmount, setSellAmount] = useState("0");
 
@@ -43,7 +46,8 @@ export const useLimitOrder = () => {
       if (native?.priceUsd && usdt?.priceUsd) {
         const ratio = native.priceUsd / usdt?.priceUsd;
 
-        setRatio(ratio.toString());
+        const formatted = formatNumberOrString({ value: ratio });
+        setRatio(formatted);
       }
     }
   }, [isTokensLoadSuccess, tokens, setBuyToken, setSellToken, setRatio]);
@@ -76,6 +80,7 @@ export const useLimitOrder = () => {
   const createLimitOrderParams = useCallback(() => {
     if (chainId && address && sellToken && buyToken) {
       const expiration = Date.now() / 1000 + calcualteExpiryAddOn();
+
       return {
         chainId,
         maker: address,
@@ -100,7 +105,8 @@ export const useLimitOrder = () => {
     if (buyToken?.priceUsd && sellToken?.priceUsd) {
       const ratio = sellToken.priceUsd / buyToken.priceUsd;
 
-      setRatio(ratio.toString());
+      const formatted = formatNumberOrString({ value: ratio });
+      setRatio(formatted);
     }
   }, [buyToken, sellToken, setRatio]);
 
@@ -119,5 +125,6 @@ export const useLimitOrder = () => {
     setBuyAmount,
     limitOrder: createLimitOrderParams,
     ratio,
+    setRatio,
   };
 };

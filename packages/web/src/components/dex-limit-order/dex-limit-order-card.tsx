@@ -21,6 +21,7 @@ export function DexLimitOrderCard() {
     tokens,
     isTokensLoading,
     ratio,
+    setRatio,
   } = useLimitOrder();
 
   const additionalTokens = useDexAdditionalTokens({
@@ -48,6 +49,7 @@ export function DexLimitOrderCard() {
           buyToken={buyToken}
           sellToken={sellToken}
           ratio={ratio}
+          setRatio={setRatio}
         />
 
         <div className="relative flex flex-col gap-2">
