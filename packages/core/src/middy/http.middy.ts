@@ -15,9 +15,17 @@ export const httpLambdaMiddleware = () => [
     serializers: [
       {
         regex: /^application\/json$/,
-        serializer: ({ body }) => JSON.stringify(body),
+        serializer: ({ body }) => JSON.stringify(body, bigIntReplacer),
       },
     ],
     defaultContentType: "application/json",
   }),
 ];
+
+const bigIntReplacer = (key: string, value: any) => {
+  if (typeof value === "bigint") {
+    return value.toString();
+  }
+
+  return value;
+};

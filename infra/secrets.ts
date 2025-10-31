@@ -7,10 +7,13 @@ export const zeroXApiKey = new sst.Secret("ZeroXApiKey");
 
 export const reownProjectID = new sst.Secret("ReownProjectID");
 
+export const oneInchAPIKey = new sst.Secret("OneInchAPIKey");
+
 export const secrets = [
   zeroXApiKey,
   coinAPIKey,
   coinGeckoAPIKey,
   moralisAPIKey,
   databaseUrl,
+  oneInchAPIKey,
 ];

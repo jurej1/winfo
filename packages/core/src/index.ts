@@ -9,3 +9,5 @@ export * from "./middy/http.middy";
 export * from "./zero-x/zero-x.repository";
 
 export * from "./uniswap/uniswap.repository";
+
+export * from "./one-inch";

@@ -10,6 +10,12 @@ api.route("GET /tokens/list/all", {
   link,
 });
 
+// LIMIT ORDERS
+api.route("POST /limit-orders/create", {
+  handler: "packages/functions/src/limit-orders/create/post.handler",
+  link,
+});
+
 // SWAPS
 api.route("GET /swap/price", {
   handler: "packages/functions/src/swap/price/get.handler",

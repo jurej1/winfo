@@ -21,6 +21,10 @@ declare module "sst" {
       "type": "sst.sst.Secret"
       "value": string
     }
+    "OneInchAPIKey": {
+      "type": "sst.sst.Secret"
+      "value": string
+    }
     "ReownProjectID": {
       "type": "sst.sst.Secret"
       "value": string

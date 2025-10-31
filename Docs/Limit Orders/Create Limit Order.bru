@@ -1,0 +1,28 @@
+meta {
+  name: Create Limit Order
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{api}}/limit-orders/create
+  body: json
+  auth: inherit
+}
+
+body:json {
+   {
+    "chainId": 1,
+    "expiration": 1761934647,
+    "maker": "0x64b5e209656143b0778e3fceb529d03994fc4338",
+    "makerAsset": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    "takerAsset": "0x111111111117dc0aa78b770fa6a738034120c302",
+    "makingAmount": "1000000",
+    "takingAmount": "1000000000000000000"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

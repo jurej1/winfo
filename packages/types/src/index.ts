@@ -11,3 +11,5 @@ export * from "./moralis/wallet.type";
 export * from "./zero-x";
 
 export * from "./uniswap/uniswap-tokens.type";
+
+export * from "./one-inch";
