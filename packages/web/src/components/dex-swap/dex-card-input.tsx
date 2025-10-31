@@ -102,7 +102,8 @@ export function DexCardInput({
           <Input
             disabled={isLoading}
             key={token?.address}
-            type={isNumberInput ? "number" : undefined}
+            inputMode="decimal"
+            pattern="[0-9.,]*"
             className={cn(
               "border-none text-black shadow-none focus-visible:border-none focus-visible:ring-0",
               "transition-colors duration-300 ease-in-out",
@@ -117,7 +118,8 @@ export function DexCardInput({
             }}
             onChange={(event) => {
               if (onValChanged === undefined) return;
-              const val = event.target.value;
+              let val = event.target.value;
+              val = val.replace(/[^0-9.,]/g, "");
               onValChanged(val);
             }}
             readOnly={readonly}
