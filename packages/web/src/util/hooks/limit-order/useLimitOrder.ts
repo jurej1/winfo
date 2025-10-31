@@ -110,6 +110,39 @@ export const useLimitOrder = () => {
     }
   }, [buyToken, sellToken, setRatio]);
 
+  const calcRatio = useCallback(() => {
+    if (buyToken?.priceUsd && sellToken?.priceUsd) {
+      return sellToken.priceUsd / buyToken.priceUsd;
+    }
+    return 0;
+  }, [buyToken, sellToken]);
+
+  const onSellAmountUpdated = useCallback(
+    (val: string) => {
+      // Remove commas from the input for formatting
+      const cleanedVal = val.replace(/,/g, "");
+      setSellAmount(cleanedVal);
+
+      const buyAmount = Number(cleanedVal) * calcRatio();
+
+      setBuyAmount(buyAmount.toString());
+    },
+    [setSellAmount, ratio, calcRatio, setBuyAmount],
+  );
+
+  const onRatioUpdated = useCallback(
+    (val: string) => {
+      // Remove commas from the input for formatting
+      const cleanedVal = val.replace(/,/g, "");
+      setRatio(cleanedVal);
+
+      const buyAmount = Number(cleanedVal) * Number(sellAmount);
+
+      setBuyAmount(buyAmount.toString());
+    },
+    [setRatio, sellAmount, setBuyAmount],
+  );
+
   return {
     tokens: tokens ?? [],
     isTokensLoading,
@@ -120,11 +153,12 @@ export const useLimitOrder = () => {
     setBuyToken,
     swapTokens,
     sellAmount,
-    setSellAmount,
+    setSellAmount: onSellAmountUpdated,
     buyAmount,
     setBuyAmount,
     limitOrder: createLimitOrderParams,
     ratio,
-    setRatio,
+    setRatio: onRatioUpdated,
+    setExpiry,
   };
 };
