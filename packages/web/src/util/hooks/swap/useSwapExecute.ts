@@ -26,7 +26,7 @@ export const useSwapExecute = ({ quote }: UseSwapExecuteProps) => {
 
   const [waitHash, setWaitHash] = useState<Hash>();
 
-  const allowanceIssue = quote?.issues.allowance;
+  const allowanceIssue = quote?.issues?.allowance;
 
   const { mutateAsync: sendTransactionToDB } = useSwapAddTransaction();
 

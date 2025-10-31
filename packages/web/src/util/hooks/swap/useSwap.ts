@@ -82,11 +82,27 @@ export const useSwap = () => {
     [setSlippage, MAX_SLIPPAGE],
   );
 
+  const setSellTokenSafe = useCallback(
+    (val: TokenDBwithPrice | undefined) => {
+      if (val === buyToken) return;
+      setSellToken(val);
+    },
+    [buyToken, setSellToken],
+  );
+
+  const setBuyTokenSafe = useCallback(
+    (val: TokenDBwithPrice | undefined) => {
+      if (val === sellToken) return;
+      setBuyToken(val);
+    },
+    [sellToken, setBuyToken],
+  );
+
   return {
     sellToken,
     buyToken,
-    setSellToken,
-    setBuyToken,
+    setSellToken: setSellTokenSafe,
+    setBuyToken: setBuyTokenSafe,
     isFetchingQuote,
     quote,
     setSellAmount,

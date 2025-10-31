@@ -30,6 +30,8 @@ export function DexSwapSettingsDialog({ slippage, onSlippageChanged }: Props) {
             </div>
             <div className="flex gap-4">
               <Slider
+                defaultValue={[slippage]}
+                value={[slippage]}
                 max={100}
                 onValueChange={(val) => {
                   onSlippageChanged(val[0]);
