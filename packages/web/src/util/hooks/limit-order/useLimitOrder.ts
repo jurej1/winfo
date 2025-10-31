@@ -9,6 +9,8 @@ export type LimitOrderExpiry = "1d" | "1w" | "1m" | "1y";
 export const useLimitOrder = () => {
   const { address, chainId } = useAccount();
 
+  const [ratio, setRatio] = useState("0");
+
   const [sellToken, setSellToken] = useState<TokenDBwithPrice | undefined>(
     undefined,
   );
@@ -37,8 +39,14 @@ export const useLimitOrder = () => {
 
       const usdt = tokens.find((token) => token.symbol === "USDT");
       setBuyToken(usdt);
+
+      if (native?.priceUsd && usdt?.priceUsd) {
+        const ratio = native.priceUsd / usdt?.priceUsd;
+
+        setRatio(ratio.toString());
+      }
     }
-  }, [isTokensLoadSuccess, tokens, setBuyToken, setSellToken]);
+  }, [isTokensLoadSuccess, tokens, setBuyToken, setSellToken, setRatio]);
 
   const swapTokens = useCallback(() => {
     if (sellToken && buyToken) {
@@ -88,6 +96,14 @@ export const useLimitOrder = () => {
     calcualteExpiryAddOn,
   ]);
 
+  useEffect(() => {
+    if (buyToken?.priceUsd && sellToken?.priceUsd) {
+      const ratio = sellToken.priceUsd / buyToken.priceUsd;
+
+      setRatio(ratio.toString());
+    }
+  }, [buyToken, sellToken, setRatio]);
+
   return {
     tokens: tokens ?? [],
     isTokensLoading,
@@ -102,5 +118,6 @@ export const useLimitOrder = () => {
     buyAmount,
     setBuyAmount,
     limitOrder: createLimitOrderParams,
+    ratio,
   };
 };

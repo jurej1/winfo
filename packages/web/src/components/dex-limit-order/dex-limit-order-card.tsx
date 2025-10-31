@@ -20,6 +20,7 @@ export function DexLimitOrderCard() {
     buyAmount,
     tokens,
     isTokensLoading,
+    ratio,
   } = useLimitOrder();
 
   const additionalTokens = useDexAdditionalTokens({
@@ -43,7 +44,11 @@ export function DexLimitOrderCard() {
         <DexCardHeader title={"Limit Order"} isLoading={false} />
       </CardHeader>
       <CardContent className="flex flex-col gap-2">
-        <DexWhenWorthInput buyToken={buyToken} sellToken={sellToken} />
+        <DexWhenWorthInput
+          buyToken={buyToken}
+          sellToken={sellToken}
+          ratio={ratio}
+        />
 
         <div className="relative flex flex-col gap-2">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">

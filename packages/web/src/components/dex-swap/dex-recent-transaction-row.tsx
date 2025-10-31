@@ -20,6 +20,9 @@ export function DexRecentTransactionRow({ tx }: Props) {
   const { isLoading, data } = useTransactionReceipt({
     hash: transactionHash as Address,
     chainId: chainId,
+    query: {
+      enabled: !!chainId && !!transactionHash,
+    },
   });
 
   if (isLoading || !data) return <></>;
