@@ -2,7 +2,6 @@ import {
   useSendTransaction,
   useSignTypedData,
   useWaitForTransactionReceipt,
-  useWriteContract,
 } from "wagmi";
 
 import { useSwapStore } from "./useSwapStore";
@@ -49,7 +48,6 @@ export const useSwapExecute = () => {
 
   const { sendTransactionAsync } = useSendTransaction();
   const { signTypedDataAsync } = useSignTypedData();
-  const { writeContractAsync } = useWriteContract();
 
   const isApprovalNeeded = useMemo(() => {
     return !!allowanceIssue && allowanceIssue.actual === "0";
