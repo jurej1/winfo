@@ -6,7 +6,6 @@ import {
   DexSwapTokensButton,
   DexCardHeader,
   DexConfirmSwapDialog,
-  DexSwapCollapsibleInfo,
   DexTokenValueComparison,
   DexCardInput,
 } from "@/components/dex-swap";
@@ -37,7 +36,7 @@ export function DexSwapCard() {
     quote,
   } = useSwap();
 
-  const sellAmountToLow = useSwapSellBalanceToLow({
+  const isUserBalanceToLow = useSwapSellBalanceToLow({
     amount: sellAmount,
     token: sellToken,
   });
@@ -71,7 +70,7 @@ export function DexSwapCard() {
           onSetToken={setSellToken}
           isNumberInput
           showAmountSelector
-          amountToLow={sellAmountToLow}
+          balanceToLow={isUserBalanceToLow}
         />
         <DexCardInput
           title="Buy"
@@ -85,13 +84,12 @@ export function DexSwapCard() {
       </CardContent>
       <CardFooter className="flex flex-col items-start gap-2">
         <DexConfirmSwapDialog
-          balanceToLow={sellAmountToLow}
+          balanceToLow={isUserBalanceToLow}
           sellToken={sellToken}
           loadingQuote={isFetchingQuote}
           quote={quote}
         />
         <DexTokenValueComparison sellToken={sellToken} buyToken={buyToken} />
-        <DexSwapCollapsibleInfo />
       </CardFooter>
     </Card>
   );

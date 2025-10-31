@@ -24,7 +24,7 @@ type Props = {
   isNumberInput?: boolean;
   isLoading?: boolean;
   showAmountSelector?: boolean;
-  amountToLow?: boolean;
+  balanceToLow?: boolean;
   additionalTokens?: TokenDBwithPrice[];
 };
 
@@ -38,7 +38,7 @@ export function DexCardInput({
   isLoading = false,
   isNumberInput = false,
   showAmountSelector = false,
-  amountToLow,
+  balanceToLow,
   additionalTokens,
 }: Props) {
   const { chainId, address } = useAccount();
@@ -107,7 +107,7 @@ export function DexCardInput({
               "border-none text-black shadow-none focus-visible:border-none focus-visible:ring-0",
               "transition-colors duration-300 ease-in-out",
               {
-                "text-red-400": amountToLow,
+                "text-red-400": balanceToLow,
               },
             )}
             placeholder="0.0"
@@ -133,8 +133,8 @@ export function DexCardInput({
               "text-base",
               "transition-colors duration-300 ease-in-out",
               {
-                "text-red-400": amountToLow,
-                "text-gray-400": !amountToLow,
+                "text-red-400": balanceToLow,
+                "text-gray-400": !balanceToLow,
               },
             )}
           >
