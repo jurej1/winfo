@@ -20,6 +20,9 @@ export const useSwapSellBalanceToLow = ({
     token: token?.native ? undefined : token?.address,
     address,
     chainId,
+    query: {
+      enabled: !!token,
+    },
   });
 
   useEffect(() => {

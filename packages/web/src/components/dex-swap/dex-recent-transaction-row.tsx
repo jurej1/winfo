@@ -18,7 +18,7 @@ export function DexRecentTransactionRow({ tx }: Props) {
   const { transactionHash, chainId } = tx;
 
   const { isLoading, data } = useTransactionReceipt({
-    hash: transactionHash as Address | undefined,
+    hash: transactionHash as Address,
     chainId: chainId,
   });
 

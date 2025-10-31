@@ -1,11 +1,11 @@
 import { getQuote } from "@/util/api/swap";
 import { useMutation, UseMutationOptions } from "@tanstack/react-query";
-import { GetQuote0XResponse, GetPrice0XParams } from "@w-info-sst/types";
+import { GetQuote0XResponse, GetQuote0XParams } from "@w-info-sst/types";
 
 type SwapQuoteOptions = UseMutationOptions<
   GetQuote0XResponse,
   Error,
-  GetPrice0XParams
+  GetQuote0XParams
 >;
 
 export const useSwapQuote = (options?: SwapQuoteOptions) => {

@@ -1,6 +1,8 @@
 import { GetPrice0XParams } from "./get-price.type";
 
-export type GetQuote0XParams = GetPrice0XParams;
+export type GetQuote0XParams = GetPrice0XParams & {
+  slippageBps: number;
+};
 
 export type GetQuote0XResponse = {
   name?: string; // error name in case something goes wrong

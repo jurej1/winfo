@@ -41,6 +41,7 @@ export class ZeroXRepository {
       sellToken: params.sellToken,
       sellAmount: params.sellAmount,
       taker: params.taker,
+      slippageBps: params.slippageBps.toString(),
     });
 
     const url = `${this.baseUrl}/quote?${searchParams}`;

@@ -4,7 +4,11 @@ import { useAccount } from "wagmi";
 import { useSwapTokens } from "./useSwapTokens";
 import { useSwapQuote } from "./useSwapQuote";
 import { TokenDBwithPrice } from "@w-info-sst/db";
-import { GetQuote0XResponse } from "@w-info-sst/types";
+import { GetQuote0XParams, GetQuote0XResponse } from "@w-info-sst/types";
+
+const DEFAULT_SLIPPAGE = 100;
+const MAX_SLIPPAGE = 10000;
+
 export const useSwap = () => {
   const { address, chainId } = useAccount();
 
@@ -14,6 +18,8 @@ export const useSwap = () => {
   const [sellAmount, setSellAmount] = useState("0");
 
   const [quote, setQuote] = useState<GetQuote0XResponse | undefined>();
+
+  const [slippage, setSlippage] = useState<number>(DEFAULT_SLIPPAGE);
 
   const { data: tokens, isLoading: isLoadingTokens } = useSwapTokens();
 
@@ -47,13 +53,14 @@ export const useSwap = () => {
         sellAmount: sellAmountInWei.toString(),
         sellToken: sellToken?.address,
         taker: address,
-      };
+        slippageBps: slippage,
+      } as GetQuote0XParams;
 
       fetchQuote(params);
     }, 500);
 
     return () => clearTimeout(handler);
-  }, [sellAmount, chainId, address, fetchQuote, sellToken, buyToken]);
+  }, [sellAmount, chainId, address, fetchQuote, sellToken, buyToken, slippage]);
 
   const swapTokens = useCallback(() => {
     let a = sellToken;
@@ -62,6 +69,18 @@ export const useSwap = () => {
     setBuyToken(a);
     setSellToken(b);
   }, [sellToken, buyToken, setSellToken, setBuyToken]);
+
+  const formattedSlippage = useCallback(() => {
+    return (slippage / MAX_SLIPPAGE) * 100;
+  }, [slippage, MAX_SLIPPAGE]);
+
+  const setSlippagePercentage = useCallback(
+    (val: number) => {
+      const percentage = val / 100;
+      setSlippage(percentage * MAX_SLIPPAGE);
+    },
+    [setSlippage, MAX_SLIPPAGE],
+  );
 
   return {
     sellToken,
@@ -75,5 +94,7 @@ export const useSwap = () => {
     tokens: tokens ?? [],
     swapTokens,
     sellAmount,
+    slippage: formattedSlippage(),
+    setSlippage: setSlippagePercentage,
   };
 };

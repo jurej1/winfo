@@ -39,6 +39,7 @@ export const getQuote = async (params: GetQuote0XParams) => {
     sellToken: params.sellToken,
     sellAmount: params.sellAmount,
     taker: params.taker,
+    slippageBps: params.slippageBps.toString(),
   });
 
   const url = `${API}/swap/quote?${searchParams}`;

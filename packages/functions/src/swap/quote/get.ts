@@ -16,6 +16,7 @@ const schema = {
         sellAmount: { type: "string" },
         chainId: { type: "number" },
         taker: { type: "string" },
+        slippageBps: { type: "number" },
       },
       required: ["sellToken", "buyToken", "sellAmount", "chainId", "taker"],
     },

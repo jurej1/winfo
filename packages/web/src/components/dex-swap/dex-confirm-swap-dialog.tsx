@@ -24,10 +24,6 @@ export function DexConfirmSwapDialog({
     quote,
   });
 
-  console.log("loadingQuote", loadingQuote);
-  console.log("transaction", quote);
-  console.log("balanceToLow", balanceToLow);
-
   return (
     <Button
       className="w-full cursor-pointer py-7 text-lg"

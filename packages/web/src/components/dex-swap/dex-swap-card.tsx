@@ -20,6 +20,8 @@ import { useSwapSellBalanceToLow } from "@/util/hooks/swap/useSwapSellBalanceToL
 import { useDexAdditionalTokens } from "@/util/hooks/useDexAdditionalTokens";
 import { useFormattedBigNumber } from "@/util/formatter/useFormattedBigNumber";
 import { NumberType } from "@/util/formatter/types";
+import { Spinner } from "../ui/spinner";
+import { DexSwapSettingsDialog } from "./dex-swap-settings-dialog";
 
 export function DexSwapCard() {
   const {
@@ -34,6 +36,8 @@ export function DexSwapCard() {
     buyToken,
     setBuyToken,
     quote,
+    slippage,
+    setSlippage,
   } = useSwap();
 
   const isUserBalanceToLow = useSwapSellBalanceToLow({
@@ -56,7 +60,18 @@ export function DexSwapCard() {
   return (
     <Card>
       <CardHeader>
-        <DexCardHeader isLoading={isLoadingTokens} title="Swap" />
+        <div className="flex items-center justify-between">
+          <span className="text-xl font-bold">SWAP</span>
+
+          {isLoadingTokens ? (
+            <Spinner />
+          ) : (
+            <DexSwapSettingsDialog
+              slippage={slippage}
+              onSlippageChanged={setSlippage}
+            />
+          )}
+        </div>
       </CardHeader>
       <CardContent className="relative flex flex-col gap-2">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
