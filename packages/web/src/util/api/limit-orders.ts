@@ -10,6 +10,9 @@ export const createLimitOrder = async (params: CreateOneInchOrderParams) => {
     {
       method: "POST",
       body: JSON.stringify(params),
+      headers: {
+        "Content-Type": "application/json",
+      },
     },
   );
 
@@ -22,5 +25,8 @@ export const submitLimitOrder = async (params: SubmitOneInchOrderParams) => {
   return fetch(`${process.env.NEXT_PUBLIC_API_URL}/limit-orders/submit`, {
     method: "POST",
     body: JSON.stringify(params),
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
 };

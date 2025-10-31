@@ -79,15 +79,26 @@ export const useLimitOrder = () => {
 
   const createLimitOrderParams = useCallback(() => {
     if (chainId && address && sellToken && buyToken) {
-      const expiration = Date.now() / 1000 + calcualteExpiryAddOn();
+      if (!(Number(sellAmount) > 0)) return;
+      if (!(Number(buyAmount) > 0)) return;
+
+      const expiration = Math.floor(Date.now() / 1000 + calcualteExpiryAddOn());
+
+      const makerAmountInWei = BigInt(
+        Math.floor(parseFloat(sellAmount) * Math.pow(10, sellToken.decimals)),
+      );
+
+      const takerAmountInWei = BigInt(
+        Math.floor(parseFloat(buyAmount) * Math.pow(10, buyToken.decimals)),
+      );
 
       return {
         chainId,
         maker: address,
         makerAsset: sellToken.address,
         takerAsset: buyToken.address,
-        makingAmount: sellAmount,
-        takingAmount: buyAmount,
+        makingAmount: makerAmountInWei.toString(),
+        takingAmount: takerAmountInWei.toString(),
         expiration,
       } as CreateOneInchOrderParams;
     }
@@ -156,7 +167,7 @@ export const useLimitOrder = () => {
     setSellAmount: onSellAmountUpdated,
     buyAmount,
     setBuyAmount,
-    limitOrder: createLimitOrderParams,
+    limitOrderParams: createLimitOrderParams,
     ratio,
     setRatio: onRatioUpdated,
     setExpiry,
