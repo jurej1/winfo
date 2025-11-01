@@ -61,8 +61,8 @@ export function DexLimitOrderRatioSelecetor({
         }}
         className={cn(
           "flex flex-row items-center",
-          "scale-100 cursor-pointer rounded-2xl border bg-transparent px-2 text-sm font-semibold text-gray-500/60",
-          "transition-transform duration-150 ease-in-out hover:scale-107",
+          "cursor-pointer rounded-2xl border bg-transparent px-2 text-sm font-semibold text-gray-500/60",
+          "transition-transform duration-150 ease-in-out hover:text-gray-300",
           "transition-colors duration-150 ease-in-out",
           {
             "bg-gray-200/50 text-gray-500": isLastClicked,
