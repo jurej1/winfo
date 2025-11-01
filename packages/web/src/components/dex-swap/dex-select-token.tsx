@@ -15,7 +15,6 @@ import { Button } from "../ui/button";
 import Image from "next/image";
 import { TokenDB, TokenDBwithPrice } from "@w-info-sst/db";
 import { useSwapTokens } from "@/util/hooks/swap/useSwapTokens";
-import { DexCoinButton } from "./dex-coin-button";
 
 type Props = {
   token?: TokenDBwithPrice;

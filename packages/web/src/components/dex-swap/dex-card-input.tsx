@@ -36,7 +36,6 @@ export function DexCardInput({
   onSetToken,
   readonly,
   isLoading = false,
-  isNumberInput = false,
   showAmountSelector = false,
   balanceToLow,
   additionalTokens,
