@@ -79,17 +79,18 @@ export const useLimitOrder = () => {
 
   const createLimitOrderParams = useCallback(() => {
     if (chainId && address && sellToken && buyToken) {
-      if (!(Number(sellAmount) > 0)) return;
-      if (!(Number(buyAmount) > 0)) return;
+      const sellVal = Number(sellAmount);
+      const buyVal = Number(buyAmount);
+
+      if (sellVal <= 0 || buyVal <= 0) return;
 
       const expiration = Math.floor(Date.now() / 1000 + calcualteExpiryAddOn());
 
       const makerAmountInWei = BigInt(
-        Math.floor(parseFloat(sellAmount) * Math.pow(10, sellToken.decimals)),
+        Math.floor(sellVal * 10 ** sellToken.decimals),
       );
-
       const takerAmountInWei = BigInt(
-        Math.floor(parseFloat(buyAmount) * Math.pow(10, buyToken.decimals)),
+        Math.floor(buyVal * 10 ** buyToken.decimals),
       );
 
       return {
