@@ -1,9 +1,9 @@
-"use state";
+"use client";
 
 import { cn } from "@/lib/utils";
 import { useLocalizedFormatter } from "@/util/formatter/useLocalizedFormatter";
 import { RATIO_PERCENTAGES } from "@/util/hooks/limit-order/useLimitOrder";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 
 import { IoIosClose } from "react-icons/io";
 
@@ -37,10 +37,15 @@ export function DexLimitOrderRatioSelecetor({
 
     if (isNaN(val) || Math.abs(val) <= 10) return "Market";
 
-    setLastClicked(0);
-
     return percentage;
-  }, [percentageFormatted, setLastClicked]);
+  }, [percentageFormatted]);
+
+  useEffect(() => {
+    const { val } = percentageFormatted;
+    if (!isNaN(val) && Math.abs(val) > 10) {
+      setLastClicked(0);
+    }
+  }, [percentageFormatted]);
 
   const RatioButton = ({
     children,
@@ -73,7 +78,6 @@ export function DexLimitOrderRatioSelecetor({
         {showClose && <IoIosClose style={{ width: 22, height: 22 }} />}
       </button>
     );
-    1;
   };
 
   return (
