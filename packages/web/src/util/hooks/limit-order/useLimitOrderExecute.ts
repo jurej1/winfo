@@ -1,14 +1,18 @@
 import { CreateOneInchOrderParams } from "@w-info-sst/types";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useLimitOrderCreate } from "./useLimitOrderCreate";
 import { useSignTypedData } from "wagmi";
 import { useLimitOrderSubmit } from "./useLimitOrderSubmit";
+import { toast } from "sonner";
+import { TransactionExecutionError, UserRejectedRequestError } from "viem";
 
 type UseLimitOrderExecuteProps = {
   order: CreateOneInchOrderParams | undefined;
 };
 
 export const useLimitOrderExecute = ({ order }: UseLimitOrderExecuteProps) => {
+  const [loading, setLoading] = useState(false);
+
   const { mutateAsync: createLimitOrder } = useLimitOrderCreate();
 
   const { mutateAsync: submitLimitOrder } = useLimitOrderSubmit();
@@ -17,23 +21,46 @@ export const useLimitOrderExecute = ({ order }: UseLimitOrderExecuteProps) => {
 
   const execute = useCallback(async () => {
     if (!order) return;
+
+    setLoading(true);
     // 1. POST /limit-orders/create
-    const createOrderResponse = await createLimitOrder(order);
+    try {
+      const createOrderResponse = await createLimitOrder(order);
 
-    // 2. signTypedData
-    const { typedData, order: responseOrder } = createOrderResponse;
+      // 2. signTypedData
+      const { typedData, order: responseOrder } = createOrderResponse;
 
-    const signature = await signTypedDataAsync(typedData);
+      const signature = await signTypedDataAsync(typedData);
 
-    // 3. POST /limit-orders/submit
-    await submitLimitOrder({
-      chainId: order.chainId,
-      order: responseOrder,
-      signature,
-    });
-  }, [order, createLimitOrder, submitLimitOrder, signTypedDataAsync]);
+      // 3. POST /limit-orders/submit
+      // await submitLimitOrder({
+      //   chainId: order.chainId,
+      //   order: responseOrder,
+      //   signature,
+      // });
+    } catch (error) {
+      const isDenied =
+        error instanceof UserRejectedRequestError ||
+        error instanceof TransactionExecutionError;
+
+      if (isDenied) {
+        toast.error("Denied 😭");
+      } else {
+        toast.error("Failed to execute limit order");
+      }
+    } finally {
+      setLoading(false);
+    }
+  }, [
+    order,
+    createLimitOrder,
+    submitLimitOrder,
+    signTypedDataAsync,
+    setLoading,
+  ]);
 
   return {
     execute,
+    isLoading: loading,
   };
 };

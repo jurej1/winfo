@@ -15,6 +15,7 @@ import { Button } from "../ui/button";
 import Image from "next/image";
 import { TokenDB, TokenDBwithPrice } from "@w-info-sst/db";
 import { useSwapTokens } from "@/util/hooks/swap/useSwapTokens";
+import { DexCoinButton } from "./dex-coin-button";
 
 type Props = {
   token?: TokenDBwithPrice;
@@ -44,13 +45,13 @@ export function DexSelectToken({ token, onSetToken }: Props) {
         {!token ? (
           <Button>Select Token</Button>
         ) : (
-          <Button>
+          <Button className="w-30">
             <div className="flex gap-2">
               <Image
                 src={token.image ?? ""}
                 height={20}
                 width={20}
-                alt={token.symbol}
+                alt={`${token.symbol} image`}
                 draggable={false}
                 referrerPolicy="no-referrer"
               />
