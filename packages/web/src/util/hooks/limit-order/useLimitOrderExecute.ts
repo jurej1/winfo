@@ -28,16 +28,18 @@ export const useLimitOrderExecute = ({ order }: UseLimitOrderExecuteProps) => {
       const createOrderResponse = await createLimitOrder(order);
 
       // 2. signTypedData
-      const { typedData, order: responseOrder } = createOrderResponse;
+      const { typedData, orderData, extension } = createOrderResponse;
 
       const signature = await signTypedDataAsync(typedData);
 
       // 3. POST /limit-orders/submit
-      // await submitLimitOrder({
-      //   chainId: order.chainId,.
-      //   order: responseOrder,
-      //   signature,
-      // });
+      // Send the serialized orderData and extension to reconstruct the order on the backend
+      await submitLimitOrder({
+        chainId: order.chainId,
+        orderData,
+        extension,
+        signature,
+      });
     } catch (error) {
       const isDenied =
         error instanceof UserRejectedRequestError ||

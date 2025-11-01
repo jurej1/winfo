@@ -1,4 +1,8 @@
-import { LimitOrderWithFee } from "@1inch/limit-order-sdk";
+import {
+  Extension,
+  LimitOrderV4Struct,
+  LimitOrderWithFee,
+} from "@1inch/limit-order-sdk";
 import middy from "@middy/core";
 import httpJsonBodyParser from "@middy/http-json-body-parser";
 import validator from "@middy/validator";
@@ -16,13 +20,19 @@ const schema = {
   properties: {
     body: {
       type: "object",
-      required: ["chainId", "signature"],
+      required: ["chainId", "signature", "orderData", "extension"],
       properties: {
         chainId: {
           type: "number",
         },
         signature: {
           type: "string",
+        },
+        orderData: {
+          type: "object",
+        },
+        extension: {
+          type: "object",
         },
       },
     },
@@ -34,13 +44,19 @@ const eventSchema = transpileSchema(schema);
 const baseHandler = async (
   event: ApiGwRequest<{
     body: {
-      order: LimitOrderWithFee;
+      orderData: LimitOrderV4Struct;
+      extension: Extension;
       chainId: number;
       signature: string;
     };
   }>,
 ) => {
-  const { order, chainId, signature } = event.body;
+  const { orderData, extension, chainId, signature } = event.body;
+
+  const order = LimitOrderWithFee.fromDataAndExtension(
+    orderData,
+    extension as Extension,
+  );
 
   await submitOneInchLimitOrder(chainId, order, signature);
 

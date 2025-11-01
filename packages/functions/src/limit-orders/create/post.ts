@@ -67,10 +67,16 @@ const baseHandler = async (
 
   const orderHash = order.getOrderHash(chainId);
 
+  // Serialize order to plain object structures that can be JSON stringified
+  // The order data structure and extension can be used to reconstruct the order
+  const orderData = order.build(); // Returns LimitOrderV4Struct (serializable)
+  const extension = order.feeExtension.build(); // Returns Extension (serializable)
+
   return {
     statusCode: 200,
     body: {
-      order,
+      orderData, // LimitOrderV4Struct - can be reconstructed
+      extension, // Extension - can be reconstructed
       typedData,
       orderHash,
     },

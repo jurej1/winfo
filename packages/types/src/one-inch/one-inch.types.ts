@@ -1,4 +1,4 @@
-import { EIP712TypedData, LimitOrderWithFee } from "@1inch/limit-order-sdk";
+import { EIP712TypedData, LimitOrderV4Struct, Extension } from "@1inch/limit-order-sdk";
 
 export type CreateOneInchOrderParams = {
   chainId: number;
@@ -11,13 +11,15 @@ export type CreateOneInchOrderParams = {
 };
 
 export type CreateOneInchOrderResponse = {
-  order: LimitOrderWithFee;
+  orderData: LimitOrderV4Struct; // Serialized order data for reconstruction
+  extension: Extension; // Serialized extension for reconstruction
   typedData: EIP712TypedData;
   orderHash: string;
 };
 
 export type SubmitOneInchOrderParams = {
   chainId: number;
-  order: LimitOrderWithFee;
+  orderData: LimitOrderV4Struct;
+  extension: Extension;
   signature: string;
 };

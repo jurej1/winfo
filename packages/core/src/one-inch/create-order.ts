@@ -13,7 +13,10 @@ export const createOneInchLimitOrder = ({
 }: CreateOneInchOrderParams) => {
   const sdk = oneInchSdk(chainId);
 
-  const makerTraits = MakerTraits.default().withExpiration(BigInt(expiration));
+  const makerTraits = MakerTraits.default()
+    .withExpiration(BigInt(expiration))
+    .allowPartialFills()
+    .allowMultipleFills();
 
   return sdk.createOrder(
     {
