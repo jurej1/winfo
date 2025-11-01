@@ -23,13 +23,14 @@ export function DexLimitOrderCard() {
     setBuyToken,
     buyAmount,
     tokens,
-    isTokensLoading,
     ratio,
     setRatio,
     limitOrderParams,
     setExpiry,
     expiry,
     selectRatio,
+    ratioPercentage,
+    swapTokens,
   } = useLimitOrder();
 
   const additionalTokens = useDexAdditionalTokens({
@@ -50,15 +51,12 @@ export function DexLimitOrderCard() {
           ratio={ratio}
           setRatio={setRatio}
           selectRatio={selectRatio}
+          ratioPercentage={ratioPercentage}
         />
 
         <div className="relative flex flex-col gap-2">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-            <DexSwapTokensButton
-              onClick={() => {
-                console.log("TODO");
-              }}
-            />
+            <DexSwapTokensButton onClick={swapTokens} />
           </div>
 
           <DexLimitOrderInputCard
@@ -69,8 +67,6 @@ export function DexLimitOrderCard() {
             readonly={false}
             setVal={setSellAmount}
             value={sellAmount}
-            tokens={tokens}
-            tokensLoading={isTokensLoading}
             showTokenPercentageSelector={true}
           />
           <DexLimitOrderInputCard
@@ -81,8 +77,6 @@ export function DexLimitOrderCard() {
             readonly={true}
             setVal={setBuyAmount}
             value={buyAmount}
-            tokens={tokens}
-            tokensLoading={isTokensLoading}
             showTokenPercentageSelector={false}
             additionalTokens={additionalTokens}
           />

@@ -105,7 +105,7 @@ export function DexCardInput({
             inputMode="decimal"
             pattern="[0-9.,]*"
             className={cn(
-              "border-none text-black shadow-none focus-visible:border-none focus-visible:ring-0",
+              "border-none font-medium text-black shadow-none focus-visible:border-none focus-visible:ring-0",
               "transition-colors duration-300 ease-in-out",
               {
                 "text-red-400": balanceToLow,

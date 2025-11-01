@@ -13,6 +13,7 @@ export const useLimitOrder = () => {
   const { address, chainId } = useAccount();
 
   const [ratio, setRatio] = useState("0");
+  const [ratioPercentage, setRatioPercentage] = useState<number>(0);
 
   const [sellToken, setSellToken] = useState<TokenDBwithPrice | undefined>(
     undefined,
@@ -37,20 +38,34 @@ export const useLimitOrder = () => {
     isSuccess: isTokensLoadSuccess,
   } = useSwapTokens();
 
+  const calcMarketRatio = useCallback(() => {
+    if (buyToken?.priceUsd && sellToken?.priceUsd) {
+      return sellToken.priceUsd / buyToken.priceUsd;
+    }
+    return 0;
+  }, [buyToken, sellToken]);
+
   const onRatioUpdated = useCallback(
     (val: string) => {
       const cleanedVal = val.replace(/,/g, "");
       setRatio(cleanedVal);
 
-      const sellVal = Number(sellAmount);
+      const ratioNumber = Number(cleanedVal);
 
+      const marketRatio = calcMarketRatio();
+
+      const customRatioPercentage =
+        ((ratioNumber - marketRatio) / marketRatio) * 100;
+
+      setRatioPercentage(customRatioPercentage);
+
+      const sellVal = Number(sellAmount);
       if (sellVal <= 0) return;
 
-      const buyAmount = Number(cleanedVal) * sellVal;
-
+      const buyAmount = ratioNumber * sellVal;
       setBuyAmount(buyAmount.toString());
     },
-    [setRatio, sellAmount, setBuyAmount],
+    [setRatio, sellAmount, setBuyAmount, setRatioPercentage, calcMarketRatio],
   );
 
   useEffect(() => {
@@ -140,13 +155,6 @@ export const useLimitOrder = () => {
     }
   }, [buyToken, sellToken, onRatioUpdated]);
 
-  const calcMarketRatio = useCallback(() => {
-    if (buyToken?.priceUsd && sellToken?.priceUsd) {
-      return sellToken.priceUsd / buyToken.priceUsd;
-    }
-    return 0;
-  }, [buyToken, sellToken]);
-
   const onSellAmountUpdated = useCallback(
     (val: string) => {
       // Remove commas from the input for formatting
@@ -192,5 +200,6 @@ export const useLimitOrder = () => {
     setExpiry,
     expiry,
     selectRatio,
+    ratioPercentage,
   };
 };

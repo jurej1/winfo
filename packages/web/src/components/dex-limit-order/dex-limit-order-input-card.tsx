@@ -21,8 +21,6 @@ type Props = {
   readonly: boolean;
   value: string;
   setVal: (val: string) => void;
-  tokens: TokenDBwithPrice[];
-  tokensLoading: boolean;
   showTokenPercentageSelector: boolean;
   additionalTokens?: TokenDBwithPrice[];
 };
@@ -35,8 +33,6 @@ export function DexLimitOrderInputCard({
   readonly,
   setVal,
   value,
-  tokens,
-  tokensLoading,
   showTokenPercentageSelector,
   additionalTokens,
 }: Props) {
@@ -93,7 +89,7 @@ export function DexLimitOrderInputCard({
           key={token?.address}
           type={numberInput ? "number" : undefined}
           className={cn(
-            "border-none text-black shadow-none focus-visible:border-none focus-visible:ring-0",
+            "border-none font-medium text-black shadow-none focus-visible:border-none focus-visible:ring-0",
             "transition-colors duration-300 ease-in-out",
             // TOOD amount to low missin
           )}
