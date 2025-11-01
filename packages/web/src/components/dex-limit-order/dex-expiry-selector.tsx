@@ -37,7 +37,7 @@ export function DexExpirySelector({ setExpiry, selected }: Props) {
 
   return (
     <div className="flex w-full justify-between">
-      <span>Expiry</span>
+      <span className="text-gray-400">Expiry</span>
       <div className="flex gap-1">
         <TimerButton val="1d">1 Day</TimerButton>
         <TimerButton val="1w">1 Week</TimerButton>
