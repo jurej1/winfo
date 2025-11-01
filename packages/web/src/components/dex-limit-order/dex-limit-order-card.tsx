@@ -1,12 +1,16 @@
 "use client";
 
-import { useLimitOrder } from "@/util/hooks/limit-order/useLimitOrder";
+import {
+  LimitOrderExpiry,
+  useLimitOrder,
+} from "@/util/hooks/limit-order/useLimitOrder";
 import { DexCardHeader, DexSwapTokensButton } from "../dex-swap";
 import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
 import { DexLimitOrderInputCard } from "./dex-limit-order-input-card";
 import { useDexAdditionalTokens } from "@/util/hooks/useDexAdditionalTokens";
 import { DexLimitOrderSubmit } from "./dex-limit-order-submit";
 import { DexWhenWorthInput } from "./dex-when-worth-input";
+import { DexExpirySelector } from "./dex-expiry-selector";
 
 export function DexLimitOrderCard() {
   const {
@@ -23,6 +27,8 @@ export function DexLimitOrderCard() {
     ratio,
     setRatio,
     limitOrderParams,
+    setExpiry,
+    expiry,
   } = useLimitOrder();
 
   const additionalTokens = useDexAdditionalTokens({
@@ -82,7 +88,8 @@ export function DexLimitOrderCard() {
           />
         </div>
       </CardContent>
-      <CardFooter>
+      <CardFooter className="flex flex-col gap-4">
+        <DexExpirySelector setExpiry={setExpiry} selected={expiry} />
         <DexLimitOrderSubmit orderParams={limitOrderParams()} />
       </CardFooter>
     </Card>

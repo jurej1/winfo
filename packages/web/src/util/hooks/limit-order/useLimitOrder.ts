@@ -172,5 +172,6 @@ export const useLimitOrder = () => {
     ratio,
     setRatio: onRatioUpdated,
     setExpiry,
+    expiry,
   };
 };
