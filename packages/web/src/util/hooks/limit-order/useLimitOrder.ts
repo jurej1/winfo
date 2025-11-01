@@ -7,6 +7,8 @@ import { useLocalizedFormatter } from "@/util/formatter/useLocalizedFormatter";
 
 export type LimitOrderExpiry = "1d" | "1w" | "1m" | "1y";
 
+export const RATIO_PERCENTAGES: number[] = [0.01, 0.05, 0.1];
+
 export const useLimitOrder = () => {
   const { address, chainId } = useAccount();
 
@@ -35,6 +37,22 @@ export const useLimitOrder = () => {
     isSuccess: isTokensLoadSuccess,
   } = useSwapTokens();
 
+  const onRatioUpdated = useCallback(
+    (val: string) => {
+      const cleanedVal = val.replace(/,/g, "");
+      setRatio(cleanedVal);
+
+      const sellVal = Number(sellAmount);
+
+      if (sellVal <= 0) return;
+
+      const buyAmount = Number(cleanedVal) * sellVal;
+
+      setBuyAmount(buyAmount.toString());
+    },
+    [setRatio, sellAmount, setBuyAmount],
+  );
+
   useEffect(() => {
     if (isTokensLoadSuccess && tokens) {
       const native = tokens.find((token) => token.native);
@@ -47,10 +65,10 @@ export const useLimitOrder = () => {
         const ratio = native.priceUsd / usdt?.priceUsd;
 
         const formatted = formatNumberOrString({ value: ratio });
-        setRatio(formatted);
+        onRatioUpdated(formatted);
       }
     }
-  }, [isTokensLoadSuccess, tokens, setBuyToken, setSellToken, setRatio]);
+  }, [isTokensLoadSuccess, tokens, setBuyToken, setSellToken, onRatioUpdated]);
 
   const swapTokens = useCallback(() => {
     if (sellToken && buyToken) {
@@ -118,11 +136,11 @@ export const useLimitOrder = () => {
       const ratio = sellToken.priceUsd / buyToken.priceUsd;
 
       const formatted = formatNumberOrString({ value: ratio });
-      setRatio(formatted);
+      onRatioUpdated(formatted);
     }
-  }, [buyToken, sellToken, setRatio]);
+  }, [buyToken, sellToken, onRatioUpdated]);
 
-  const calcRatio = useCallback(() => {
+  const calcMarketRatio = useCallback(() => {
     if (buyToken?.priceUsd && sellToken?.priceUsd) {
       return sellToken.priceUsd / buyToken.priceUsd;
     }
@@ -135,24 +153,24 @@ export const useLimitOrder = () => {
       const cleanedVal = val.replace(/,/g, "");
       setSellAmount(cleanedVal);
 
-      const buyAmount = Number(cleanedVal) * calcRatio();
+      const buyAmount = Number(cleanedVal) * calcMarketRatio();
 
       setBuyAmount(buyAmount.toString());
     },
-    [setSellAmount, ratio, calcRatio, setBuyAmount],
+    [setSellAmount, ratio, calcMarketRatio, setBuyAmount],
   );
 
-  const onRatioUpdated = useCallback(
-    (val: string) => {
-      // Remove commas from the input for formatting
-      const cleanedVal = val.replace(/,/g, "");
-      setRatio(cleanedVal);
+  const selectRatio = useCallback(
+    (val: number) => {
+      const multiplier = 1 + val;
 
-      const buyAmount = Number(cleanedVal) * Number(sellAmount);
+      const newRatio = calcMarketRatio() * multiplier;
 
-      setBuyAmount(buyAmount.toString());
+      const formatted = formatNumberOrString({ value: newRatio });
+
+      onRatioUpdated(formatted);
     },
-    [setRatio, sellAmount, setBuyAmount],
+    [onRatioUpdated, calcMarketRatio],
   );
 
   return {
@@ -173,5 +191,6 @@ export const useLimitOrder = () => {
     setRatio: onRatioUpdated,
     setExpiry,
     expiry,
+    selectRatio,
   };
 };

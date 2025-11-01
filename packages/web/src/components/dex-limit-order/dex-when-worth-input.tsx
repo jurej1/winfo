@@ -7,11 +7,13 @@ import { Input } from "../ui/input";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { Button } from "../ui/button";
+import { DexLimitOrderRatioSelecetor } from "./dex-limit-order-ratio-selector";
 
 type Props = {
   sellToken?: TokenDBwithPrice;
   buyToken?: TokenDBwithPrice;
   ratio: string;
+  selectRatio: (val: number) => void;
   setRatio: (val: string) => void;
 };
 
@@ -20,19 +22,22 @@ export function DexWhenWorthInput({
   buyToken,
   ratio,
   setRatio,
+  selectRatio,
 }: Props) {
   const [isHover, setIsHover] = useState(false);
 
   return (
     <DexCardBackground isHovering={setIsHover}>
-      <p className="text-xs">When 1 {sellToken?.symbol} is worth </p>
+      <p className="text-sm text-gray-500">
+        When 1 <span className="font-semibold">{sellToken?.symbol}</span> is
+        worth
+      </p>
 
       <div className="flex items-center justify-between gap-4">
         <Input
           className={cn(
             "border-none text-black shadow-none focus-visible:border-none focus-visible:ring-0",
             "transition-colors duration-300 ease-in-out",
-            "",
           )}
           placeholder="0.0"
           value={ratio}
@@ -64,6 +69,7 @@ export function DexWhenWorthInput({
           </Button>
         )}
       </div>
+      <DexLimitOrderRatioSelecetor selectRatio={selectRatio} />
     </DexCardBackground>
   );
 }

@@ -29,6 +29,7 @@ export function DexLimitOrderCard() {
     limitOrderParams,
     setExpiry,
     expiry,
+    selectRatio,
   } = useLimitOrder();
 
   const additionalTokens = useDexAdditionalTokens({
@@ -36,8 +37,6 @@ export function DexLimitOrderCard() {
     tokens,
     sellToken,
   });
-
-  // 4. Input field -> expiration &&&
 
   return (
     <Card>
@@ -50,6 +49,7 @@ export function DexLimitOrderCard() {
           sellToken={sellToken}
           ratio={ratio}
           setRatio={setRatio}
+          selectRatio={selectRatio}
         />
 
         <div className="relative flex flex-col gap-2">
