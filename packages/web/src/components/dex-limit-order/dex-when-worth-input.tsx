@@ -60,14 +60,14 @@ export function DexWhenWorthInput({
           <Button asChild className="w-30">
             <div className="flex gap-2">
               <Image
-                src={buyToken.image ?? ""}
+                src={buyToken?.image ?? ""}
                 height={20}
                 width={20}
-                alt={buyToken.symbol}
+                alt={buyToken?.symbol}
                 draggable={false}
                 referrerPolicy="no-referrer"
               />
-              <p>{buyToken.symbol}</p>
+              <p>{buyToken?.symbol}</p>
             </div>
           </Button>
         )}
