@@ -84,7 +84,11 @@ export function DexLimitOrderCard() {
       </CardContent>
       <CardFooter className="flex flex-col gap-4">
         <DexExpirySelector setExpiry={setExpiry} selected={expiry} />
-        <DexLimitOrderSubmit orderParams={limitOrderParams()} />
+        <DexLimitOrderSubmit
+          orderParams={limitOrderParams()}
+          sellToken={sellToken}
+          buyToken={buyToken}
+        />
       </CardFooter>
     </Card>
   );
