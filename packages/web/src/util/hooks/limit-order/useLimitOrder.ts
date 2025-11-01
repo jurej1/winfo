@@ -68,7 +68,6 @@ export const useLimitOrder = () => {
     [setRatio, sellAmount, setBuyAmount, setRatioPercentage, calcMarketRatio],
   );
 
-  // this is causing problem
   useEffect(() => {
     if (tokens) {
       const native = tokens.find((token) => token.native);
@@ -77,7 +76,7 @@ export const useLimitOrder = () => {
       const usdt = tokens.find((token) => token.symbol === "USDT");
       setBuyToken(usdt);
     }
-  }, [tokens, setBuyToken, setSellToken, isTokensLoadSuccess]);
+  }, [tokens, setBuyToken, setSellToken]);
 
   const swapTokens = useCallback(() => {
     if (sellToken && buyToken) {
@@ -175,14 +174,30 @@ export const useLimitOrder = () => {
     [onRatioUpdated, calcMarketRatio],
   );
 
+  const setSellTokenSafe = useCallback(
+    (val: TokenDBwithPrice) => {
+      if (val.address === buyToken?.address) return;
+      setSellToken(val);
+    },
+    [setSellToken, buyToken],
+  );
+
+  const setBuyTokenSafe = useCallback(
+    (val: TokenDBwithPrice) => {
+      if (val.address === sellToken?.address) return;
+      setBuyToken(val);
+    },
+    [setBuyToken, sellToken],
+  );
+
   return {
     tokens: tokens ?? [],
     isTokensLoading,
     isTokensError,
     sellToken,
-    setSellToken,
+    setSellToken: setSellTokenSafe,
     buyToken,
-    setBuyToken,
+    setBuyToken: setBuyTokenSafe,
     swapTokens,
     sellAmount,
     setSellAmount: onSellAmountUpdated,
