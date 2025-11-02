@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { TokenDBwithPrice } from "@w-info-sst/db";
 import { CreateOneInchOrderParams } from "@w-info-sst/types";
 import { useLocalizedFormatter } from "@/util/formatter/useLocalizedFormatter";
+import { parseUnits } from "viem";
 
 export type LimitOrderExpiry = "1d" | "1w" | "1m" | "1y";
 
@@ -111,19 +112,13 @@ export const useLimitOrder = () => {
 
   const createLimitOrderParams = useCallback(() => {
     if (chainId && address && sellToken && buyToken) {
-      const sellVal = Number(sellAmount);
-      const buyVal = Number(buyAmount);
+      const safeSellAmount = sellAmount.length === 0 ? "0" : sellAmount;
+      const safeBuyAmount = buyAmount.length === 0 ? "0" : buyAmount;
 
-      if (sellVal <= 0 || buyVal <= 0) return;
+      const makerAmountInWei = parseUnits(safeSellAmount, sellToken.decimals);
+      const takerAmountInWei = parseUnits(safeBuyAmount, buyToken.decimals);
 
       const expiration = Math.floor(Date.now() / 1000 + calcualteExpiryAddOn());
-
-      const makerAmountInWei = BigInt(
-        Math.floor(sellVal * 10 ** sellToken.decimals),
-      );
-      const takerAmountInWei = BigInt(
-        Math.floor(buyVal * 10 ** buyToken.decimals),
-      );
 
       return {
         chainId,

@@ -17,7 +17,7 @@ type Props = {
   title: string;
   token?: TokenDBwithPrice;
   setToken: (token: TokenDBwithPrice) => void;
-  numberInput: boolean;
+
   readonly: boolean;
   value: string;
   setVal: (val: string) => void;
@@ -29,7 +29,7 @@ export function DexLimitOrderInputCard({
   token,
   setToken,
   title,
-  numberInput,
+
   readonly,
   setVal,
   value,
@@ -87,7 +87,8 @@ export function DexLimitOrderInputCard({
         <Input
           disabled={false}
           key={token?.address}
-          type={numberInput ? "number" : undefined}
+          inputMode="decimal"
+          pattern="[0-9.,]*"
           className={cn(
             "border-none font-medium text-black shadow-none focus-visible:border-none focus-visible:ring-0",
             "transition-colors duration-300 ease-in-out",
@@ -99,7 +100,10 @@ export function DexLimitOrderInputCard({
             fontSize: 28,
           }}
           onChange={(event) => {
-            setVal(event.target.value);
+            let val = event.target.value;
+            val = val.replace(/[^0-9.,]/g, "");
+
+            setVal(val);
           }}
           readOnly={readonly}
         />

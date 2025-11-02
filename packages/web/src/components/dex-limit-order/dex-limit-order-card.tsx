@@ -63,7 +63,6 @@ export function DexLimitOrderCard() {
             setToken={setSellToken}
             token={sellToken}
             title={"Sell"}
-            numberInput={true}
             readonly={false}
             setVal={setSellAmount}
             value={sellAmount}
@@ -73,7 +72,6 @@ export function DexLimitOrderCard() {
             setToken={setBuyToken}
             token={buyToken}
             title={"Buy"}
-            numberInput={false}
             readonly={true}
             setVal={setBuyAmount}
             value={buyAmount}
