@@ -20,8 +20,6 @@ export const useLimitOrder = () => {
     undefined,
   );
 
-  const { formatNumberOrString } = useLocalizedFormatter();
-
   const [sellAmount, setSellAmount] = useState("0");
 
   const [buyToken, setBuyToken] = useState<TokenDBwithPrice | undefined>(
@@ -83,8 +81,8 @@ export const useLimitOrder = () => {
     if (sellToken && buyToken) {
       setSellToken(buyToken);
       setBuyToken(sellToken);
-      setBuyAmount("0");
-      setSellAmount("0");
+      setBuyAmount(sellAmount);
+      setSellAmount(buyAmount);
     }
   }, [
     sellToken,
@@ -144,8 +142,7 @@ export const useLimitOrder = () => {
     if (buyToken?.priceUsd && sellToken?.priceUsd) {
       const ratio = sellToken.priceUsd / buyToken.priceUsd;
 
-      const formatted = formatNumberOrString({ value: ratio });
-      onRatioUpdated(formatted);
+      onRatioUpdated(ratio.toString());
     }
   }, [buyToken, sellToken, onRatioUpdated]);
 
@@ -168,9 +165,7 @@ export const useLimitOrder = () => {
 
       const newRatio = calcMarketRatio() * multiplier;
 
-      const formatted = formatNumberOrString({ value: newRatio });
-
-      onRatioUpdated(formatted);
+      onRatioUpdated(newRatio.toString());
     },
     [onRatioUpdated, calcMarketRatio],
   );
