@@ -80,13 +80,19 @@ export const useLimitOrder = () => {
 
   const swapTokens = useCallback(() => {
     if (sellToken && buyToken) {
-      let a = sellToken;
-      let b = buyToken;
-
-      setBuyToken(a);
-      setSellToken(b);
+      setSellToken(buyToken);
+      setBuyToken(sellToken);
+      setBuyAmount("0");
+      setSellAmount("0");
     }
-  }, [sellToken, buyToken, setSellToken, setBuyToken]);
+  }, [
+    sellToken,
+    buyToken,
+    setSellToken,
+    setBuyToken,
+    setBuyAmount,
+    setSellAmount,
+  ]);
 
   const calcualteExpiryAddOn = useCallback(() => {
     switch (expiry) {
