@@ -53,10 +53,7 @@ const baseHandler = async (
 ) => {
   const { orderData, extension, chainId, signature } = event.body;
 
-  const order = LimitOrderWithFee.fromDataAndExtension(
-    orderData,
-    extension as Extension,
-  );
+  const order = LimitOrderWithFee.fromDataAndExtension(orderData, extension);
 
   await submitOneInchLimitOrder(chainId, order, signature);
 
