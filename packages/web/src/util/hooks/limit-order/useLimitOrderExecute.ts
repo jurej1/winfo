@@ -5,7 +5,6 @@ import {
   useAccount,
   useReadContract,
   useSignTypedData,
-  useWaitForTransactionReceipt,
   useWriteContract,
 } from "wagmi";
 import { useLimitOrderSubmit } from "./useLimitOrderSubmit";
@@ -13,9 +12,9 @@ import { useLimitOrderSubmit } from "./useLimitOrderSubmit";
 import { getLimitOrderV4Domain } from "@1inch/limit-order-sdk";
 
 import { toast } from "sonner";
+
 import {
   Address,
-  ChainDisconnectedError,
   erc20Abi,
   maxUint256,
   TransactionExecutionError,
@@ -28,41 +27,49 @@ type UseLimitOrderExecuteProps = {
   sellToken: TokenDBwithPrice | undefined;
 };
 
+export enum LimitOrderStatus {
+  initial,
+  checkAllowanceAndApprove,
+  createLimitOrder,
+  signLimitOrder,
+  submitLimitOrder,
+  done,
+  error,
+}
+
 export const useLimitOrderExecute = ({
   order,
   sellToken,
 }: UseLimitOrderExecuteProps) => {
-  const [loading, setLoading] = useState(false);
+  const [isPending, setIsPending] = useState(false);
 
   const { mutateAsync: createLimitOrder } = useLimitOrderCreate();
 
-  const { address } = useAccount();
+  const { address, chainId } = useAccount();
 
   const { writeContractAsync } = useWriteContract();
 
-  const [approveHash, setApproveHash] = useState<`0x${string}` | undefined>();
-
-  const { data: allowanceResponse } = useReadContract(
-    !!sellToken?.address && !!order?.chainId && !!address
-      ? {
-          address: sellToken.address,
-          chainId: order.chainId,
-          functionName: "allowance",
-          args: [
-            address,
-            getLimitOrderV4Domain(order.chainId).verifyingContract as Address,
-          ],
-          abi: erc20Abi,
-          query: {
-            refetchOnMount: true,
-          },
-        }
-      : undefined,
-  );
+  const { data: allowanceResponse } = useReadContract({
+    address: sellToken?.address,
+    chainId: chainId,
+    functionName: "allowance",
+    args: [
+      address!,
+      getLimitOrderV4Domain(chainId!).verifyingContract as Address,
+    ],
+    abi: erc20Abi,
+    query: {
+      enabled: !!sellToken?.address && !!chainId && !!address,
+    },
+  });
 
   const { mutateAsync: submitLimitOrder } = useLimitOrderSubmit();
 
   const { signTypedDataAsync } = useSignTypedData();
+
+  const [status, setStatus] = useState<LimitOrderStatus>(
+    LimitOrderStatus.initial,
+  );
 
   const approveSpender = useCallback(async () => {
     if (!sellToken || !order?.chainId) {
@@ -72,15 +79,14 @@ export const useLimitOrderExecute = ({
     const spenderAddress = getLimitOrderV4Domain(order.chainId)
       .verifyingContract as Address;
 
-    const hash = await writeContractAsync({
+    // TODO -> wait for "Approve" write to succeed before continuating with code,
+    await writeContractAsync({
       address: sellToken.address,
       abi: erc20Abi,
       functionName: "approve",
       args: [spenderAddress, maxUint256],
     });
-
-    setApproveHash(hash);
-  }, [sellToken, order?.chainId, setApproveHash]);
+  }, [sellToken, order?.chainId]);
 
   const checkAllowanceAndApproveIfNeeded = useCallback(async () => {
     const sellingAmount = BigInt(order?.makingAmount ?? 0);
@@ -93,27 +99,37 @@ export const useLimitOrderExecute = ({
 
   const execute = useCallback(async () => {
     if (!order) return;
-    setLoading(true);
-    try {
-      await checkAllowanceAndApproveIfNeeded();
 
-      // 1. POST /limit-orders/create
+    setIsPending(true);
+    await new Promise((resolve) => setTimeout(resolve, 200));
+
+    try {
+      // 1. Check Allowance & Approve if needed
+      setStatus(LimitOrderStatus.checkAllowanceAndApprove);
+      await checkAllowanceAndApproveIfNeeded();
+      // adding delay for now
+      await new Promise((resolve) => setTimeout(resolve, 300));
+
+      // 2. Create Limit order
+      setStatus(LimitOrderStatus.createLimitOrder);
       const createOrderResponse = await createLimitOrder(order);
 
-      // 2. signTypedData
+      // 3. Sign Limit order
+      setStatus(LimitOrderStatus.signLimitOrder);
       const { typedData, orderData, extension } = createOrderResponse;
-
       const signature = await signTypedDataAsync(typedData);
 
-      // 3. POST /limit-orders/submit
-      // Send the serialized orderData and extension to reconstruct the order on the backend
+      //4. Submit Limit Order
+      setStatus(LimitOrderStatus.submitLimitOrder);
       await submitLimitOrder({
         chainId: order.chainId,
         orderData,
         extension,
         signature,
       });
+      setStatus(LimitOrderStatus.done);
     } catch (error) {
+      setStatus(LimitOrderStatus.error);
       const isDenied =
         error instanceof UserRejectedRequestError ||
         error instanceof TransactionExecutionError;
@@ -124,19 +140,21 @@ export const useLimitOrderExecute = ({
         toast.error("Failed to execute limit order");
       }
     } finally {
-      setLoading(false);
+      setIsPending(false);
     }
   }, [
-    setLoading,
+    setIsPending,
     order,
     createLimitOrder,
     submitLimitOrder,
     signTypedDataAsync,
-    setLoading,
+    setIsPending,
+    setStatus,
   ]);
 
   return {
     execute,
-    isLoading: loading,
+    isPending,
+    status,
   };
 };
