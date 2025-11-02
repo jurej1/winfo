@@ -21,7 +21,10 @@ export function DexLimitOrderSubmit({
 }: Props) {
   const [isAnyNative, setIsAnyNative] = useState(false);
 
-  const { execute, isLoading } = useLimitOrderExecute({ order: orderParams });
+  const { execute, isLoading } = useLimitOrderExecute({
+    order: orderParams,
+    sellToken: sellToken,
+  });
 
   useEffect(() => {
     if (buyToken?.native || sellToken?.native) {
