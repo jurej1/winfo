@@ -2,6 +2,8 @@ import { CreateOneInchOrderParams } from "@w-info-sst/types";
 import { useCallback, useEffect, useState } from "react";
 import { useLimitOrderCreate } from "./useLimitOrderCreate";
 import {
+  useAccount,
+  useReadContract,
   useSignTypedData,
   useWaitForTransactionReceipt,
   useWriteContract,
@@ -13,6 +15,7 @@ import { getLimitOrderV4Domain } from "@1inch/limit-order-sdk";
 import { toast } from "sonner";
 import {
   Address,
+  ChainDisconnectedError,
   erc20Abi,
   maxUint256,
   TransactionExecutionError,
@@ -33,39 +36,66 @@ export const useLimitOrderExecute = ({
 
   const { mutateAsync: createLimitOrder } = useLimitOrderCreate();
 
+  const { address } = useAccount();
+
   const { writeContractAsync } = useWriteContract();
+
+  const [approveHash, setApproveHash] = useState<`0x${string}` | undefined>();
+
+  const { data: allowanceResponse } = useReadContract(
+    !!sellToken?.address && !!order?.chainId && !!address
+      ? {
+          address: sellToken.address,
+          chainId: order.chainId,
+          functionName: "allowance",
+          args: [
+            address,
+            getLimitOrderV4Domain(order.chainId).verifyingContract as Address,
+          ],
+          abi: erc20Abi,
+          query: {
+            refetchOnMount: true,
+          },
+        }
+      : undefined,
+  );
 
   const { mutateAsync: submitLimitOrder } = useLimitOrderSubmit();
 
   const { signTypedDataAsync } = useSignTypedData();
 
-  const [approveHash, setApproveHash] = useState<Address | undefined>();
+  const approveSpender = useCallback(async () => {
+    if (!sellToken || !order?.chainId) {
+      throw Error("icomplete-data");
+    }
 
-  const { isSuccess: isApproveSuccess } = useWaitForTransactionReceipt({
-    hash: approveHash,
-    query: {
-      enabled: !!approveHash,
-    },
-  });
-
-  const approveAmount = useCallback(async () => {
-    if (!sellToken) return;
-
-    const one_inch_contract = getLimitOrderV4Domain(56).verifyingContract;
+    const spenderAddress = getLimitOrderV4Domain(order.chainId)
+      .verifyingContract as Address;
 
     const hash = await writeContractAsync({
       address: sellToken.address,
       abi: erc20Abi,
       functionName: "approve",
-      args: [one_inch_contract as Address, maxUint256],
+      args: [spenderAddress, maxUint256],
     });
-  }, [sellToken]);
+
+    setApproveHash(hash);
+  }, [sellToken, order?.chainId, setApproveHash]);
+
+  const checkAllowanceAndApproveIfNeeded = useCallback(async () => {
+    const sellingAmount = BigInt(order?.makingAmount ?? 0);
+    const allowance = BigInt(allowanceResponse ?? 0);
+
+    if (allowance < sellingAmount) {
+      await approveSpender();
+    }
+  }, [order?.makingAmount, allowanceResponse, approveSpender]);
 
   const execute = useCallback(async () => {
     if (!order) return;
     setLoading(true);
     try {
-      await approveAmount();
+      await checkAllowanceAndApproveIfNeeded();
 
       // 1. POST /limit-orders/create
       const createOrderResponse = await createLimitOrder(order);
