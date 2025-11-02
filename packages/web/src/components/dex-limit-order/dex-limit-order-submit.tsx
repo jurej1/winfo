@@ -3,10 +3,9 @@ import { Button } from "../ui/button";
 import { useLimitOrderExecute } from "@/util/hooks/limit-order/useLimitOrderExecute";
 import { Spinner } from "../ui/spinner";
 import { TokenDBwithPrice } from "@w-info-sst/db";
-import { useCallback, useEffect, useState } from "react";
-import { cn } from "@/lib/utils";
-import { GoAlertFill } from "react-icons/go";
-import { Goal } from "lucide-react";
+import { useEffect, useState } from "react";
+import { DexLimitOrderSubmitStatus } from "./dex-limit-order-submit-status";
+import { DexLimitOrderNativeWarning } from "./dex-limit-order-native-warning";
 
 type Props = {
   orderParams: CreateOneInchOrderParams | undefined;
@@ -21,7 +20,7 @@ export function DexLimitOrderSubmit({
 }: Props) {
   const [isAnyNative, setIsAnyNative] = useState(false);
 
-  const { execute, isLoading } = useLimitOrderExecute({
+  const { execute, isPending, status } = useLimitOrderExecute({
     order: orderParams,
     sellToken: sellToken,
   });
@@ -39,34 +38,14 @@ export function DexLimitOrderSubmit({
       <Button
         className="w-full cursor-pointer py-7 text-lg"
         onClick={execute}
-        disabled={!orderParams || isLoading || isAnyNative}
+        disabled={!orderParams || isPending || isAnyNative}
       >
-        {isLoading ? (
-          <div className="flex items-center justify-center gap-2">
-            <Spinner /> Loading...
-          </div>
-        ) : (
-          "Place Limit Order"
-        )}
+        Confirm
       </Button>
 
-      <div
-        className={cn("transition-all duration-200 ease-in-out", {
-          "mt-2 opacity-100": isAnyNative,
-          "mt-0 max-h-0 opacity-0": !isAnyNative,
-        })}
-        aria-hidden={!isAnyNative}
-      >
-        <div className="rounded-lg bg-gray-100 p-2 shadow">
-          <div className="flex items-start gap-2 text-yellow-600">
-            <GoAlertFill className="mt-1 leading-4" />
-            <span>
-              Currently, only <b>non-native</b> tokens are supported when
-              creating limit orders.
-            </span>
-          </div>
-        </div>
-      </div>
+      <DexLimitOrderSubmitStatus status={status} open={isPending} />
+
+      <DexLimitOrderNativeWarning show={isAnyNative} />
     </div>
   );
 }
