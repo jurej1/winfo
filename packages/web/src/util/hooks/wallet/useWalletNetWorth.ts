@@ -1,6 +1,6 @@
+import { fetchWalletNetWorth } from "@/util/api/wallet";
 import { useQuery } from "@tanstack/react-query";
 import { Address } from "viem";
-import { fetchWalletNetWorth } from "../api/wallet";
 
 export const useWalletNetWorth = (address: Address) => {
   const ONE_HOUR = 60 * 60 * 1000;

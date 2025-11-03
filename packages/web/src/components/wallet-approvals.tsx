@@ -12,7 +12,7 @@ import {
 import { WalletApprovalRow } from "./wallet-approval-row";
 import { shortenAddress } from "@/lib/shorten-address";
 import { WalletApprovalsInfo } from "./wallet-approvals-info";
-import { useWalletApprovals } from "@/util/hooks/useWalletApprovals";
+import { useWalletApprovals } from "@/util/hooks/wallet/useWalletApprovals";
 
 type Props = {
   address: Address;

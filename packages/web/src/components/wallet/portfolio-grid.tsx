@@ -5,7 +5,7 @@ import { PortfolioPie } from "./portfolio-pie";
 import { TokensPortfolioList } from "./tokens-grid";
 import { NetWorthCard } from "./net-worth-card";
 import { Spinner } from "../ui/spinner";
-import { useWalletBalance } from "@/util/hooks/useWalletBalance";
+import { useWalletBalance } from "@/util/hooks/wallet/useWalletBalance";
 
 type Props = {
   address: Address;
@@ -13,10 +13,7 @@ type Props = {
 };
 
 export function PortfolioGrid({ address, chainId }: Props) {
-  const { data, isLoading, error, isError } = useWalletBalance(
-    address,
-    chainId,
-  );
+  const { data, isLoading } = useWalletBalance(address, chainId);
 
   if (isLoading || !data) {
     return (

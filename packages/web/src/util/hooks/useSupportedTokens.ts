@@ -1,11 +1,11 @@
 import { useQuery, UseQueryOptions } from "@tanstack/react-query";
-import { getSwapTokensForChain } from "../../api/swap";
+import { getSwapTokensForChain } from "../api/swap";
 import { TokenDBwithPrice } from "@w-info-sst/db";
 import { useAccount } from "wagmi";
 
-type SwapTokenOptions = UseQueryOptions<TokenDBwithPrice[], Error>;
+type SupportedTokenOptions = UseQueryOptions<TokenDBwithPrice[], Error>;
 
-export const useSwapTokens = (options?: SwapTokenOptions) => {
+export const useSupportedTokens = (options?: SupportedTokenOptions) => {
   const ONE_HOUR = 60 * 60 * 1000;
 
   const { chainId } = useAccount();

@@ -34,8 +34,8 @@ export function DexWalletLimitOrders() {
         <TableHeader>
           <TableRow>
             <TableHead>Tx Hash</TableHead>
-            <TableHead>Created</TableHead>
-            <TableHead>Rate</TableHead>
+            <TableHead>Dates</TableHead>
+            <TableHead>Info</TableHead>
             <TableHead>Selling</TableHead>
             <TableHead>Buying</TableHead>
             <TableHead>Action</TableHead>

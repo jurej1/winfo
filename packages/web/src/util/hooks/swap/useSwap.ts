@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useAccount } from "wagmi";
 
-import { useSwapTokens } from "./useSwapTokens";
+import { useSupportedTokens } from "../useSupportedTokens";
 import { useSwapQuote } from "./useSwapQuote";
 import { TokenDBwithPrice } from "@w-info-sst/db";
 import { GetQuote0XParams, GetQuote0XResponse } from "@w-info-sst/types";
@@ -21,7 +21,7 @@ export const useSwap = () => {
 
   const [slippage, setSlippage] = useState<number>(DEFAULT_SLIPPAGE);
 
-  const { data: tokens, isLoading: isLoadingTokens } = useSwapTokens();
+  const { data: tokens, isLoading: isLoadingTokens } = useSupportedTokens();
 
   useEffect(() => {
     if (tokens && !isLoadingTokens) {

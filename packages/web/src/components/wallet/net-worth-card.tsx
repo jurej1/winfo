@@ -7,14 +7,14 @@ import { Button } from "../ui/button";
 import { IoIosCopy } from "react-icons/io";
 import { toast } from "sonner";
 import { Spinner } from "../ui/spinner";
-import { useWalletNetWorth } from "@/util/hooks/useWalletNetWorth";
+import { useWalletNetWorth } from "@/util/hooks/wallet/useWalletNetWorth";
 
 type Props = {
   address: Address;
 };
 
 export function NetWorthCard({ address }: Props) {
-  const { data, isLoading, error } = useWalletNetWorth(address);
+  const { data, isLoading } = useWalletNetWorth(address);
 
   const chainNetWorthPercentage = (total: string, chain: string) => {
     return (Number(chain) / Number(total)) * 100;

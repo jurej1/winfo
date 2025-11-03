@@ -1,5 +1,5 @@
 import { useAccount } from "wagmi";
-import { useSwapTokens } from "../swap/useSwapTokens";
+import { useSupportedTokens } from "../useSupportedTokens";
 import { useCallback, useEffect, useState } from "react";
 import { TokenDBwithPrice } from "@w-info-sst/db";
 import { CreateOneInchOrderParams } from "@w-info-sst/types";
@@ -37,7 +37,7 @@ export const useLimitOrder = () => {
     isLoading: isTokensLoading,
     isError: isTokensError,
     isSuccess: isTokensLoadSuccess,
-  } = useSwapTokens();
+  } = useSupportedTokens();
 
   const calcMarketRatio = useCallback(() => {
     if (buyToken?.priceUsd && sellToken?.priceUsd) {

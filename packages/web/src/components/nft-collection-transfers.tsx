@@ -1,6 +1,6 @@
 "use client";
 
-import { useNftCollectionTransfers } from "@/util/hooks/useNftCollectionTransfers";
+import { useNftCollectionTransfers } from "@/util/hooks/nft/useNftCollectionTransfers";
 import { NftTransactionCard } from "./nft-transaction-card";
 import { Address } from "viem";
 

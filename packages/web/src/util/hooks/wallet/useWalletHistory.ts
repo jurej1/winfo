@@ -1,6 +1,6 @@
+import { fetchWalletHistory } from "@/util/api/wallet";
 import { useQuery } from "@tanstack/react-query";
 import { Address } from "viem";
-import { fetchWalletHistory } from "../api/wallet";
 
 export const useWalletHistory = ({
   address,

@@ -1,7 +1,7 @@
+import { fetchTokenBalancesByWallet } from "@/util/api/wallet";
 import { useQuery } from "@tanstack/react-query";
 
 import { Address } from "viem";
-import { fetchTokenBalancesByWallet } from "../api/wallet";
 
 export const useWalletBalance = (address: Address, chain: number) => {
   const TEN_MINUTES = 5 * 60 * 1000;

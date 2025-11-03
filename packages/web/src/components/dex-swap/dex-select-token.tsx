@@ -14,7 +14,7 @@ import { Button } from "../ui/button";
 
 import Image from "next/image";
 import { TokenDB, TokenDBwithPrice } from "@w-info-sst/db";
-import { useSwapTokens } from "@/util/hooks/swap/useSwapTokens";
+import { useSupportedTokens } from "@/util/hooks/useSupportedTokens";
 
 type Props = {
   token?: TokenDBwithPrice;
@@ -32,7 +32,7 @@ export function DexSelectToken({ token, onSetToken }: Props) {
     [setOpen, onSetToken],
   );
 
-  const { data: tokens, isLoading: loadingTokens } = useSwapTokens();
+  const { data: tokens, isLoading: loadingTokens } = useSupportedTokens();
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

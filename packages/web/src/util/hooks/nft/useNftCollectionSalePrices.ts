@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchNftSalePricesByCollection } from "../api/nfts";
+import { fetchNftSalePricesByCollection } from "../../api/nfts";
 
 export const useNftCollectionSalePrices = (address: string) => {
   const ONE_DAY = 24 * 60 * 60 * 1000;

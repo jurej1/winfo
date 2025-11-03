@@ -1,6 +1,6 @@
 "use client";
 
-import { useNftCollectionMetadata } from "@/util/hooks/useNftCollectionMetadata";
+import { useNftCollectionMetadata } from "@/util/hooks/nft/useNftCollectionMetadata";
 import { Button } from "./ui/button";
 
 export function NftCollectionMetadata() {
