@@ -21,6 +21,11 @@ api.route("POST /limit-orders/submit", {
   link,
 });
 
+api.route("GET /limit-orders", {
+  handler: "packages/functions/src/limit-orders/get-for-wallet/get.handler",
+  link,
+});
+
 // SWAPS
 api.route("GET /swap/price", {
   handler: "packages/functions/src/swap/price/get.handler",
