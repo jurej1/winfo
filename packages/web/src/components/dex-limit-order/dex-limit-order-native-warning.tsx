@@ -8,8 +8,8 @@ type Props = {
 export function DexLimitOrderNativeWarning({ show }: Props) {
   return (
     <div
-      className={cn("transition-all duration-200 ease-in-out", {
-        "mt-2 opacity-100": show,
+      className={cn("transition-all delay-100 duration-300 ease-in-out", {
+        "animate-fade-in-delay mt-2 opacity-100": show,
         "mt-0 max-h-0 opacity-0": !show,
       })}
       aria-hidden={!show}
