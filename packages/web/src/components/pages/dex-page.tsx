@@ -7,7 +7,7 @@ import { DexWalletLimitOrders } from "../dex-limit-order/dex-wallet-limit-orders
 export default function DexPage() {
   return (
     <div className="mx-auto my-3 flex max-w-7xl flex-col gap-2">
-      <Tabs defaultValue="swap">
+      <Tabs defaultValue="limit-order">
         <div className="mx-auto flex w-lg">
           <TabsList>
             <TabsTrigger value="swap">Swap</TabsTrigger>
