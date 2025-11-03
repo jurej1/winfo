@@ -31,44 +31,51 @@ export function DexTokensRouteCard({ isLoading, quote }: Props) {
           Route {!shouldShow && <Spinner />}
         </CardTitle>
       </CardHeader>
-      <CardContent>
-        <div className="grid grid-cols-[auto_1fr] rounded-2xl bg-blue-200/20 p-2">
-          <ol className="flex flex-col">
-            {route()?.tokens.map((token, index) => {
-              const length = route()?.tokens.length ?? 1;
-              const notLast = length - 1 != index;
+      <CardContent className="mt-0">
+        {isLoading && quote && (
+          <div className="flex items-center justify-center gap-2">
+            <Spinner /> Loading...
+          </div>
+        )}
+        {!isLoading && (
+          <div className="grid grid-cols-[auto_1fr] rounded-2xl bg-blue-200/20 p-2 pl-4">
+            <ol className="flex flex-col">
+              {route()?.tokens.map((token, index) => {
+                const length = route()?.tokens.length ?? 1;
+                const notLast = length - 1 != index;
 
-              return (
-                <li
-                  key={token.address}
-                  className={cn(
-                    "flex flex-col items-center",
-                    "animate-in fade-in transition-opacity duration-300",
-                  )}
-                >
-                  <span>{token.symbol}</span>
-                  {notLast && (
-                    <div className="mx-auto h-6 w-1 animate-pulse rounded bg-blue-400" />
-                  )}
-                </li>
-              );
-            })}
-          </ol>
-          <ol className="mt-6 ml-2 flex flex-col gap-6">
-            {route()?.fills.map((fill, index) => {
-              const cleanSource = fill.source.replaceAll("_", " ");
+                return (
+                  <li
+                    key={token.address}
+                    className={cn(
+                      "flex flex-col items-center",
+                      "animate-in fade-in transition-opacity duration-300",
+                    )}
+                  >
+                    <span>{token.symbol}</span>
+                    {notLast && (
+                      <div className="mx-auto h-6 w-1 animate-pulse rounded bg-blue-400" />
+                    )}
+                  </li>
+                );
+              })}
+            </ol>
+            <ol className="mt-6 ml-2 flex flex-col gap-6">
+              {route()?.fills.map((fill, index) => {
+                const cleanSource = fill.source.replaceAll("_", " ");
 
-              return (
-                <li
-                  key={fill.source + index}
-                  className="animate-in fade-in text-gray-400 transition-opacity duration-300"
-                >
-                  {cleanSource}
-                </li>
-              );
-            })}
-          </ol>
-        </div>
+                return (
+                  <li
+                    key={fill.source + index}
+                    className="animate-in fade-in text-gray-400 transition-opacity duration-300"
+                  >
+                    {cleanSource}
+                  </li>
+                );
+              })}
+            </ol>
+          </div>
+        )}
       </CardContent>
     </Card>
   );
