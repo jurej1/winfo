@@ -23,7 +23,7 @@ export function DexWalletLimitOrders() {
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center justify-between">
-        <p className="text-xl font-semibold">Your Limit Orders</p>
+        <p className="text-xl font-semibold">Your Active Limit Orders</p>
         {isLoading && <Spinner />}
       </div>
 
