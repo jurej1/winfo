@@ -4,7 +4,6 @@ import { useSwap } from "@/util/hooks/swap/useSwap";
 
 import {
   DexSwapTokensButton,
-  DexCardHeader,
   DexConfirmSwapDialog,
   DexTokenValueComparison,
   DexCardInput,
@@ -23,7 +22,9 @@ import { NumberType } from "@/util/formatter/types";
 import { Spinner } from "../ui/spinner";
 import { DexSwapSettingsDialog } from "./dex-swap-settings-dialog";
 
-export function DexSwapCard() {
+type Props = ReturnType<typeof useSwap>;
+
+export function DexSwapCard(swap: Props) {
   const {
     isLoadingTokens,
     swapTokens,
@@ -38,7 +39,7 @@ export function DexSwapCard() {
     quote,
     slippage,
     setSlippage,
-  } = useSwap();
+  } = swap;
 
   const isUserBalanceToLow = useSwapSellBalanceToLow({
     amount: sellAmount,

@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { TokenDBwithPrice } from "@w-info-sst/db";
 import { CreateOneInchOrderParams } from "@w-info-sst/types";
 import { parseUnits } from "viem";
+import { useLocalizedFormatter } from "@/util/formatter/useLocalizedFormatter";
 
 export type LimitOrderExpiry = "1d" | "1w" | "1m" | "1y";
 
@@ -18,6 +19,8 @@ export const useLimitOrder = () => {
   const [sellToken, setSellToken] = useState<TokenDBwithPrice | undefined>(
     undefined,
   );
+
+  const { formatNumberOrString } = useLocalizedFormatter();
 
   const [sellAmount, setSellAmount] = useState("0");
 

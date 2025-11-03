@@ -1,7 +1,6 @@
-import { DexRecentTransactions } from "@/components/dex-swap";
-import { DexSwapCard } from "@/components/dex-swap/dex-swap-card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { DexLimitOrderCard } from "../dex-limit-order/dex-limit-order-card";
+import { DexSwapComponent } from "../dex-swap/dex-swap";
 
 export default function DexPage() {
   // <DexRecentTransactions />
@@ -14,7 +13,7 @@ export default function DexPage() {
         </TabsList>
         <div>
           <TabsContent value="swap">
-            <DexSwapCard />
+            <DexSwapComponent />
           </TabsContent>
           <TabsContent value="limit-order">
             <DexLimitOrderCard />
