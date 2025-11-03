@@ -3,7 +3,6 @@ import { useSwapTokens } from "../swap/useSwapTokens";
 import { useCallback, useEffect, useState } from "react";
 import { TokenDBwithPrice } from "@w-info-sst/db";
 import { CreateOneInchOrderParams } from "@w-info-sst/types";
-import { useLocalizedFormatter } from "@/util/formatter/useLocalizedFormatter";
 import { parseUnits } from "viem";
 
 export type LimitOrderExpiry = "1d" | "1w" | "1m" | "1y";
@@ -81,8 +80,6 @@ export const useLimitOrder = () => {
     if (sellToken && buyToken) {
       setSellToken(buyToken);
       setBuyToken(sellToken);
-      setBuyAmount(sellAmount);
-      setSellAmount(buyAmount);
     }
   }, [
     sellToken,

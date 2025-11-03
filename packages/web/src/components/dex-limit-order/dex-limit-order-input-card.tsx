@@ -63,6 +63,7 @@ export function DexLimitOrderInputCard({
       </div>
       <div className="flex items-center justify-between gap-4">
         <DexInput
+          type="number"
           value={value}
           onChange={(event) => {
             let val = event.target.value;
