@@ -4,6 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { DexLimitOrderCard } from "../dex-limit-order/dex-limit-order-card";
 
 export default function DexPage() {
+  // <DexRecentTransactions />
   return (
     <div className="mx-auto my-3 flex max-w-7xl flex-col gap-2">
       <Tabs defaultValue="swap" className="mx-auto w-lg">
@@ -20,7 +21,6 @@ export default function DexPage() {
           </TabsContent>
         </div>
       </Tabs>
-      <DexRecentTransactions />
     </div>
   );
 }
