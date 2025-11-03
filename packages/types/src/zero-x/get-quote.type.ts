@@ -9,6 +9,7 @@ export type GetQuote0XResponse = {
   blockNumber: string;
   buyAmount: string;
   buyToken: string;
+  allowanceTarget: string;
   fees: {
     integratorFee: null;
     zeroExFee: null;
