@@ -8,21 +8,28 @@ export default function DexPage() {
   // <DexRecentTransactions />
   return (
     <div className="mx-auto my-3 flex max-w-7xl flex-col gap-2">
-      <Tabs defaultValue="swap" className="mx-auto w-lg">
-        <TabsList>
-          <TabsTrigger value="swap">Swap</TabsTrigger>
-          <TabsTrigger value="limit-order">Limit Order</TabsTrigger>
-        </TabsList>
+      <Tabs defaultValue="swap">
+        <div className="mx-auto flex w-lg">
+          <TabsList>
+            <TabsTrigger value="swap">Swap</TabsTrigger>
+            <TabsTrigger value="limit-order">Limit Order</TabsTrigger>
+          </TabsList>
+        </div>
         <div>
           <TabsContent value="swap">
-            <DexSwapComponent />
+            <div className="mx-auto w-lg">
+              <DexSwapComponent />
+            </div>
+            <DexRecentTransactions />
           </TabsContent>
           <TabsContent value="limit-order">
-            <DexLimitOrderCard />
+            <div className="mx-auto w-lg">
+              <DexLimitOrderCard />
+            </div>
+            <DexWalletLimitOrders />
           </TabsContent>
         </div>
       </Tabs>
-      <DexWalletLimitOrders />
     </div>
   );
 }

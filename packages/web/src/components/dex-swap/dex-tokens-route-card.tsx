@@ -23,7 +23,7 @@ export function DexTokensRouteCard({ isLoading, quote }: Props) {
     <Card
       className={cn("transition-all duration-200 ease-in-out", {
         "translate-x-0 opacity-100": shouldShow(),
-        "-translate-x-30 opacity-0": !shouldShow(),
+        "max-h-0 -translate-x-30 opacity-0": !shouldShow(),
       })}
     >
       <CardHeader>

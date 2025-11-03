@@ -13,6 +13,7 @@ import {
 import { useAccount } from "wagmi";
 import { shortenAddress } from "@/lib/shorten-address";
 import { DexLimitOrderTableRow } from "./dex-limit-order-table-row";
+import { Spinner } from "../ui/spinner";
 
 export function DexWalletLimitOrders() {
   const { isLoading, data } = useLimitOrderByWallet();
@@ -20,8 +21,11 @@ export function DexWalletLimitOrders() {
   const { address } = useAccount();
   return (
     <div className="flex flex-col gap-2">
-      <p className="text-xl font-semibold">Your Limit Orders</p>
-      {isLoading && <p>Loading...</p>}
+      <div className="flex items-center justify-between">
+        <p className="text-xl font-semibold">Your Limit Orders</p>
+        {isLoading && <Spinner />}
+      </div>
+
       <Table>
         <TableCaption>
           Limit Orders for {shortenAddress(address ?? "")}
