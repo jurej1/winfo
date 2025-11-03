@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import { DexCardBackground } from "../dex/dex-card-bacground";
+import { DexCardBackground } from "../dex/dex-card-background";
 import { TokenDBwithPrice } from "@w-info-sst/db";
 import { Input } from "../ui/input";
 import { cn } from "@/lib/utils";

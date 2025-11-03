@@ -11,9 +11,11 @@ import { useSwapTokenUsdPrice } from "@/util/hooks/swap/util/useSwapTokenUsdPric
 import { Skeleton } from "../ui/skeleton";
 import { cn } from "@/lib/utils";
 import { DexTokenAmountSelector } from "./dex-token-amount-selector";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { DexAdditionalTokensDisplayer } from "./dex-additional-tokens-displayer";
-import { DexCardBackground } from "../dex/dex-card-bacground";
+import { DexCardBackground } from "../dex/dex-card-background";
+import { DexInput } from "../dex/dex-input";
+import { DexTokenBalanceDisplayer } from "../dex/dex-token-balance-displayer";
 
 type Props = {
   title: string;
@@ -43,26 +45,10 @@ export function DexCardInput({
 }: Props) {
   const { chainId, address } = useAccount();
 
-  const tokenAddress = token?.native ? undefined : token?.address;
-
-  const { data: balance } = useBalance({
-    chainId,
-    address,
-    token: tokenAddress,
-    query: {
-      refetchInterval: 1000 * 10,
-    },
-  });
-
-  const formattedValue = useFormattedBigNumber({
-    decimals: balance?.decimals,
-    value: balance?.value,
-  });
-
-  const usdPrice = useSwapTokenUsdPrice({
-    price: token?.priceUsd,
-    value,
-  });
+  const tokenAddress = useCallback(
+    () => (token?.native ? undefined : token?.address),
+    [token],
+  );
 
   const [isHover, setIsHover] = useState(false);
 
@@ -70,9 +56,9 @@ export function DexCardInput({
     <DexCardBackground isHovering={setIsHover}>
       <div className="flex justify-between">
         <p className="text-md text-gray-400">{title}</p>
-        {showAmountSelector && !isLoading && balance && (
+        {showAmountSelector && !isLoading && (
           <DexTokenAmountSelector
-            balance={balance}
+            tokenAddress={tokenAddress()}
             show={isHover}
             onSelect={(val) => {
               if (onValChanged != undefined) onValChanged(val.toString());
@@ -92,23 +78,12 @@ export function DexCardInput({
         {isLoading ? (
           <Skeleton className="h-8 w-40 rounded-full bg-gray-300" />
         ) : (
-          <Input
+          <DexInput
             disabled={isLoading}
-            key={token?.address}
-            inputMode="decimal"
-            pattern="[0-9.,]*"
-            className={cn(
-              "border-none font-medium text-black shadow-none focus-visible:border-none focus-visible:ring-0",
-              "transition-colors duration-300 ease-in-out",
-              {
-                "text-red-400": balanceToLow,
-              },
-            )}
-            placeholder="0.0"
+            className={cn({
+              "text-red-400": balanceToLow,
+            })}
             value={value}
-            style={{
-              fontSize: 28,
-            }}
             onChange={(event) => {
               if (onValChanged === undefined) return;
               let val = event.target.value;
@@ -121,21 +96,11 @@ export function DexCardInput({
         <DexSelectToken token={token} onSetToken={onSetToken} />
       </div>
       {token && (
-        <div className="flex items-center justify-between text-gray-400">
-          <span>{usdPrice}</span>
-          <span
-            className={cn(
-              "text-base",
-              "transition-colors duration-300 ease-in-out",
-              {
-                "text-red-400": balanceToLow,
-                "text-gray-400": !balanceToLow,
-              },
-            )}
-          >
-            {formattedValue} {balance?.symbol}
-          </span>
-        </div>
+        <DexTokenBalanceDisplayer
+          tokenAddress={tokenAddress()}
+          tokenPriceUsd={token.priceUsd}
+          value={value}
+        />
       )}
     </DexCardBackground>
   );
