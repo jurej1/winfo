@@ -1,6 +1,8 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { DexLimitOrderCard } from "../dex-limit-order/dex-limit-order-card";
 import { DexSwapComponent } from "../dex-swap/dex-swap";
+import { DexRecentTransactions } from "../dex-swap";
+import { DexWalletLimitOrders } from "../dex-limit-order/dex-wallet-limit-orders";
 
 export default function DexPage() {
   // <DexRecentTransactions />
@@ -20,6 +22,7 @@ export default function DexPage() {
           </TabsContent>
         </div>
       </Tabs>
+      <DexWalletLimitOrders />
     </div>
   );
 }

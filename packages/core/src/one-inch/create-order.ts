@@ -18,7 +18,7 @@ export const createOneInchLimitOrder = ({
     .allowPartialFills()
     .allowMultipleFills();
 
-  return sdk.createOrder(
+  const order = sdk.createOrder(
     {
       makerAsset: new Address(makerAsset),
       takerAsset: new Address(takerAsset),
@@ -28,4 +28,6 @@ export const createOneInchLimitOrder = ({
     },
     makerTraits,
   );
+
+  return order;
 };

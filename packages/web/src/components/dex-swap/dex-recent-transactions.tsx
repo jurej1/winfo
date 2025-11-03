@@ -18,7 +18,7 @@ export function DexRecentTransactions() {
   const { data, isLoading } = useSwapRecentTransactions(chainId);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col gap-2">
       <p className="text-xl font-bold">Recent Transactions</p>
 
       {/* {isLoading && (

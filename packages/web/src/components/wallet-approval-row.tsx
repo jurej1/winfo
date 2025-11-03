@@ -1,6 +1,5 @@
 "use client";
 
-import { ERC_20ABI } from "@/lib/web3/erc20ABI";
 import { ApprovalResult } from "@w-info-sst/types";
 import { Address } from "viem/accounts";
 import { useTransactionReceipt, useWriteContract } from "wagmi";
@@ -12,6 +11,7 @@ import { Button } from "./ui/button";
 import { Spinner } from "./ui/spinner";
 import { useEffect } from "react";
 import { toast } from "sonner";
+import { erc20Abi } from "viem";
 
 type Props = {
   approval: ApprovalResult;
@@ -41,7 +41,7 @@ export function WalletApprovalRow({ approval, onRevokeSuccess }: Props) {
 
   const onRevokePressed = (tokenAdress: Address, spenderAddress: Address) => {
     writeContract({
-      abi: ERC_20ABI,
+      abi: erc20Abi,
       address: tokenAdress,
       functionName: "approve",
       args: [spenderAddress, BigInt(0)],

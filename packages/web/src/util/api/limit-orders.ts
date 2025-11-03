@@ -1,4 +1,8 @@
 import {
+  CursorPaginatedResponse,
+  LimitOrderApiItem,
+} from "@1inch/limit-order-sdk";
+import {
   CreateOneInchOrderParams,
   CreateOneInchOrderResponse,
   SubmitOneInchOrderParams,
@@ -29,4 +33,22 @@ export const submitLimitOrder = async (params: SubmitOneInchOrderParams) => {
       "Content-Type": "application/json",
     },
   });
+};
+
+export const fetchLimitOrdersForWalelt = async (
+  chainId: number,
+  wallet: string,
+) => {
+  const searchParams = new URLSearchParams({
+    chainId: chainId.toString(),
+    wallet: wallet,
+  });
+
+  const url = `${process.env.NEXT_PUBLIC_API_URL}/limit-orders?${searchParams}`;
+
+  const response = await fetch(url);
+
+  const body = await response.json();
+
+  return body as CursorPaginatedResponse<LimitOrderApiItem>;
 };
