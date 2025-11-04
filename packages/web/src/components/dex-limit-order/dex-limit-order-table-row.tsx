@@ -16,7 +16,7 @@ type Props = {
 };
 
 export function DexLimitOrderTableRow({ limitOrder }: Props) {
-  const { orderHash, makerRate } = limitOrder;
+  const { orderHash } = limitOrder;
 
   const {
     sellingToken,
