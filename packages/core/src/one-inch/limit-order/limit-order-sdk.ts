@@ -1,8 +1,8 @@
-import { Api, FetchProviderConnector } from "@1inch/limit-order-sdk";
+import { FetchProviderConnector, Sdk } from "@1inch/limit-order-sdk";
 import { Resource } from "sst";
 
-export const oneInchApi = (chainId: number) =>
-  new Api({
+export const limitOrderSdk = (chainId: number) =>
+  new Sdk({
     authKey: Resource.OneInchAPIKey.value,
     networkId: chainId,
     httpConnector: new FetchProviderConnector(),

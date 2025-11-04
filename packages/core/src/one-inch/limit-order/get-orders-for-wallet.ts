@@ -1,7 +1,7 @@
 import { Address } from "@1inch/limit-order-sdk";
-import { oneInchApi } from "./api";
+import { limitOrderApi } from "./limit-order-api";
 
 export const getLimitOrdersForWallet = (chainId: number, address: string) =>
-  oneInchApi(chainId).getOrdersByMaker(new Address(address), {
+  limitOrderApi(chainId).getOrdersByMaker(new Address(address), {
     statuses: [1], // only valid orders
   });

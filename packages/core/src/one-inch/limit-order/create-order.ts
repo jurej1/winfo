@@ -1,6 +1,6 @@
 import { Address, MakerTraits } from "@1inch/limit-order-sdk";
 import { CreateOneInchOrderParams } from "@w-info-sst/types";
-import { oneInchSdk } from "./sdk";
+import { limitOrderSdk } from "./limit-order-sdk";
 
 export const createOneInchLimitOrder = ({
   chainId,
@@ -11,7 +11,7 @@ export const createOneInchLimitOrder = ({
   takingAmount,
   expiration,
 }: CreateOneInchOrderParams) => {
-  const sdk = oneInchSdk(chainId);
+  const sdk = limitOrderSdk(chainId);
 
   const makerTraits = MakerTraits.default()
     .withExpiration(BigInt(expiration))
