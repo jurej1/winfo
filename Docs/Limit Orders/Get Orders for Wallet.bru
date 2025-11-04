@@ -5,11 +5,17 @@ meta {
 }
 
 get {
-  url: {{api}}/limit-orders
+  url: {{api}}/limit-orders?chainId=56&wallet=0x1ff4577f378115e8AeB638C218B541CE0c332B08
   body: none
   auth: inherit
 }
 
+params:query {
+  chainId: 56
+  wallet: 0x1ff4577f378115e8AeB638C218B541CE0c332B08
+}
+
 settings {
   encodeUrl: true
+  timeout: 0
 }

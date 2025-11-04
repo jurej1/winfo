@@ -16,7 +16,7 @@ import { DexLimitOrderTableRow } from "./dex-limit-order-table-row";
 import { Spinner } from "../ui/spinner";
 
 export function DexWalletLimitOrders() {
-  const { isLoading, data } = useLimitOrderByWallet();
+  const { isLoading, limitOrders } = useLimitOrderByWallet();
 
   const { address } = useAccount();
 
@@ -42,7 +42,7 @@ export function DexWalletLimitOrders() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data?.items?.map((order) => (
+          {limitOrders.map((order) => (
             <DexLimitOrderTableRow key={order.orderHash} limitOrder={order} />
           ))}
         </TableBody>
