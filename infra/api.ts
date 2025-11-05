@@ -158,6 +158,11 @@ api.route("GET /tokens/tickers", {
   link,
 });
 
+api.route("GET /tokens/data/{id}", {
+  handler: "packages/functions/src/tokens/data/get.handler",
+  link,
+});
+
 ////////
 // NFTS
 ////////

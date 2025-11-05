@@ -1,5 +1,6 @@
 import {
   CoingeckoPriceResponse,
+  CoinGeckoTokenResponse,
   OHLCDaysFilter,
   TokenListInfo,
 } from "@w-info-sst/types";
@@ -45,7 +46,7 @@ export class CoingeckoRepository {
 
     const body = await response.json();
 
-    return body;
+    return body as CoinGeckoTokenResponse;
   }
 
   static async getAllCoins() {
