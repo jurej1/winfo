@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@1inch/byte-utils": "^3.1.7",
-    "@1inch/cross-chain-sdk": "^1.1.1",
     "@1inch/limit-order-sdk": "^5.2.3",
     "@coingecko/cryptoformat": "^0.8.2",
     "@radix-ui/react-collapsible": "^1.1.12",
