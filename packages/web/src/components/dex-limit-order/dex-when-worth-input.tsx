@@ -60,7 +60,7 @@ export function DexWhenWorthInput({
           <Button asChild className="w-30">
             <div className="flex gap-2">
               <Image
-                src={buyToken?.image ?? ""}
+                src={buyToken?.logo ?? ""}
                 height={20}
                 width={20}
                 alt={buyToken?.symbol}

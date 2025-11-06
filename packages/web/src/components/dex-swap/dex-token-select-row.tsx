@@ -1,13 +1,13 @@
 import { shortenAddress } from "@/lib/shorten-address";
-import { TokenDB } from "@w-info-sst/db";
+import { TokenDBwithPrice } from "@w-info-sst/db";
 import Image from "next/image";
 
 type Props = {
-  token: TokenDB;
+  token: TokenDBwithPrice;
   onPressed: () => void;
 };
 export function DexTokenSelectRow({ token, onPressed }: Props) {
-  const { address, image, name, symbol } = token;
+  const { address, logo, name, symbol } = token;
 
   return (
     <button
@@ -15,14 +15,13 @@ export function DexTokenSelectRow({ token, onPressed }: Props) {
       onClick={onPressed}
     >
       <li className="flex flex-row gap-3 p-2">
-        {image && (
+        {logo && (
           <Image
-            src={image}
+            src={logo}
             alt={symbol}
             width={30}
             height={30}
-            className="object-contain"
-            referrerPolicy="no-referrer"
+            className="rounded-full object-contain"
           />
         )}
         <div className="flex flex-col items-start">

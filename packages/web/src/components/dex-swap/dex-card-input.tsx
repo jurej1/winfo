@@ -1,13 +1,8 @@
 "use client";
 
-import { Input } from "../ui/input";
-import { useAccount, useBalance } from "wagmi";
-
+import { useAccount } from "wagmi";
 import { DexSelectToken } from "./dex-select-token";
 import { TokenDBwithPrice } from "@w-info-sst/db";
-import { useFormattedBigNumber } from "@/util/formatter/useFormattedBigNumber";
-
-import { useSwapTokenUsdPrice } from "@/util/hooks/swap/util/useSwapTokenUsdPrice";
 import { Skeleton } from "../ui/skeleton";
 import { cn } from "@/lib/utils";
 import { DexTokenAmountSelector } from "./dex-token-amount-selector";
@@ -16,6 +11,7 @@ import { DexAdditionalTokensDisplayer } from "./dex-additional-tokens-displayer"
 import { DexCardBackground } from "../dex/dex-card-background";
 import { DexInput } from "../dex/dex-input";
 import { DexTokenBalanceDisplayer } from "../dex/dex-token-balance-displayer";
+import { Address } from "viem";
 
 type Props = {
   title: string;
@@ -31,6 +27,7 @@ type Props = {
   additionalTokens?: TokenDBwithPrice[];
 };
 
+const nativeAddress = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
 export function DexCardInput({
   title,
   token,
@@ -43,10 +40,11 @@ export function DexCardInput({
   balanceToLow,
   additionalTokens,
 }: Props) {
-  const { chainId, address } = useAccount();
-
   const tokenAddress = useCallback(
-    () => (token?.native ? undefined : token?.address),
+    () =>
+      token?.address === nativeAddress
+        ? undefined
+        : (token?.address as Address),
     [token],
   );
 

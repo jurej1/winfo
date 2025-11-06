@@ -13,6 +13,7 @@ type Props = {
   buyToken: TokenDBwithPrice | undefined;
 };
 
+const nativeAddress = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
 export function DexLimitOrderSubmit({
   orderParams,
   sellToken,
@@ -26,7 +27,10 @@ export function DexLimitOrderSubmit({
   });
 
   useEffect(() => {
-    if (buyToken?.native || sellToken?.native) {
+    if (
+      buyToken?.address === nativeAddress ||
+      sellToken?.address === nativeAddress
+    ) {
       setIsAnyNative(true);
     } else {
       setIsAnyNative(false);

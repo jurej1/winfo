@@ -39,11 +39,11 @@ export function DexAdditionalTokensDisplayer({
             onClick={() => onSelect(token)}
           >
             <Image
-              src={token.image!}
+              src={token.logo!}
               alt={token.name}
               height={22}
               width={22}
-              className="object-fill"
+              className="rounded-full object-fill"
             />
           </div>
         );

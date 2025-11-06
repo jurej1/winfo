@@ -13,6 +13,7 @@ import { DexAdditionalTokensDisplayer } from "../dex-swap/dex-additional-tokens-
 import { DexCardBackground } from "../dex/dex-card-background";
 import { DexInput } from "../dex/dex-input";
 import { DexTokenBalanceDisplayer } from "../dex/dex-token-balance-displayer";
+import { Address } from "viem";
 
 type Props = {
   title: string;
@@ -37,8 +38,13 @@ export function DexLimitOrderInputCard({
 }: Props) {
   const [isHover, setIsHover] = useState(false);
 
+  const nativeAddress = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
+
   const tokenAddress = useCallback(
-    () => (token?.native ? undefined : token?.address),
+    () =>
+      token?.address === nativeAddress
+        ? undefined
+        : (token?.address as Address),
     [token],
   );
 

@@ -3,16 +3,14 @@ import {
   LimitOrderApiItem,
   LimitOrderV4Struct,
   LimitOrderWithFee,
-  MakerTraits,
 } from "@1inch/limit-order-sdk";
-import { useSupportedTokens } from "../useSupportedTokens";
+import { useTokens } from "../useTokens";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { TokenDBwithPrice } from "@w-info-sst/db";
 
 import { useFormattedBigNumber } from "@/util/formatter/useFormattedBigNumber";
 import { NumberType } from "@/util/formatter/types";
 import { useLocalizedFormatter } from "@/util/formatter/useLocalizedFormatter";
-import { formatNumber } from "@/util/formatter/numberFormatter";
 import { formatUnits } from "viem";
 
 type UseLimitOrderRowProps = {
@@ -38,7 +36,7 @@ export const useLimitOrderRow = ({ order }: UseLimitOrderRowProps) => {
     takingAmount, // buying amount
   } = order.data;
 
-  const { data: tokens } = useSupportedTokens();
+  const { data: tokens } = useTokens();
 
   const { formatNumberOrString } = useLocalizedFormatter();
 

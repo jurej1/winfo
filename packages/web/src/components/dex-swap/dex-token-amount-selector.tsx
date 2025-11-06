@@ -8,7 +8,7 @@ import { Address } from "viem";
 type Props = {
   show: boolean;
   onSelect: (val: number) => void;
-  tokenAddress: Address | undefined;
+  tokenAddress: string | undefined;
 };
 
 export function DexTokenAmountSelector({
@@ -23,7 +23,7 @@ export function DexTokenAmountSelector({
   const { data: balance } = useBalance({
     chainId,
     address,
-    token: tokenAddress,
+    token: tokenAddress as Address | undefined,
     query: {
       refetchInterval: 1000 * 10,
     },

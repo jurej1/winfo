@@ -13,8 +13,8 @@ import { DexTokenSelectRow } from "./dex-token-select-row";
 import { Button } from "../ui/button";
 
 import Image from "next/image";
-import { TokenDB, TokenDBwithPrice } from "@w-info-sst/db";
-import { useSupportedTokens } from "@/util/hooks/useSupportedTokens";
+import { TokenDBwithPrice } from "@w-info-sst/db";
+import { useTokens } from "@/util/hooks/useTokens";
 
 type Props = {
   token?: TokenDBwithPrice;
@@ -32,7 +32,7 @@ export function DexSelectToken({ token, onSetToken }: Props) {
     [setOpen, onSetToken],
   );
 
-  const { data: tokens, isLoading: loadingTokens } = useSupportedTokens();
+  const { data: tokens, isLoading: loadingTokens } = useTokens();
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -47,12 +47,11 @@ export function DexSelectToken({ token, onSetToken }: Props) {
           <Button className="w-30">
             <div className="flex gap-2">
               <Image
-                src={token.image ?? ""}
+                src={token.logo ?? ""}
                 height={20}
                 width={20}
                 alt={`${token.symbol} image`}
                 draggable={false}
-                referrerPolicy="no-referrer"
               />
               <p>{token.symbol}</p>
             </div>

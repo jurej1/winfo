@@ -1,5 +1,5 @@
 import { useAccount } from "wagmi";
-import { useSupportedTokens } from "../useSupportedTokens";
+import { useTokens } from "../useTokens";
 import { useCallback, useEffect, useState } from "react";
 import { TokenDBwithPrice } from "@w-info-sst/db";
 import { CreateOneInchOrderParams } from "@w-info-sst/types";
@@ -37,7 +37,7 @@ export const useLimitOrder = () => {
     isLoading: isTokensLoading,
     isError: isTokensError,
     isSuccess: isTokensLoadSuccess,
-  } = useSupportedTokens();
+  } = useTokens();
 
   const calcMarketRatio = useCallback(() => {
     if (buyToken?.priceUsd && sellToken?.priceUsd) {
@@ -69,9 +69,11 @@ export const useLimitOrder = () => {
     [setRatio, sellAmount, setBuyAmount, setRatioPercentage, calcMarketRatio],
   );
 
+  const nativeAddress = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
+
   useEffect(() => {
     if (tokens) {
-      const native = tokens.find((token) => token.native);
+      const native = tokens.find((token) => token.address === nativeAddress);
       setSellToken(native);
 
       const usdt = tokens.find((token) => token.symbol === "USDT");

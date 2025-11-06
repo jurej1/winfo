@@ -8,7 +8,6 @@ import {
 import {
   DexTransactionDB,
   InsertDexTransactionDB,
-  TokenDB,
   TokenDBwithPrice,
 } from "@w-info-sst/db";
 
