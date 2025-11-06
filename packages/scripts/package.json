@@ -4,6 +4,7 @@
   "type": "module",
   "dependencies": {
     "@w-info-sst/core": "*",
+    "@w-info-sst/db": "*",
     "sst": "*"
   },
   "scripts": {

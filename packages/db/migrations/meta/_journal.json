@@ -64,6 +64,20 @@
       "when": 1761671170306,
       "tag": "0008_gifted_lyja",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1762428274589,
+      "tag": "0009_mute_power_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1762428460782,
+      "tag": "0010_material_mantis",
+      "breakpoints": true
     }
   ]
 }

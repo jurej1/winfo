@@ -1,0 +1,27 @@
+meta {
+  name: Get Tokens
+  type: http
+  seq: 7
+}
+
+get {
+  url: https://matcha.xyz/api/discovery/tokens?sortBy=marketCap&sortDirection=desc&timeframe=24&page=1&preset=popular&shouldError=false&pageDiscovery=false&networks=56
+  body: none
+  auth: inherit
+}
+
+params:query {
+  sortBy: marketCap
+  sortDirection: desc
+  timeframe: 24
+  page: 1
+  preset: popular
+  shouldError: false
+  pageDiscovery: false
+  networks: 56
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

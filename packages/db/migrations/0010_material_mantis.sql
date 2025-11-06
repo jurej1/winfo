@@ -1,0 +1,1 @@
+DROP TABLE "dex-tokens" CASCADE;
