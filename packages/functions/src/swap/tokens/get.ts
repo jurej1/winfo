@@ -32,18 +32,32 @@ const baseHandler = async (
 
   const response = await getTokensByChainId(chain);
 
+  const nativeAddressDB = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
+  const nativeAddressCoingecko = "0x0000000000000000000000000000000000000000";
+
   const tokenAddresses = response.map((token) => {
-    const nativeCoingecko = "0x0000000000000000000000000000000000000000";
-    return token.native ? nativeCoingecko : token.address;
+    return token.address.toLowerCase() === nativeAddressDB.toLowerCase()
+      ? nativeAddressCoingecko
+      : token.address;
   });
 
-  const prices = await CoingeckoRepository.getCoinPriceDexByAddresses(
-    "bsc",
-    tokenAddresses,
+  // CoinGecko API allows MAX 30 tokens per request
+  const BATCH_SIZE = 30;
+  const batches: string[][] = [];
+
+  for (let i = 0; i < tokenAddresses.length; i += BATCH_SIZE) {
+    batches.push(tokenAddresses.slice(i, i + BATCH_SIZE));
+  }
+
+  const batchPricesPromises = batches.map((batch) =>
+    CoingeckoRepository.getCoinPriceDexByAddresses("bsc", batch),
   );
 
+  const batchPricesResults = await Promise.all(batchPricesPromises);
+  const allPrices = batchPricesResults.flat();
+
   const mappedTokens = response.map((token, index) => {
-    return { ...token, priceUsd: prices[index] } as TokenDBwithPrice;
+    return { ...token, priceUsd: allPrices[index] } as TokenDBwithPrice;
   });
 
   return {
