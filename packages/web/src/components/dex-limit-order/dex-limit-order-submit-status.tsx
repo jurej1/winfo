@@ -58,7 +58,7 @@ const StatusRow = ({
   title,
   status = "initial",
 }: {
-  title: String;
+  title: string;
   status: StatusRowStatus;
 }) => {
   const iconClass = "h-[15px] w-[15px] text-blue-400";

@@ -79,7 +79,7 @@ export function DexLimitOrderTableRow({ limitOrder }: Props) {
       <TableCell>
         {sellingToken && (
           <TokenWithImage
-            src={sellingToken?.image ?? ""}
+            src={sellingToken?.logo ?? ""}
             symbol={sellingToken?.symbol ?? "xx"}
           />
         )}
@@ -91,7 +91,7 @@ export function DexLimitOrderTableRow({ limitOrder }: Props) {
       <TableCell>
         {buyingToken && (
           <TokenWithImage
-            src={buyingToken?.image ?? ""}
+            src={buyingToken?.logo ?? ""}
             symbol={buyingToken?.symbol ?? "xx"}
           />
         )}

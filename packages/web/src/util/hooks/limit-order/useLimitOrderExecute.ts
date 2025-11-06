@@ -1,5 +1,5 @@
 import { CreateOneInchOrderParams } from "@w-info-sst/types";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { useLimitOrderCreate } from "./useLimitOrderCreate";
 import {
   useAccount,
@@ -50,7 +50,7 @@ export const useLimitOrderExecute = ({
   const { writeContractAsync } = useWriteContract();
 
   const { data: allowanceResponse } = useReadContract({
-    address: sellToken?.address,
+    address: sellToken?.address as Address,
     chainId: chainId,
     functionName: "allowance",
     args: [
@@ -81,7 +81,7 @@ export const useLimitOrderExecute = ({
 
     // TODO -> wait for "Approve" write to succeed before continuating with code,
     await writeContractAsync({
-      address: sellToken.address,
+      address: sellToken.address as Address,
       abi: erc20Abi,
       functionName: "approve",
       args: [spenderAddress, maxUint256],

@@ -150,7 +150,7 @@ export const useLimitOrderRow = ({ order }: UseLimitOrderRowProps) => {
     value: BigInt(takingAmount),
   });
 
-  const amountUsd = (
+  const useAmountUsd = (
     token: TokenDBwithPrice | undefined,
     amount: string | number | bigint | undefined,
   ) =>
@@ -166,8 +166,8 @@ export const useLimitOrderRow = ({ order }: UseLimitOrderRowProps) => {
       return "$x.xx";
     }, [token?.priceUsd, amount, token?.decimals]);
 
-  const buyingAmountUsd = amountUsd(buyingToken, takingAmount);
-  const sellingAmountUsd = amountUsd(sellingToken, makingAmount);
+  const buyingAmountUsd = useAmountUsd(buyingToken, takingAmount);
+  const sellingAmountUsd = useAmountUsd(sellingToken, makingAmount);
 
   const sellingAmountFormatted = useFormattedBigNumber({
     decimals: sellingToken?.decimals,

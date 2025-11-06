@@ -10,13 +10,13 @@ export async function generateStaticParams() {
 }
 
 type TokenPageProps = {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 };
 
-export default function TokenPage({ params }: TokenPageProps) {
-  const { id } = params;
+export default async function TokenPage({ params }: TokenPageProps) {
+  const { id } = await params;
 
   return <TokenDetailsPage id={id} />;
 }

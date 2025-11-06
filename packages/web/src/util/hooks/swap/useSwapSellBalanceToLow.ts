@@ -1,5 +1,6 @@
 import { TokenDBwithPrice } from "@w-info-sst/db";
 import { useEffect, useState } from "react";
+import { Address } from "viem";
 
 import { useAccount, useBalance } from "wagmi";
 
@@ -8,6 +9,7 @@ type UseSwapSellBalanceToLowProps = {
   amount: string;
 };
 
+const nativeAddress = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
 export const useSwapSellBalanceToLow = ({
   token,
   amount,
@@ -17,7 +19,10 @@ export const useSwapSellBalanceToLow = ({
   const { chainId, address } = useAccount();
 
   const { data: balance } = useBalance({
-    token: token?.native ? undefined : token?.address,
+    token:
+      token?.address === nativeAddress
+        ? undefined
+        : (token?.address as Address),
     address,
     chainId,
     query: {

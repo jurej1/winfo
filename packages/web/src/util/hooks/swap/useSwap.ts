@@ -65,11 +65,8 @@ export const useSwap = () => {
   }, [sellAmount, chainId, address, fetchQuote, sellToken, buyToken, slippage]);
 
   const swapTokens = useCallback(() => {
-    let a = sellToken;
-    let b = buyToken;
-
-    setBuyToken(a);
-    setSellToken(b);
+    setBuyToken(sellToken);
+    setSellToken(buyToken);
   }, [sellToken, buyToken, setSellToken, setBuyToken]);
 
   const formattedSlippage = useCallback(() => {
