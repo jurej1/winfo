@@ -23,10 +23,10 @@ export function TransactionGasProgress({ gas, gasUsed }: Props) {
           </span>
         </div>
         {/* Arrow */}
-        <div className="border-t-onyx-DEFAULT absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent" />
+        <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent" />
       </div>
 
-      <span className="text-onyx-DEFAULT cursor-help text-xs font-semibold">
+      <span className="cursor-help text-xs font-semibold">
         {val.toFixed(1)}%
       </span>
       <Progress value={val} className="bg-platinum-DEFAULT h-2 w-20" />

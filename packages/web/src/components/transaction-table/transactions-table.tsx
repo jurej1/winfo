@@ -33,7 +33,7 @@ export function TransactionsTable({ transactions }: Props) {
       <div className="mb-6">
         <div className="mb-2 flex items-center gap-2">
           <MdHistory className="h-5 w-5 text-neutral-500" />
-          <h3 className="text-base font-semibold text-primary-dark-900">
+          <h3 className="text-primary-dark-900 text-base font-semibold">
             Transaction History
           </h3>
         </div>

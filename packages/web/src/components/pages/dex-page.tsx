@@ -1,10 +1,25 @@
+"use client";
+
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { DexLimitOrderCard } from "../dex-limit-order/dex-limit-order-card";
 import { DexSwapComponent } from "../dex-swap/dex-swap";
 import { DexRecentTransactions } from "../dex-swap";
 import { DexWalletLimitOrders } from "../dex-limit-order/dex-wallet-limit-orders";
+import { WalletDisconnected } from "../ui/wallet-disconnected";
+import { useAccount } from "wagmi";
 
 export default function DexPage() {
+  const { address, chainId } = useAccount();
+
+  if (!address || !chainId) {
+    return (
+      <WalletDisconnected
+        title="Wallet Not Connected"
+        message="Connect your wallet to access decentralized exchange features, swap tokens, and create limit orders"
+      />
+    );
+  }
+
   return (
     <div className="mx-auto flex max-w-7xl flex-col gap-6 p-6">
       <Tabs defaultValue="swap">

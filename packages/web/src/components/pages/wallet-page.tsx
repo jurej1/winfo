@@ -4,19 +4,17 @@ import { useAccount } from "wagmi";
 
 import { PortfolioGrid } from "@/components/wallet/portfolio-grid";
 import { WalletApprovals } from "@/components/wallet-approvals";
+import { WalletDisconnected } from "@/components/ui/wallet-disconnected";
 
 export default function WalletPage() {
   const { address, chainId } = useAccount();
 
   if (!address || !chainId) {
     return (
-      <div className="mx-auto mt-8 max-w-7xl px-4">
-        <div className="flex min-h-[200px] items-center justify-center rounded-lg border border-neutral-200 bg-white p-8 shadow-sm">
-          <p className="text-base font-medium text-neutral-600">
-            Please connect your wallet...
-          </p>
-        </div>
-      </div>
+      <WalletDisconnected
+        title="Wallet Not Connected"
+        message="Connect your wallet to view your portfolio, token holdings, and manage approvals"
+      />
     );
   }
 
