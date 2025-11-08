@@ -2,111 +2,80 @@
 
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Link from "next/link";
-import { useState } from "react";
-
 import Image from "next/image";
 
-const items = [
-  <Link key="wallet" href="/">
-    Wallet
-  </Link>,
-  <Link key="token" href="/token">
-    Token
-  </Link>,
-  <Link key="transactions" href="/transactions">
-    Transactions
-  </Link>,
-  // <Link key="nfts" href="/">
-  //   Nfts
-  // </Link>,
-  <Link key="dex" href="/dex">
-    DEX
-  </Link>,
+type NavItem = {
+  href: string;
+  label: string;
+};
+
+const navItems: NavItem[] = [
+  {
+    href: "/",
+    label: "Wallet",
+  },
+  {
+    href: "/token",
+    label: "Token",
+  },
+  {
+    href: "/transactions",
+    label: "Transactions",
+  },
+  // {
+  //   href: "/",
+  //   label: "NFTs",
+  // },
+  {
+    href: "/dex",
+    label: "DEX",
+  },
 ];
 
 export default function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-  const DesktopNav = () => {
-    return (
-      <div className="hidden items-center gap-x-4 font-bold text-blue-400 md:flex">
-        {items}
-      </div>
-    );
-  };
-
-  const MobileNav = () => {
-    return (
-      <div
-        className={`fixed top-0 left-0 z-30 h-full w-64 transform bg-white shadow-xl transition-transform duration-300 ease-in-out ${
-          isMenuOpen ? "translate-x-0" : "-translate-x-full"
-        } md:hidden`}
-      >
-        <div className="flex flex-col space-y-4 p-5 pt-16 font-semibold text-blue-500">
-          <button
-            onClick={toggleMenu}
-            className="absolute top-4 right-4 text-xl text-gray-500 hover:text-gray-700"
-            aria-label="Close menu"
-          >
-            &times;
-          </button>
-
-          {items.map((item, index) => (
-            <div
-              key={index}
-              onClick={toggleMenu}
-              className="rounded p-2 hover:bg-gray-100"
-            >
-              {item}
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  };
-
-  const HamburgerIcon = () => {
-    return (
-      <button
-        className="p-2 text-2xl text-blue-400 md:hidden"
-        onClick={toggleMenu}
-        aria-label="Open menu"
-      >
-        &#9776;
-      </button>
-    );
-  };
+  const DesktopNav = () => (
+    <nav aria-label="Main navigation" className="hidden md:flex">
+      <ul className="flex items-center gap-x-4 font-bold text-white">
+        {navItems.map((item) => (
+          <AnimatedLinkItem
+            href={item.href}
+            label={item.label}
+            key={item.href}
+          />
+        ))}
+      </ul>
+    </nav>
+  );
 
   return (
-    <>
-      <div className="sticky top-0 z-20 flex items-center justify-between bg-black px-5 py-3 shadow">
-        <Image
-          src="/logo.svg"
-          alt="Logo"
-          width={120}
-          height={30}
-          className="text-black"
-          draggable={false}
-        />
-        <HamburgerIcon />
+    <header className="from-seasalt-100 to-seasalt-200 sticky top-0 z-20 flex items-center justify-between bg-gradient-to-r from-80% px-5 py-3 shadow">
+      <Image
+        src="/logo.svg"
+        alt="Logo"
+        width={120}
+        height={30}
+        className="text-black"
+        draggable={false}
+      />
 
-        <DesktopNav />
+      <DesktopNav />
 
-        <ConnectButton />
-      </div>
-
-      <MobileNav />
-
-      {isMenuOpen && (
-        <div
-          className="fixed inset-0 z-25 bg-black opacity-30 md:hidden"
-          onClick={toggleMenu}
-        />
-      )}
-    </>
+      <ConnectButton />
+    </header>
   );
 }
+
+export const AnimatedLinkItem = ({
+  href,
+  label,
+}: {
+  href: string;
+  label: string;
+}) => {
+  return (
+    <li className="group flex flex-col items-center">
+      <Link href={href}>{label}</Link>
+      <div className="bg-seasalt-500 h-0.5 w-0 rounded-full transition-all duration-200 ease-out group-hover:w-full" />
+    </li>
+  );
+};
