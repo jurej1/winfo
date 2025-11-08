@@ -69,7 +69,7 @@ export function NetWorthCard({ address }: Props) {
                 <span className="bg-gradient-to-r from-slate-400 to-slate-500 bg-clip-text text-6xl font-bold text-transparent">
                   ${data.total_networth_usd}
                 </span>
-                <span className="text-2xl text-white/60">USD</span>
+                <span className="text-2xl text-slate-500">USD</span>
               </div>
             </div>
           </div>

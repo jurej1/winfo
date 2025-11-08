@@ -25,7 +25,7 @@ export function PortfolioGrid({ address, chainId }: Props) {
 
   return (
     <div className="flex flex-col gap-8">
-      <div className="grid grid-cols-2">
+      <div className="grid grid-cols-2 gap-4">
         <NetWorthCard address={address} />
         <PortfolioPie tokens={data.result} />
       </div>
