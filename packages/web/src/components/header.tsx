@@ -4,6 +4,8 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Link from "next/link";
 import { useState } from "react";
 
+import Image from "next/image";
+
 const items = [
   <Link key="wallet" href="/">
     Wallet
@@ -81,7 +83,15 @@ export default function Header() {
 
   return (
     <>
-      <div className="sticky top-0 z-20 flex items-center justify-between bg-white px-5 py-2 shadow">
+      <div className="sticky top-0 z-20 flex items-center justify-between bg-black px-5 py-3 shadow">
+        <Image
+          src="/logo.svg"
+          alt="Logo"
+          width={120}
+          height={30}
+          className="text-black"
+          draggable={false}
+        />
         <HamburgerIcon />
 
         <DesktopNav />
