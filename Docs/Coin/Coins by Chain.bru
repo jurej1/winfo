@@ -1,20 +1,15 @@
 meta {
-  name: Tokens List
+  name: Coins by Chain
   type: http
-  seq: 5
+  seq: 1
 }
 
 get {
-  url: {{api}}/tokens/list
+  url: 
   body: none
   auth: inherit
 }
 
-params:query {
-  : 
-}
-
 settings {
   encodeUrl: true
-  timeout: 0
 }

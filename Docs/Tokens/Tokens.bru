@@ -1,20 +1,15 @@
 meta {
-  name: Tokens List
+  name: Tokens
   type: http
-  seq: 5
+  seq: 10
 }
 
 get {
-  url: {{api}}/tokens/list
+  url: {{api}}
   body: none
   auth: inherit
 }
 
-params:query {
-  : 
-}
-
 settings {
   encodeUrl: true
-  timeout: 0
 }
