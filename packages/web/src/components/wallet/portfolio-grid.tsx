@@ -4,7 +4,7 @@ import { Address } from "viem";
 import { PortfolioPie } from "./portfolio-pie";
 import { TokensPortfolioList } from "./tokens-grid";
 import { NetWorthCard } from "./net-worth-card";
-import { Spinner } from "../ui/spinner";
+import { LoadingCard } from "../ui/loading-card";
 import { useWalletBalance } from "@/util/hooks/wallet/useWalletBalance";
 
 type Props = {
@@ -17,8 +17,9 @@ export function PortfolioGrid({ address, chainId }: Props) {
 
   if (isLoading || !data) {
     return (
-      <div className="flex justify-center">
-        <Spinner />
+      <div className="grid grid-cols-2 gap-4">
+        <LoadingCard message="Loading Portfolio Data..." />
+        <LoadingCard message="Loading Token Distribution..." />
       </div>
     );
   }

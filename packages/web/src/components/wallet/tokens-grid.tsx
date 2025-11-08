@@ -3,7 +3,6 @@ import { PortfolioTokenCard } from "./portfolio-token-card";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableHead,
   TableHeader,
   TableRow,
