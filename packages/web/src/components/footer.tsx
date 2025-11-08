@@ -12,9 +12,6 @@ export default function Footer() {
             height={30}
             className="text-primary-dark-900"
           />
-          <span className="text-neutral-500">
-            Built with SST and powered by Neon, Moralis, CoinGecko, 0x, and 1inch.
-          </span>
         </div>
         <div className="text-neutral-400">
           © {new Date().getFullYear()} Wallet Info. All rights reserved.
