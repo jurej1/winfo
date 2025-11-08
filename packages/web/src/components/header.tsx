@@ -14,10 +14,10 @@ const navItems: NavItem[] = [
     href: "/",
     label: "Wallet",
   },
-  {
-    href: "/token",
-    label: "Token",
-  },
+  // {
+  //   href: "/token",
+  //   label: "Token",
+  // },
   {
     href: "/transactions",
     label: "Transactions",
