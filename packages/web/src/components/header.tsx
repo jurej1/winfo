@@ -26,7 +26,10 @@ const navItems: NavItem[] = [
 
 export default function Header() {
   const DesktopNav = () => (
-    <nav aria-label="Main navigation" className="hidden md:flex">
+    <nav
+      aria-label="Main navigation"
+      className="absolute top-1/2 left-1/2 hidden -translate-x-1/2 -translate-y-1/2 md:flex"
+    >
       <ul className="flex items-center gap-x-8">
         {navItems.map((item) => (
           <AnimatedLinkItem
@@ -40,7 +43,7 @@ export default function Header() {
   );
 
   return (
-    <header className="sticky top-0 z-20 flex items-center justify-between border-b border-neutral-200 bg-white px-6 py-4 shadow-sm backdrop-blur-sm">
+    <header className="sticky top-0 z-20 flex items-center justify-between border-b border-neutral-200 bg-white px-6 py-4 shadow-sm backdrop-blur-sm md:relative">
       <Image
         src="/logo.svg"
         alt="Logo"
