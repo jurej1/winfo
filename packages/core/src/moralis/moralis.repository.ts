@@ -1,4 +1,4 @@
-import { NftTransactions } from "@w-info-sst/types";
+import { MoralisTokenPrice, NftTransactions } from "@w-info-sst/types";
 import Moralis from "moralis";
 import { EvmChain } from "moralis/common-evm-utils";
 import { Resource } from "sst";
@@ -181,5 +181,45 @@ export class MoralisRepository {
       address: string,
       chain: Moralis.EvmUtils.EvmChain.ETHEREUM,
     });
+  }
+
+  static async getManyTokenPrices(
+    chain: EvmChain,
+    tokens: string[],
+  ): Promise<MoralisTokenPrice[]> {
+    const chainName = () => {
+      switch (chain) {
+        case EvmChain.ETHEREUM:
+          return "eth";
+        case EvmChain.BSC:
+          return "bsc";
+        default:
+          return "eth";
+      }
+    };
+
+    const mappedTokens = tokens.map((t) => ({
+      token_address: t,
+    }));
+
+    const options = {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        "content-type": "application/json",
+        "X-API-Key": Resource.MoralisAPIKey.value,
+      },
+      body: JSON.stringify({
+        tokens: mappedTokens,
+      }),
+    };
+
+    const url = `https://deep-index.moralis.io/api/v2.2/erc20/prices?chain=${chainName()}`;
+
+    const response = await fetch(url, options);
+
+    const body = (await response.json()) as MoralisTokenPrice[];
+
+    return body;
   }
 }
