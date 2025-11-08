@@ -12,6 +12,7 @@ import { Spinner } from "./ui/spinner";
 import { useEffect } from "react";
 import { toast } from "sonner";
 import { erc20Abi } from "viem";
+import { MdCheckCircle } from "react-icons/md";
 
 type Props = {
   approval: ApprovalResult;
@@ -33,68 +34,135 @@ export function WalletApprovalRow({ approval, onRevokeSuccess }: Props) {
   });
 
   useEffect(() => {
-    if (isReceiptSuccess) {
-      toast.success(receipt.transactionHash);
+    if (isReceiptSuccess && receipt) {
+      toast.success("Approval revoked successfully!", {
+        description: shortenAddress(receipt.transactionHash),
+      });
       onRevokeSuccess(approval.transaction_hash);
     }
-  }, [isReceiptSuccess, receipt]);
+  }, [isReceiptSuccess, receipt, approval.transaction_hash, onRevokeSuccess]);
 
-  const onRevokePressed = (tokenAdress: Address, spenderAddress: Address) => {
+  const onRevokePressed = (tokenAddress: Address, spenderAddress: Address) => {
     writeContract({
       abi: erc20Abi,
-      address: tokenAdress,
+      address: tokenAddress,
       functionName: "approve",
       args: [spenderAddress, BigInt(0)],
     });
   };
 
+  // Format the date
+  const formattedDate = new Date(approval.block_timestamp).toLocaleDateString(
+    "en-US",
+    {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    },
+  );
+
+  const formattedTime = new Date(approval.block_timestamp).toLocaleTimeString(
+    "en-US",
+    {
+      hour: "2-digit",
+      minute: "2-digit",
+    },
+  );
+
   return (
-    <TableRow>
-      <TableCell className="text-xs text-gray-400">
-        {shortenAddress(approval.transaction_hash)}
+    <TableRow className="border-platinum-200 group/row transition-all duration-200 hover:bg-white/40">
+      <TableCell className="py-4">
+        <code className="text-onyx-DEFAULT rounded-lg bg-white/80 px-2 py-1 font-mono text-xs font-medium">
+          {shortenAddress(approval.transaction_hash)}
+        </code>
       </TableCell>
+
       <TableCell>
-        <div className="flex gap-1">
-          <span>{approval.value_formatted}</span>
-          <span className="uppercase">{approval.token.symbol}</span>
+        <div className="flex items-center gap-3">
           {token.logo != null && (
-            <Image
-              src={token.logo}
-              alt="Token Logo"
-              height={17}
-              width={17}
-              className="object-contain"
-            />
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/80 p-1 shadow-sm transition-transform duration-200 group-hover/row:scale-110">
+              <Image
+                src={token.logo}
+                alt="Token Logo"
+                height={24}
+                width={24}
+                className="object-contain"
+                draggable="false"
+              />
+            </div>
           )}
+          <div className="flex flex-col">
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-onyx-DEFAULT text-sm font-semibold">
+                {approval.value_formatted}
+              </span>
+              <span className="text-slate_gray-DEFAULT text-xs font-medium uppercase">
+                {approval.token.symbol}
+              </span>
+            </div>
+            <span className="text-slate_gray-DEFAULT text-xs">
+              {token.name}
+            </span>
+          </div>
         </div>
       </TableCell>
+
       <TableCell>
-        {new Date(approval.block_timestamp).toLocaleDateString()}
+        <div className="flex flex-col gap-0.5">
+          <span className="text-onyx-DEFAULT text-sm font-semibold">
+            {formattedDate}
+          </span>
+          <span className="text-slate_gray-DEFAULT text-xs">
+            {formattedTime}
+          </span>
+        </div>
       </TableCell>
-      <TableCell>{formatCurrency(Number(token.usd_at_risk), "$")}</TableCell>
+
       <TableCell>
-        <div className="flex flex-col gap-1 text-xs text-gray-400">
-          <span>{shortenAddress(approval.spender.address)}</span>
+        <div className="flex flex-col gap-1">
+          <span className="text-onyx-DEFAULT text-sm font-semibold">
+            {formatCurrency(Number(token.usd_at_risk), "$")}
+          </span>
+          <span className="text-slate_gray-DEFAULT text-xs">At Risk</span>
+        </div>
+      </TableCell>
+
+      <TableCell>
+        <div className="flex flex-col gap-2">
+          <code className="text-slate_gray-DEFAULT bg-platinum-200 w-fit rounded px-2 py-1 font-mono text-xs">
+            {shortenAddress(approval.spender.address)}
+          </code>
           {showSpenderInfo && (
-            <div className="flex gap-1">
-              <span>{spender.entity}</span>
+            <div className="flex items-center gap-2">
               {spender.entity_logo && (
-                <Image
-                  src={spender.entity_logo}
-                  alt={spender.entity ?? "Spender Logo"}
-                  height={15}
-                  width={15}
-                  className="object-contain"
-                />
+                <div className="flex h-5 w-5 items-center justify-center rounded-full bg-white/80 shadow-sm">
+                  <Image
+                    src={spender.entity_logo}
+                    alt={spender.entity ?? "Spender Logo"}
+                    height={16}
+                    width={16}
+                    className="object-contain"
+                    draggable="false"
+                  />
+                </div>
               )}
+              <span className="text-onyx-DEFAULT flex items-center gap-1 text-xs font-medium">
+                {spender.entity}
+                {spender.address_label && (
+                  <MdCheckCircle className="h-3 w-3 text-green-600" />
+                )}
+              </span>
             </div>
           )}
         </div>
       </TableCell>
-      <TableCell>
+
+      <TableCell className="text-right">
         <Button
           size="sm"
           onClick={() => onRevokePressed(token.address, spender.address)}
+          disabled={showLoading}
+          className="bg-red-100 text-red-700 transition-all duration-200 hover:scale-105 hover:bg-red-600 hover:text-white disabled:opacity-50"
         >
           {showLoading ? <Spinner /> : "Revoke"}
         </Button>
