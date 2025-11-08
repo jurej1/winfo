@@ -60,7 +60,7 @@ export default function TransactionsPage({ address, chainId }: Props) {
   };
 
   return (
-    <div className="mx-auto flex max-w-7xl flex-col">
+    <div className="mx-auto mt-5 flex max-w-7xl flex-col">
       <TransactionsTable transactions={data.result} />
       <TransactionTableNavigation
         onBackPressed={onBackwardsPressed}
