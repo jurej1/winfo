@@ -3,5 +3,9 @@ type Props = {
 };
 
 export function TransactionAddress({ address }: Props) {
-  return <span className="text-xs">{address}</span>;
+  return (
+    <code className="text-slate_gray-DEFAULT bg-platinum-200 rounded px-2 py-1 font-mono text-xs">
+      {address}
+    </code>
+  );
 }

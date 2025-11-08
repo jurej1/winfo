@@ -5,6 +5,7 @@ import {
   TransactionsTable,
 } from "@/components/transaction-table";
 import { useWalletHistory } from "@/util/hooks/wallet/useWalletHistory";
+import { LoadingCard } from "@/components/ui/loading-card";
 
 import { useEffect, useState } from "react";
 import { Address } from "viem";
@@ -30,11 +31,29 @@ export default function TransactionsPage({ address, chainId }: Props) {
   }, [chainId, setCursor, setCursorHistory]);
 
   if (isLoading || !data) {
-    return <div>Loading transactions...</div>;
+    return (
+      <div className="mx-auto mt-5 max-w-7xl">
+        <LoadingCard message="Loading Transaction History..." />
+      </div>
+    );
   }
 
   if (isError) {
-    return <div>There was an error loading transactions</div>;
+    return (
+      <div className="mx-auto mt-5 max-w-7xl">
+        <div className="group border-platinum-300 from-seasalt-DEFAULT via-anti-flash_white-DEFAULT to-platinum-DEFAULT relative m-2 flex min-h-[300px] items-center justify-center overflow-hidden rounded-3xl border bg-gradient-to-br p-8 shadow-xl">
+          <div className="text-center">
+            <p className="text-onyx-DEFAULT mb-2 text-lg font-semibold">
+              Error Loading Transactions
+            </p>
+            <p className="text-slate_gray-DEFAULT text-sm">
+              There was an error loading your transaction history. Please try
+              again.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   const onForwardPressed = () => {

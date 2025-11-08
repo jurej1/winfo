@@ -1,5 +1,3 @@
-import { Divide } from "lucide-react";
-import { Tooltip } from "../tooltip";
 import { Progress } from "../ui/progress";
 
 type Props = {
@@ -11,18 +9,27 @@ export function TransactionGasProgress({ gas, gasUsed }: Props) {
   const val = (Number(gasUsed) / Number(gas)) * 100;
 
   return (
-    <div className="flex items-center gap-x-2">
-      <Tooltip
-        tooltip={
-          <div className="flex flex-col">
-            <span>Used: {gasUsed}</span>
-            <span>Max: {gas}</span>
-          </div>
-        }
-      >
-        <span className="text-xs text-gray-500">{val.toFixed(1)}%</span>
-      </Tooltip>
-      <Progress value={val} className="h-1.5 w-15 [&>div]:bg-blue-500" />
+    <div
+      className="group/gas relative flex flex-col gap-1.5"
+      title={`Gas Used: ${gasUsed} / ${gas}`}
+    >
+      <div className="bg-onyx-DEFAULT pointer-events-none absolute bottom-full left-1/2 z-50 mb-2 hidden -translate-x-1/2 rounded-lg px-3 py-2 text-xs whitespace-nowrap text-white shadow-lg group-hover/gas:block">
+        <div className="flex flex-col gap-1">
+          <span>
+            <span className="font-semibold">Used:</span> {gasUsed}
+          </span>
+          <span>
+            <span className="font-semibold">Max:</span> {gas}
+          </span>
+        </div>
+        {/* Arrow */}
+        <div className="border-t-onyx-DEFAULT absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent" />
+      </div>
+
+      <span className="text-onyx-DEFAULT cursor-help text-xs font-semibold">
+        {val.toFixed(1)}%
+      </span>
+      <Progress value={val} className="bg-platinum-DEFAULT h-2 w-20" />
     </div>
   );
 }
