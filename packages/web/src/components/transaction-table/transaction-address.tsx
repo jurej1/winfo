@@ -4,7 +4,7 @@ type Props = {
 
 export function TransactionAddress({ address }: Props) {
   return (
-    <code className="text-slate_gray-DEFAULT bg-platinum-200 rounded px-2 py-1 font-mono text-xs">
+    <code className="rounded border border-neutral-200 bg-neutral-50 px-2 py-1 font-mono text-xs text-neutral-600">
       {address}
     </code>
   );

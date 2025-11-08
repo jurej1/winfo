@@ -18,54 +18,48 @@ type Props = {
 
 export function TokensPortfolioList({ tokens, address }: Props) {
   return (
-    <div className="group border-platinum-300 from-seasalt-DEFAULT via-anti-flash_white-DEFAULT to-platinum-DEFAULT relative m-2 h-full w-full overflow-hidden rounded-3xl border bg-gradient-to-br p-8 shadow-xl transition-all duration-300 hover:shadow-2xl">
-      {/* Decorative background elements */}
-      <div className="from-french_gray-400/20 to-slate_gray-400/10 absolute -top-20 -right-20 h-40 w-40 rounded-full bg-gradient-to-br blur-3xl" />
-      <div className="from-platinum-400/20 to-french_gray-300/10 absolute -bottom-16 -left-16 h-32 w-32 rounded-full bg-gradient-to-tr blur-2xl" />
-
-      <div className="relative z-10">
-        {/* Header */}
-        <div className="mb-6">
-          <div className="mb-2 flex items-center gap-2">
-            <BiCoin className="text-slate_gray-DEFAULT h-5 w-5" />
-            <h3 className="text-slate_gray-DEFAULT text-lg font-semibold tracking-wider uppercase">
-              Token Holdings
-            </h3>
-          </div>
-          <p className="text-outer_space-DEFAULT text-sm">
-            Portfolio assets for {shortenAddress(address)}
-          </p>
+    <div className="w-full rounded-lg border border-neutral-200 bg-white p-6 shadow-sm">
+      {/* Header */}
+      <div className="mb-6">
+        <div className="mb-2 flex items-center gap-2">
+          <BiCoin className="h-5 w-5 text-neutral-500" />
+          <h3 className="text-base font-semibold text-primary-dark-900">
+            Token Holdings
+          </h3>
         </div>
+        <p className="text-sm text-neutral-600">
+          Portfolio assets for {shortenAddress(address)}
+        </p>
+      </div>
 
-        {/* Table Container */}
-        <div className="overflow-hidden rounded-2xl bg-white/60 backdrop-blur-sm">
-          <Table>
-            <TableHeader>
-              <TableRow className="border-platinum-300 hover:bg-transparent">
-                <TableHead className="text-onyx-DEFAULT font-bold uppercase">
-                  Token
-                </TableHead>
-                <TableHead className="text-onyx-DEFAULT font-bold uppercase">
-                  Price (24H)
-                </TableHead>
-                <TableHead className="text-onyx-DEFAULT font-bold uppercase">
-                  Balance
-                </TableHead>
-                <TableHead className="text-onyx-DEFAULT font-bold uppercase">
-                  Portfolio %
-                </TableHead>
-                <TableHead className="text-onyx-DEFAULT text-right font-bold uppercase">
-                  Value
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {tokens.map((token) => (
-                <PortfolioTokenCard key={token.token_address} token={token} />
-              ))}
-            </TableBody>
-          </Table>
-        </div>
+      {/* Table Container */}
+      <div className="overflow-hidden rounded-lg border border-neutral-200">
+        <Table>
+          <TableHeader>
+            <TableRow className="border-neutral-200 bg-neutral-50 hover:bg-neutral-50">
+              <TableHead className="font-medium text-neutral-600">
+                Token
+              </TableHead>
+              <TableHead className="font-medium text-neutral-600">
+                Price (24H)
+              </TableHead>
+              <TableHead className="font-medium text-neutral-600">
+                Balance
+              </TableHead>
+              <TableHead className="font-medium text-neutral-600">
+                Portfolio %
+              </TableHead>
+              <TableHead className="text-right font-medium text-neutral-600">
+                Value
+              </TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {tokens.map((token) => (
+              <PortfolioTokenCard key={token.token_address} token={token} />
+            ))}
+          </TableBody>
+        </Table>
       </div>
     </div>
   );

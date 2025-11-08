@@ -14,18 +14,10 @@ const navItems: NavItem[] = [
     href: "/",
     label: "Wallet",
   },
-  // {
-  //   href: "/token",
-  //   label: "Token",
-  // },
   {
     href: "/transactions",
     label: "Transactions",
   },
-  // {
-  //   href: "/",
-  //   label: "NFTs",
-  // },
   {
     href: "/dex",
     label: "DEX",
@@ -35,7 +27,7 @@ const navItems: NavItem[] = [
 export default function Header() {
   const DesktopNav = () => (
     <nav aria-label="Main navigation" className="hidden md:flex">
-      <ul className="flex items-center gap-x-4 font-bold text-white">
+      <ul className="flex items-center gap-x-8">
         {navItems.map((item) => (
           <AnimatedLinkItem
             href={item.href}
@@ -48,13 +40,13 @@ export default function Header() {
   );
 
   return (
-    <header className="from-seasalt-100 to-seasalt-200 sticky top-0 z-20 flex items-center justify-between bg-gradient-to-r from-80% px-5 py-3 shadow">
+    <header className="sticky top-0 z-20 flex items-center justify-between border-b border-neutral-200 bg-white px-6 py-4 shadow-sm backdrop-blur-sm">
       <Image
         src="/logo.svg"
         alt="Logo"
         width={120}
         height={30}
-        className="text-black"
+        className="text-primary-dark-900"
         draggable={false}
       />
 
@@ -73,9 +65,14 @@ export const AnimatedLinkItem = ({
   label: string;
 }) => {
   return (
-    <li className="group flex flex-col items-center">
-      <Link href={href}>{label}</Link>
-      <div className="bg-seasalt-500 h-0.5 w-0 rounded-full transition-all duration-200 ease-out group-hover:w-full" />
+    <li className="group relative">
+      <Link
+        href={href}
+        className="hover:text-primary-dark-900 text-sm font-medium text-neutral-600 transition-colors duration-150"
+      >
+        {label}
+      </Link>
+      <div className="bg-accent-teal-500 absolute -bottom-1 left-0 h-0.5 w-0 transition-all duration-200 ease-out group-hover:w-full" />
     </li>
   );
 };

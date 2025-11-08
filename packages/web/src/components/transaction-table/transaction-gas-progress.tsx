@@ -13,7 +13,7 @@ export function TransactionGasProgress({ gas, gasUsed }: Props) {
       className="group/gas relative flex flex-col gap-1.5"
       title={`Gas Used: ${gasUsed} / ${gas}`}
     >
-      <div className="bg-onyx-DEFAULT pointer-events-none absolute bottom-full left-1/2 z-50 mb-2 hidden -translate-x-1/2 rounded-lg px-3 py-2 text-xs whitespace-nowrap text-white shadow-lg group-hover/gas:block">
+      <div className="pointer-events-none absolute bottom-full left-1/2 z-50 mb-2 hidden -translate-x-1/2 rounded-lg bg-black px-3 py-2 text-xs whitespace-nowrap text-white shadow-lg group-hover/gas:block">
         <div className="flex flex-col gap-1">
           <span>
             <span className="font-semibold">Used:</span> {gasUsed}

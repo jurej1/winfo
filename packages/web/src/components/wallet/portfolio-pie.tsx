@@ -9,16 +9,16 @@ import {
   Tooltip,
 } from "recharts";
 
-// Color palette matching the net-worth-card theme
+// Professional fintech color palette
 const COLORS = [
-  "#6c757d", // slate_gray
-  "#495057", // outer_space
-  "#343a40", // onyx
-  "#adb5bd", // french_gray
-  "#ced4da", // french_gray lighter
-  "#dee2e6", // platinum
-  "#212529", // eerie_black
-  "#8c959f", // slate_gray-700
+  "#06B6D4", // accent-teal-500
+  "#10B981", // success-500
+  "#F59E0B", // warning-500
+  "#8B5CF6", // purple
+  "#0EA5E9", // blue
+  "#EF4444", // error-500
+  "#64748B", // neutral-500
+  "#475569", // neutral-600
 ];
 
 type Props = {
@@ -36,73 +36,68 @@ export function PortfolioPie({ tokens }: Props) {
   }, [tokens]);
 
   return (
-    <div className="group border-platinum-300 from-seasalt-DEFAULT via-anti-flash_white-DEFAULT to-platinum-DEFAULT relative m-2 h-full w-full overflow-hidden rounded-3xl border bg-gradient-to-br p-8 shadow-xl transition-all duration-300 hover:shadow-2xl">
-      {/* Decorative background elements */}
-      <div className="from-french_gray-400/20 to-slate_gray-400/10 absolute -top-20 -right-20 h-40 w-40 rounded-full bg-gradient-to-br blur-3xl" />
-      <div className="from-platinum-400/20 to-french_gray-300/10 absolute -bottom-16 -left-16 h-32 w-32 rounded-full bg-gradient-to-tr blur-2xl" />
+    <div className="h-full w-full rounded-lg border border-neutral-200 bg-white p-6 shadow-sm">
+      {/* Header */}
+      <div className="mb-6">
+        <h3 className="text-primary-dark-900 text-base font-semibold">
+          Portfolio Distribution
+        </h3>
+        <p className="mt-1 text-sm text-neutral-600">
+          Token allocation by percentage
+        </p>
+      </div>
 
-      <div className="relative z-10">
-        {/* Header */}
-        <div className="mb-6">
-          <h3 className="text-slate_gray-DEFAULT text-lg font-semibold tracking-wider uppercase">
-            Portfolio Distribution
-          </h3>
-          <p className="text-outer_space-DEFAULT mt-1 text-sm">
-            Token allocation by percentage
-          </p>
-        </div>
-
-        {/* Chart Container */}
-        <div className="rounded-2xl bg-white/60 p-6 backdrop-blur-sm">
-          <ResponsiveContainer width="100%" height={400}>
-            <PieChart>
-              <Pie
-                data={pieChartData}
-                cx="50%"
-                cy="50%"
-                labelLine={false}
-                label={({ name, value }) => `${name}: ${value}%`}
-                outerRadius={120}
-                innerRadius={60}
-                fill="#8884d8"
-                dataKey="value"
-                nameKey="name"
-                strokeWidth={3}
-                stroke="#fff"
-              >
-                {pieChartData.map((_entry, index) => (
-                  <Cell
-                    key={_entry.name}
-                    fill={COLORS[index % COLORS.length]}
-                    className="transition-opacity duration-200 hover:opacity-80"
-                  />
-                ))}
-              </Pie>
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: "rgba(255, 255, 255, 0.95)",
-                  border: "1px solid #dee2e6",
-                  borderRadius: "12px",
-                  padding: "12px",
-                  boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                }}
-                itemStyle={{
-                  color: "#343a40",
-                  fontWeight: "600",
-                }}
-                formatter={(value) => `${value}%`}
-              />
-              <Legend
-                verticalAlign="bottom"
-                height={36}
-                iconType="circle"
-                wrapperStyle={{
-                  paddingTop: "20px",
-                }}
-              />
-            </PieChart>
-          </ResponsiveContainer>
-        </div>
+      {/* Chart Container */}
+      <div className="rounded-lg bg-neutral-50 p-6">
+        <ResponsiveContainer width="100%" height={400}>
+          <PieChart>
+            <Pie
+              data={pieChartData}
+              cx="50%"
+              cy="50%"
+              labelLine={false}
+              label={({ name, value }) => `${name}: ${value}%`}
+              outerRadius={120}
+              innerRadius={60}
+              fill="#8884d8"
+              dataKey="value"
+              nameKey="name"
+              strokeWidth={2}
+              stroke="#fff"
+            >
+              {pieChartData.map((_entry, index) => (
+                <Cell
+                  key={_entry.name}
+                  fill={COLORS[index % COLORS.length]}
+                  className="transition-opacity duration-150 hover:opacity-80"
+                />
+              ))}
+            </Pie>
+            <Tooltip
+              contentStyle={{
+                backgroundColor: "#FFFFFF",
+                border: "1px solid #E2E8F0",
+                borderRadius: "8px",
+                padding: "12px",
+                boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+              }}
+              itemStyle={{
+                color: "#0F172A",
+                fontWeight: "500",
+              }}
+              formatter={(value) => `${value}%`}
+            />
+            <Legend
+              verticalAlign="bottom"
+              height={36}
+              iconType="circle"
+              wrapperStyle={{
+                paddingTop: "20px",
+                fontSize: "14px",
+              }}
+            />
+          </PieChart>
+        </ResponsiveContainer>
       </div>
     </div>
   );

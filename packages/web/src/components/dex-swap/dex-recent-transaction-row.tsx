@@ -29,7 +29,7 @@ export function DexRecentTransactionRow({ tx }: Props) {
 
   if (isLoading || !data) {
     return (
-      <TableRow className="border-platinum-200">
+      <TableRow className="border-neutral-200">
         <TableCell colSpan={5}>
           <Skeleton className="h-12 w-full" />
         </TableCell>
@@ -53,14 +53,14 @@ export function DexRecentTransactionRow({ tx }: Props) {
   const StatusBadge = () => {
     if (status === "success") {
       return (
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-700">
+        <span className="bg-success-50 text-success-700 inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-medium">
           <FaCheck className="h-3 w-3" />
           Success
         </span>
       );
     } else {
       return (
-        <span className="inline-flex items-center gap-1.5 rounded-full bg-red-100 px-3 py-1 text-xs font-semibold text-red-700">
+        <span className="bg-error-50 text-error-700 inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-medium">
           <ImCross className="h-3 w-3" />
           Failed
         </span>
@@ -69,10 +69,10 @@ export function DexRecentTransactionRow({ tx }: Props) {
   };
 
   return (
-    <TableRow className="border-platinum-200 group/row transition-all duration-200 hover:bg-white/40">
+    <TableRow className="group/row border-neutral-200 transition-all duration-150 hover:bg-neutral-50">
       <TableCell className="py-4">
         <div className="flex items-center gap-2">
-          <code className="text-onyx-DEFAULT rounded-lg bg-white/80 px-2 py-1 font-mono text-sm font-medium">
+          <code className="text-primary-dark-900 rounded border border-neutral-200 bg-neutral-50 px-2 py-1 font-mono text-sm font-medium">
             {shortenAddress(tx.transactionHash)}
           </code>
           {txUrl && (
@@ -80,7 +80,7 @@ export function DexRecentTransactionRow({ tx }: Props) {
               href={txUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-slate_gray-DEFAULT hover:text-onyx-DEFAULT transition-colors"
+              className="hover:text-accent-teal-600 text-neutral-500 transition-colors"
             >
               <FaExternalLinkAlt className="h-3 w-3" />
             </a>
@@ -88,7 +88,7 @@ export function DexRecentTransactionRow({ tx }: Props) {
         </div>
       </TableCell>
       <TableCell>
-        <span className="bg-slate_gray-DEFAULT/10 text-slate_gray-DEFAULT inline-flex items-center rounded-full px-3 py-1 text-xs font-bold">
+        <span className="inline-flex items-center rounded-md bg-neutral-100 px-2.5 py-1 text-xs font-medium text-neutral-600">
           Chain {chainId}
         </span>
       </TableCell>
@@ -97,21 +97,21 @@ export function DexRecentTransactionRow({ tx }: Props) {
       </TableCell>
       <TableCell>
         <div className="flex items-center gap-2">
-          <code className="text-slate_gray-DEFAULT bg-platinum-200 rounded px-2 py-1 font-mono text-xs">
+          <code className="rounded border border-neutral-200 bg-neutral-50 px-2 py-1 font-mono text-xs text-neutral-600">
             {shortenAddress(from)}
           </code>
-          <HiArrowRight className="text-slate_gray-DEFAULT h-4 w-4" />
-          <code className="text-slate_gray-DEFAULT bg-platinum-200 rounded px-2 py-1 font-mono text-xs">
+          <HiArrowRight className="h-4 w-4 text-neutral-400" />
+          <code className="rounded border border-neutral-200 bg-neutral-50 px-2 py-1 font-mono text-xs text-neutral-600">
             {shortenAddress(to || "")}
           </code>
         </div>
       </TableCell>
       <TableCell>
         <div className="flex flex-col gap-1">
-          <span className="text-onyx-DEFAULT text-sm font-semibold">
+          <span className="text-primary-dark-900 text-sm font-medium">
             {totalFeeEth.toFixed(6)} {chain?.nativeCurrency.symbol}
           </span>
-          <span className="text-slate_gray-DEFAULT text-xs">Gas Fee</span>
+          <span className="text-xs text-neutral-600">Gas Fee</span>
         </div>
       </TableCell>
     </TableRow>

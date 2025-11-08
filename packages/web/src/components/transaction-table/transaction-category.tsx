@@ -3,25 +3,25 @@ type Props = {
 };
 
 export function TransactionCategory({ category }: Props) {
-  // Map categories to different color schemes
+  // Map categories to professional color schemes
   const getCategoryStyle = (cat: string) => {
     const lowerCat = cat.toLowerCase();
     
     if (lowerCat.includes("send") || lowerCat.includes("transfer")) {
-      return "bg-red-100 text-red-700";
+      return "bg-error-50 text-error-700";
     } else if (lowerCat.includes("receive")) {
-      return "bg-green-100 text-green-700";
+      return "bg-success-50 text-success-700";
     } else if (lowerCat.includes("swap") || lowerCat.includes("trade")) {
-      return "bg-blue-100 text-blue-700";
+      return "bg-accent-teal-50 text-accent-teal-700";
     } else if (lowerCat.includes("approve")) {
-      return "bg-yellow-100 text-yellow-700";
+      return "bg-warning-50 text-warning-700";
     } else {
-      return "bg-slate_gray-DEFAULT/10 text-slate_gray-DEFAULT";
+      return "bg-neutral-100 text-neutral-600";
     }
   };
 
   return (
-    <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold capitalize ${getCategoryStyle(category)}`}>
+    <span className={`inline-flex items-center rounded-md px-2.5 py-1 text-xs font-medium capitalize ${getCategoryStyle(category)}`}>
       {category}
     </span>
   );

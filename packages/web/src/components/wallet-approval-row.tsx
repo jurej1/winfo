@@ -70,9 +70,9 @@ export function WalletApprovalRow({ approval, onRevokeSuccess }: Props) {
   );
 
   return (
-    <TableRow className="border-platinum-200 group/row transition-all duration-200 hover:bg-white/40">
+    <TableRow className="group/row border-neutral-200 transition-all duration-150 hover:bg-neutral-50">
       <TableCell className="py-4">
-        <code className="text-onyx-DEFAULT rounded-lg bg-white/80 px-2 py-1 font-mono text-xs font-medium">
+        <code className="text-primary-dark-900 rounded border border-neutral-200 bg-neutral-50 px-2 py-1 font-mono text-xs font-medium">
           {shortenAddress(approval.transaction_hash)}
         </code>
       </TableCell>
@@ -80,7 +80,7 @@ export function WalletApprovalRow({ approval, onRevokeSuccess }: Props) {
       <TableCell>
         <div className="flex items-center gap-3">
           {token.logo != null && (
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/80 p-1 shadow-sm transition-transform duration-200 group-hover/row:scale-110">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-neutral-100 p-1">
               <Image
                 src={token.logo}
                 alt="Token Logo"
@@ -93,49 +93,45 @@ export function WalletApprovalRow({ approval, onRevokeSuccess }: Props) {
           )}
           <div className="flex flex-col">
             <div className="flex items-baseline gap-1.5">
-              <span className="text-onyx-DEFAULT text-sm font-semibold">
+              <span className="text-primary-dark-900 text-sm font-medium">
                 {approval.value_formatted}
               </span>
-              <span className="text-slate_gray-DEFAULT text-xs font-medium uppercase">
+              <span className="text-xs font-medium text-neutral-500 uppercase">
                 {approval.token.symbol}
               </span>
             </div>
-            <span className="text-slate_gray-DEFAULT text-xs">
-              {token.name}
-            </span>
+            <span className="text-xs text-neutral-600">{token.name}</span>
           </div>
         </div>
       </TableCell>
 
       <TableCell>
         <div className="flex flex-col gap-0.5">
-          <span className="text-onyx-DEFAULT text-sm font-semibold">
+          <span className="text-primary-dark-900 text-sm font-medium">
             {formattedDate}
           </span>
-          <span className="text-slate_gray-DEFAULT text-xs">
-            {formattedTime}
-          </span>
+          <span className="text-xs text-neutral-600">{formattedTime}</span>
         </div>
       </TableCell>
 
       <TableCell>
         <div className="flex flex-col gap-1">
-          <span className="text-onyx-DEFAULT text-sm font-semibold">
+          <span className="text-primary-dark-900 text-sm font-medium">
             {formatCurrency(Number(token.usd_at_risk), "$")}
           </span>
-          <span className="text-slate_gray-DEFAULT text-xs">At Risk</span>
+          <span className="text-xs text-neutral-600">At Risk</span>
         </div>
       </TableCell>
 
       <TableCell>
         <div className="flex flex-col gap-2">
-          <code className="text-slate_gray-DEFAULT bg-platinum-200 w-fit rounded px-2 py-1 font-mono text-xs">
+          <code className="w-fit rounded border border-neutral-200 bg-neutral-50 px-2 py-1 font-mono text-xs text-neutral-600">
             {shortenAddress(approval.spender.address)}
           </code>
           {showSpenderInfo && (
             <div className="flex items-center gap-2">
               {spender.entity_logo && (
-                <div className="flex h-5 w-5 items-center justify-center rounded-full bg-white/80 shadow-sm">
+                <div className="flex h-5 w-5 items-center justify-center rounded-full bg-neutral-100">
                   <Image
                     src={spender.entity_logo}
                     alt={spender.entity ?? "Spender Logo"}
@@ -146,10 +142,10 @@ export function WalletApprovalRow({ approval, onRevokeSuccess }: Props) {
                   />
                 </div>
               )}
-              <span className="text-onyx-DEFAULT flex items-center gap-1 text-xs font-medium">
+              <span className="text-primary-dark-900 flex items-center gap-1 text-xs font-medium">
                 {spender.entity}
                 {spender.address_label && (
-                  <MdCheckCircle className="h-3 w-3 text-green-600" />
+                  <MdCheckCircle className="text-success-600 h-3 w-3" />
                 )}
               </span>
             </div>
@@ -162,7 +158,7 @@ export function WalletApprovalRow({ approval, onRevokeSuccess }: Props) {
           size="sm"
           onClick={() => onRevokePressed(token.address, spender.address)}
           disabled={showLoading}
-          className="bg-red-100 text-red-700 transition-all duration-200 hover:scale-105 hover:bg-red-600 hover:text-white disabled:opacity-50"
+          className="bg-error-50 text-error-700 hover:bg-error-600 transition-all duration-150 hover:text-white disabled:opacity-50"
         >
           {showLoading ? <Spinner /> : "Revoke"}
         </Button>

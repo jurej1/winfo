@@ -12,11 +12,11 @@ type Props = {
 
 export function PortfolioTokenCard({ token }: Props) {
   return (
-    <TableRow className="border-platinum-200 group/row transition-all duration-200 hover:bg-white/40">
+    <TableRow className="group/row border-neutral-200 transition-all duration-150 hover:bg-neutral-50">
       <TableCell className="py-4">
         <div className="flex items-center gap-3">
           {token.logo && (
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/80 p-1.5 shadow-sm transition-transform duration-200 group-hover/row:scale-110">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-neutral-100 p-1.5">
               <Image
                 src={token.logo}
                 alt={token.name}
@@ -28,10 +28,10 @@ export function PortfolioTokenCard({ token }: Props) {
             </div>
           )}
           <div className="flex flex-col">
-            <span className="text-onyx-DEFAULT font-semibold">
+            <span className="text-primary-dark-900 font-medium">
               {token.name}
             </span>
-            <span className="text-slate_gray-DEFAULT text-xs uppercase">
+            <span className="text-xs text-neutral-500 uppercase">
               {token.symbol}
             </span>
           </div>
@@ -39,7 +39,7 @@ export function PortfolioTokenCard({ token }: Props) {
       </TableCell>
       <TableCell>
         <div className="flex flex-col gap-1">
-          <span className="text-onyx-DEFAULT font-semibold">
+          <span className="text-primary-dark-900 font-medium">
             {formatCurrency(token.usd_price, "$")}
           </span>
           <PriceChangeIndicator
@@ -48,25 +48,23 @@ export function PortfolioTokenCard({ token }: Props) {
         </div>
       </TableCell>
       <TableCell>
-        <span className="text-slate_gray-DEFAULT font-medium">
+        <span className="font-medium text-neutral-600">
           {formatCurrency(Number(token.balance_formatted), "")}
         </span>
       </TableCell>
       <TableCell>
         <div className="flex flex-col gap-2">
-          <div className="flex items-center gap-2">
-            <span className="text-onyx-DEFAULT font-semibold">
-              {token.portfolio_percentage.toFixed(2)}%
-            </span>
-          </div>
+          <span className="text-primary-dark-900 font-medium">
+            {token.portfolio_percentage.toFixed(2)}%
+          </span>
           <Progress
             value={token.portfolio_percentage}
-            className="bg-platinum-DEFAULT h-2 w-24"
+            className="h-2 w-24 bg-neutral-100"
           />
         </div>
       </TableCell>
       <TableCell className="text-right">
-        <span className="text-onyx-DEFAULT text-lg font-bold">
+        <span className="text-primary-dark-900 text-base font-semibold">
           {formatCurrency(token.usd_value, "$")}
         </span>
       </TableCell>
@@ -80,7 +78,7 @@ const PriceChangeIndicator = ({ percentChange }: { percentChange: number }) => {
 
   if (isNeutral) {
     return (
-      <span className="bg-platinum-300 inline-flex w-min items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold text-slate-200">
+      <span className="inline-flex w-min items-center gap-1 rounded-md bg-neutral-100 px-2 py-0.5 text-xs font-medium text-neutral-600">
         0.00%
       </span>
     );
@@ -89,17 +87,17 @@ const PriceChangeIndicator = ({ percentChange }: { percentChange: number }) => {
   return (
     <span
       className={cn(
-        "inline-flex w-min items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold",
+        "inline-flex w-min items-center gap-1 rounded-md px-2 py-0.5 text-xs font-medium",
         {
-          "bg-green-100 text-green-700": isPositive,
-          "bg-red-100 text-red-700": !isPositive,
+          "bg-success-50 text-success-700": isPositive,
+          "bg-error-50 text-error-700": !isPositive,
         },
       )}
     >
       {isPositive ? (
-        <IoIosArrowRoundUp className="h-4 w-4" />
+        <IoIosArrowRoundUp className="h-3.5 w-3.5" />
       ) : (
-        <IoIosArrowRoundDown className="h-4 w-4" />
+        <IoIosArrowRoundDown className="h-3.5 w-3.5" />
       )}
       {Math.abs(percentChange).toFixed(2)}%
     </span>

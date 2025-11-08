@@ -41,12 +41,12 @@ export default function TransactionsPage({ address, chainId }: Props) {
   if (isError) {
     return (
       <div className="mx-auto mt-5 max-w-7xl">
-        <div className="group border-platinum-300 from-seasalt-DEFAULT via-anti-flash_white-DEFAULT to-platinum-DEFAULT relative m-2 flex min-h-[300px] items-center justify-center overflow-hidden rounded-3xl border bg-gradient-to-br p-8 shadow-xl">
+        <div className="flex min-h-[300px] items-center justify-center rounded-lg border border-neutral-200 bg-white p-8 shadow-sm">
           <div className="text-center">
-            <p className="text-onyx-DEFAULT mb-2 text-lg font-semibold">
+            <p className="text-primary-dark-900 mb-2 text-base font-semibold">
               Error Loading Transactions
             </p>
-            <p className="text-slate_gray-DEFAULT text-sm">
+            <p className="text-sm text-neutral-600">
               There was an error loading your transaction history. Please try
               again.
             </p>
