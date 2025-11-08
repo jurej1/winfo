@@ -47,7 +47,6 @@ export default function Header() {
         width={120}
         height={30}
         className="text-primary-dark-900"
-        draggable={false}
       />
 
       <DesktopNav />
