@@ -10,15 +10,12 @@ type Props = {
 
 export default function TokenDetailsPage({ id }: Props) {
   return (
-    <div className="mx-auto mt-2 grid max-w-7xl grid-cols-[1fr_400px] gap-2">
-      <div
-        className="overflow-y-hide flex flex-col gap-4 pr-2"
-        style={{ minHeight: 0 }}
-      >
+    <div className="mx-auto flex max-w-7xl flex-col gap-6 p-6 lg:grid lg:grid-cols-[1fr_400px]">
+      <div className="flex flex-col gap-6">
         <TokenDetailsCard id={id} />
         <TokenChartCard id={id} />
       </div>
-      <div className="sticky top-14 self-start">
+      <div className="sticky top-20 self-start">
         <DexSwapComponent />
       </div>
     </div>
