@@ -70,7 +70,7 @@ export function DexSwapCard(swap: Props) {
 
     const sellAmountNum = parseFloat(sellAmount);
     const buyAmountNum = parseFloat(formattedBuyAmount);
-    
+
     // Calculate price impact
     const expectedPrice = sellToken.priceUsd / buyToken.priceUsd;
     const actualPrice = sellAmountNum / buyAmountNum;
@@ -78,12 +78,16 @@ export function DexSwapCard(swap: Props) {
 
     // Calculate minimum received
     const minBuyAmountNum = parseFloat(
-      (BigInt(quote.minBuyAmount) / BigInt(10 ** buyToken.decimals)).toString()
+      (BigInt(quote.minBuyAmount) / BigInt(10 ** buyToken.decimals)).toString(),
     );
 
     // Calculate gas fee in USD (approximate)
     const gasFeeEth = parseFloat(quote.totalNetworkFee) / 1e18;
-    const gasFeeUsd = gasFeeEth * (sellToken.address === "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" ? sellToken.priceUsd : 0);
+    const gasFeeUsd =
+      gasFeeEth *
+      (sellToken.address === "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+        ? sellToken.priceUsd
+        : 0);
 
     return {
       priceImpact,
@@ -96,10 +100,10 @@ export function DexSwapCard(swap: Props) {
 
   return (
     <Card>
-      <CardHeader className="border-b border-neutral-100">
+      <CardHeader className="flex items-center justify-between border-b border-neutral-100">
         <div className="flex items-center gap-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-primary/10 to-primary/5">
-            <TbArrowsExchange className="h-5 w-5 text-primary" />
+          <div className="from-primary/10 to-primary/5 flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br">
+            <TbArrowsExchange className="text-primary h-5 w-5" />
           </div>
           <CardTitle className="text-base font-semibold text-neutral-900">
             Token Swap
@@ -149,12 +153,15 @@ export function DexSwapCard(swap: Props) {
               <IoInformationCircleOutline className="h-4 w-4" />
               <span>Transaction Details</span>
             </div>
-            
+
             <div className="space-y-2">
               {/* Exchange Rate */}
               <div className="flex items-center justify-between text-sm">
                 <span className="text-neutral-600">Rate</span>
-                <DexTokenValueComparison sellToken={sellToken} buyToken={buyToken} />
+                <DexTokenValueComparison
+                  sellToken={sellToken}
+                  buyToken={buyToken}
+                />
               </div>
 
               {/* Price Impact */}
@@ -166,8 +173,8 @@ export function DexSwapCard(swap: Props) {
                     Math.abs(quoteDetails.priceImpact) < 1
                       ? "text-success-600"
                       : Math.abs(quoteDetails.priceImpact) < 3
-                      ? "text-amber-600"
-                      : "text-error-600",
+                        ? "text-amber-600"
+                        : "text-error-600",
                   )}
                 >
                   {quoteDetails.priceImpact > 0 ? "+" : ""}
