@@ -19,6 +19,10 @@ const navItems: NavItem[] = [
     label: "Transactions",
   },
   {
+    href: "/token",
+    label: "Tokens",
+  },
+  {
     href: "/dex",
     label: "DEX",
   },
