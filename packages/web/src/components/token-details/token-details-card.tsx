@@ -27,7 +27,7 @@ export default function TokenDetailsCard({ id, className }: Props) {
 
     return (
       <div className="flex min-h-[320px] flex-col items-center justify-center rounded-xl border border-neutral-200 bg-white p-10 text-center shadow-sm">
-        <div className="rounded-full bg-destructive/10 p-3 text-destructive">
+        <div className="bg-destructive/10 text-destructive rounded-full p-3">
           <svg
             className="h-6 w-6"
             fill="none"
@@ -45,9 +45,7 @@ export default function TokenDetailsCard({ id, className }: Props) {
         <h2 className="mt-4 text-lg font-semibold text-neutral-900">
           Token Not Found
         </h2>
-        <p className="mt-2 max-w-md text-sm text-neutral-600">
-          {errorMessage}
-        </p>
+        <p className="mt-2 max-w-md text-sm text-neutral-600">{errorMessage}</p>
       </div>
     );
   }
@@ -55,7 +53,7 @@ export default function TokenDetailsCard({ id, className }: Props) {
   return (
     <Card className={className}>
       <CardHeader className="border-b border-neutral-100">
-        <CardTitle className="text-xs font-semibold uppercase tracking-wide text-neutral-500">
+        <CardTitle className="text-xs font-semibold tracking-wide text-neutral-500 uppercase">
           Token Overview
         </CardTitle>
       </CardHeader>

@@ -1,5 +1,3 @@
-"use client";
-
 import TokenDetailsCard from "@/components/token-details/token-details-card";
 import { TokenChartCard } from "@/components/token-details/token-chart-card";
 import { DexSwapComponent } from "../dex-swap/dex-swap";

@@ -34,7 +34,7 @@ export function TokenChartCard({ id }: Props) {
   return (
     <Card>
       <CardHeader className="border-b border-neutral-100">
-        <CardTitle className="text-xs font-semibold uppercase tracking-wide text-neutral-500">
+        <CardTitle className="text-xs font-semibold tracking-wide text-neutral-500 uppercase">
           Price Chart
         </CardTitle>
         <CardAction>
