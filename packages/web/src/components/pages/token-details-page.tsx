@@ -15,7 +15,7 @@ export default function TokenDetailsPage({ id }: Props) {
         <TokenDetailsCard id={id} />
         <TokenChartCard id={id} />
       </div>
-      <div className="sticky top-20 self-start">
+      <div className="sticky top-6 self-baseline">
         <DexSwapComponent />
       </div>
     </div>
