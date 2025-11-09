@@ -4,10 +4,12 @@ import { TokenListInfo } from "@w-info-sst/types";
 import { TableCell, TableRow } from "../ui/table";
 import Image from "next/image";
 import { formatCurrency } from "@coingecko/cryptoformat";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { IoIosArrowRoundDown, IoIosArrowRoundUp } from "react-icons/io";
+import { Progress } from "../ui/progress";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 type Props = {
   token: TokenListInfo;
@@ -30,6 +32,8 @@ export function TokenListRow({ token }: Props) {
     low_24h,
     price_change_percentage_1h_in_currency,
     circulating_supply,
+    total_supply,
+    max_supply,
   } = token;
 
   const uppercaseSymbol = symbol.toUpperCase();
@@ -45,6 +49,14 @@ export function TokenListRow({ token }: Props) {
       minimumFractionDigits: 0,
     }).format(amount);
   };
+
+  const supplyPercentage = useMemo(() => {
+    if (max_supply && max_supply > 0) {
+      const percentage = (circulating_supply / max_supply) * 100;
+      return Math.min(percentage, 100); // Cap at 100%
+    }
+    return undefined;
+  }, [max_supply, circulating_supply]);
 
   return (
     <TableRow
@@ -107,8 +119,67 @@ export function TokenListRow({ token }: Props) {
         {formatCurrency(low_24h, "$")}
       </TableCell>
       {/* Circulating Supply */}
-      <TableCell className="py-4 text-sm text-neutral-700">
-        {formatLargeNumber(circulating_supply)}
+      <TableCell className="py-4">
+        {supplyPercentage !== undefined ? (
+          <Tooltip>
+            <TooltipTrigger className="w-full">
+              <div className="flex flex-col gap-1.5 text-end text-sm text-neutral-700">
+                <span>
+                  {formatLargeNumber(circulating_supply)}{" "}
+                  <span className="uppercase">{symbol}</span>
+                </span>
+                <Progress value={supplyPercentage} className="h-1.5" />
+              </div>
+            </TooltipTrigger>
+            <TooltipContent className="w-72 space-y-3 border border-neutral-200 bg-white p-4 text-neutral-900 shadow-lg">
+              <div className="space-y-1">
+                <p className="text-xs font-semibold tracking-wide text-neutral-500 uppercase">
+                  Token Supply Information
+                </p>
+                <p className="text-sm font-medium text-neutral-900">{name}</p>
+              </div>
+              <div className="space-y-2">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-neutral-600">Circulating Supply</span>
+                  <span className="font-medium text-neutral-900">
+                    {formatLargeNumber(circulating_supply)} {uppercaseSymbol}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-neutral-600">Total Supply</span>
+                  <span className="font-medium text-neutral-900">
+                    {formatLargeNumber(total_supply)} {uppercaseSymbol}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-neutral-600">Max Supply</span>
+                  <span className="font-medium text-neutral-900">
+                    {formatLargeNumber(max_supply!)} {uppercaseSymbol}
+                  </span>
+                </div>
+                <div className="border-t border-neutral-200 pt-2">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="font-medium text-neutral-700">
+                      Circulation Progress
+                    </span>
+                    <span className="text-primary font-semibold">
+                      {supplyPercentage.toFixed(2)}%
+                    </span>
+                  </div>
+                </div>
+                <Progress
+                  value={supplyPercentage}
+                  className="mt-2 h-2 bg-neutral-100"
+                />
+              </div>
+            </TooltipContent>
+          </Tooltip>
+        ) : (
+          <div className="text-end text-sm text-neutral-700">
+            {formatLargeNumber(circulating_supply)}{" "}
+            <span className="uppercase">{symbol}</span>
+          </div>
+        )}
       </TableCell>
     </TableRow>
   );
