@@ -17,6 +17,8 @@ import { useMemo } from "react";
 import { formatCurrency } from "@coingecko/cryptoformat";
 import { IoInformationCircleOutline } from "react-icons/io5";
 import { HiArrowUp, HiArrowDown } from "react-icons/hi";
+import { motion } from "framer-motion";
+import { fadeInUp, cardHover } from "@/lib/animations";
 
 export function DexLimitOrderCard() {
   const {
@@ -56,11 +58,10 @@ export function DexLimitOrderCard() {
     // Calculate expiry time remaining
     const getExpiryLabel = () => {
       switch (expiry) {
-        case "1h": return "1 hour";
         case "1d": return "1 day";
-        case "3d": return "3 days";
-        case "7d": return "7 days";
-        case "30d": return "30 days";
+        case "1w": return "1 week";
+        case "1m": return "1 month";
+        case "1y": return "1 year";
         default: return expiry;
       }
     };
@@ -75,150 +76,159 @@ export function DexLimitOrderCard() {
   }, [sellToken, buyToken, ratio, expiry]);
 
   return (
-    <Card>
-      <CardHeader className="border-b border-neutral-100">
-        <div className="flex items-center gap-2">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-primary/10 to-primary/5">
-            <TbClockHour4 className="h-5 w-5 text-primary" />
-          </div>
-          <CardTitle className="text-base font-semibold text-neutral-900">
-            Limit Order
-          </CardTitle>
-        </div>
-      </CardHeader>
-      <CardContent className="flex flex-col gap-2">
-        <DexWhenWorthInput
-          buyToken={buyToken}
-          sellToken={sellToken}
-          ratio={ratio}
-          setRatio={setRatio}
-          selectRatio={selectRatio}
-          ratioPercentage={ratioPercentage}
-        />
-        <div className="relative flex flex-col gap-2">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-            <DexSwapTokensButton onClick={swapTokens} />
-          </div>
-          <DexLimitOrderInputCard
-            setToken={setSellToken}
-            token={sellToken}
-            title={"Sell"}
-            readonly={false}
-            setVal={setSellAmount}
-            value={sellAmount}
-            showTokenPercentageSelector={true}
-          />
-          <DexLimitOrderInputCard
-            setToken={setBuyToken}
-            token={buyToken}
-            title={"Buy"}
-            readonly={true}
-            setVal={setBuyAmount}
-            value={buyAmount}
-            showTokenPercentageSelector={false}
-            additionalTokens={additionalTokens}
-          />
-        </div>
-      </CardContent>
-
-      {/* Order Summary Section */}
-      {orderSummary && sellAmount && buyAmount && (
-        <div className="border-t border-neutral-100 bg-gradient-to-br from-neutral-50/50 to-transparent px-6 py-4">
-          <div className="space-y-3">
-            <div className="flex items-center gap-2 text-xs font-medium text-neutral-500">
-              <IoInformationCircleOutline className="h-4 w-4" />
-              <span>Order Summary</span>
+    <motion.div
+      variants={fadeInUp}
+      initial="hidden"
+      animate="visible"
+      whileHover="hover"
+    >
+      <motion.div variants={cardHover}>
+        <Card variant="glass-elevated" className="hover-glow-purple">
+          <CardHeader className="border-b border-white/10">
+            <div className="flex items-center gap-2">
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-accent-purple-500/20 to-accent-blue-500/20">
+                <TbClockHour4 className="h-5 w-5 text-accent-purple-500" />
+              </div>
+              <CardTitle className="text-base font-semibold">
+                Limit Order
+              </CardTitle>
             </div>
-            
-            <div className="space-y-2">
-              {/* Order Type */}
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-neutral-600">Order Type</span>
-                <div className="flex items-center gap-1">
-                  {orderSummary.isAboveMarket ? (
-                    <HiArrowUp className="h-4 w-4 text-success-600" />
-                  ) : (
-                    <HiArrowDown className="h-4 w-4 text-error-600" />
-                  )}
-                  <span
-                    className={cn(
-                      "font-semibold",
-                      orderSummary.isAboveMarket ? "text-success-600" : "text-error-600",
-                    )}
-                  >
-                    {orderSummary.isAboveMarket ? "Sell Above" : "Buy Below"} Market
-                  </span>
+          </CardHeader>
+          <CardContent className="flex flex-col gap-2">
+            <DexWhenWorthInput
+              buyToken={buyToken}
+              sellToken={sellToken}
+              ratio={ratio}
+              setRatio={setRatio}
+              selectRatio={selectRatio}
+              ratioPercentage={ratioPercentage}
+            />
+            <div className="relative flex flex-col gap-2">
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                <DexSwapTokensButton onClick={swapTokens} />
+              </div>
+              <DexLimitOrderInputCard
+                setToken={setSellToken}
+                token={sellToken}
+                title={"Sell"}
+                readonly={false}
+                setVal={setSellAmount}
+                value={sellAmount}
+                showTokenPercentageSelector={true}
+              />
+              <DexLimitOrderInputCard
+                setToken={setBuyToken}
+                token={buyToken}
+                title={"Buy"}
+                readonly={true}
+                setVal={setBuyAmount}
+                value={buyAmount}
+                showTokenPercentageSelector={false}
+                additionalTokens={additionalTokens}
+              />
+            </div>
+          </CardContent>
+
+          {/* Order Summary Section */}
+          {orderSummary && sellAmount && buyAmount && (
+            <div className="glass-subtle mx-6 rounded-lg px-4 py-4">
+              <div className="space-y-3">
+                <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
+                  <IoInformationCircleOutline className="h-4 w-4" />
+                  <span>Order Summary</span>
                 </div>
-              </div>
 
-              {/* Execution Price */}
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-neutral-600">Execution Price</span>
-                <span className="font-semibold text-neutral-900">
-                  1 {sellToken?.symbol} = {orderSummary.targetRate.toFixed(6)} {buyToken?.symbol}
-                </span>
-              </div>
+                <div className="space-y-2">
+                  {/* Order Type */}
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-muted-foreground">Order Type</span>
+                    <div className="flex items-center gap-1">
+                      {orderSummary.isAboveMarket ? (
+                        <HiArrowUp className="h-4 w-4 text-success-600" />
+                      ) : (
+                        <HiArrowDown className="h-4 w-4 text-error-600" />
+                      )}
+                      <span
+                        className={cn(
+                          "font-semibold",
+                          orderSummary.isAboveMarket ? "text-success-600" : "text-error-600",
+                        )}
+                      >
+                        {orderSummary.isAboveMarket ? "Sell Above" : "Buy Below"} Market
+                      </span>
+                    </div>
+                  </div>
 
-              {/* Current Market Price */}
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-neutral-600">Current Market</span>
-                <span className="font-medium text-neutral-700">
-                  1 {sellToken?.symbol} = {orderSummary.currentMarketRate.toFixed(6)} {buyToken?.symbol}
-                </span>
-              </div>
-
-              {/* Price Difference */}
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-neutral-600">Difference</span>
-                <span
-                  className={cn(
-                    "font-semibold",
-                    orderSummary.isAboveMarket ? "text-success-600" : "text-error-600",
-                  )}
-                >
-                  {orderSummary.priceDifference > 0 ? "+" : ""}
-                  {orderSummary.priceDifference.toFixed(2)}%
-                </span>
-              </div>
-
-              {/* Expiry */}
-              <div className="flex items-center justify-between rounded-lg border border-neutral-200 bg-white px-3 py-2 text-sm">
-                <span className="text-neutral-600">Expires In</span>
-                <span className="font-medium text-neutral-900">
-                  {orderSummary.expiryLabel}
-                </span>
-              </div>
-
-              {/* Order Amount */}
-              <div className="mt-3 rounded-lg border border-primary/20 bg-gradient-to-br from-primary/5 to-transparent p-3">
-                <div className="space-y-1.5">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-neutral-500">You're Selling</span>
-                    <span className="font-semibold text-neutral-900">
-                      {sellAmount} {sellToken?.symbol}
+                  {/* Execution Price */}
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-muted-foreground">Execution Price</span>
+                    <span className="font-semibold">
+                      1 {sellToken?.symbol} = {orderSummary.targetRate.toFixed(6)} {buyToken?.symbol}
                     </span>
                   </div>
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-neutral-500">You'll Receive</span>
-                    <span className="font-semibold text-neutral-900">
-                      {buyAmount} {buyToken?.symbol}
+
+                  {/* Current Market Price */}
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-muted-foreground">Current Market</span>
+                    <span className="font-medium">
+                      1 {sellToken?.symbol} = {orderSummary.currentMarketRate.toFixed(6)} {buyToken?.symbol}
                     </span>
+                  </div>
+
+                  {/* Price Difference */}
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-muted-foreground">Difference</span>
+                    <span
+                      className={cn(
+                        "font-semibold",
+                        orderSummary.isAboveMarket ? "text-success-600" : "text-error-600",
+                      )}
+                    >
+                      {orderSummary.priceDifference > 0 ? "+" : ""}
+                      {orderSummary.priceDifference.toFixed(2)}%
+                    </span>
+                  </div>
+
+                  {/* Expiry */}
+                  <div className="glass-subtle flex items-center justify-between rounded-lg px-3 py-2 text-sm">
+                    <span className="text-muted-foreground">Expires In</span>
+                    <span className="font-medium">
+                      {orderSummary.expiryLabel}
+                    </span>
+                  </div>
+
+                  {/* Order Amount */}
+                  <div className="mt-3 rounded-lg border border-accent-purple-500/20 bg-gradient-to-br from-accent-purple-500/5 to-transparent p-3">
+                    <div className="space-y-1.5">
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="text-muted-foreground">You&apos;re Selling</span>
+                        <span className="font-semibold">
+                          {sellAmount} {sellToken?.symbol}
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="text-muted-foreground">You&apos;ll Receive</span>
+                        <span className="font-semibold">
+                          {buyAmount} {buyToken?.symbol}
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      )}
+          )}
 
-      <CardFooter className="flex flex-col gap-4">
-        <DexExpirySelector setExpiry={setExpiry} selected={expiry} />
-        <DexLimitOrderSubmit
-          orderParams={limitOrderParams()}
-          sellToken={sellToken}
-          buyToken={buyToken}
-        />
-      </CardFooter>
-    </Card>
+          <CardFooter className="flex flex-col gap-4">
+            <DexExpirySelector setExpiry={setExpiry} selected={expiry} />
+            <DexLimitOrderSubmit
+              orderParams={limitOrderParams()}
+              sellToken={sellToken}
+              buyToken={buyToken}
+            />
+          </CardFooter>
+        </Card>
+      </motion.div>
+    </motion.div>
   );
 }

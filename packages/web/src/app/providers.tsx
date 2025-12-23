@@ -28,7 +28,7 @@ export default function Providers({ children }: Props) {
       <QueryClientProvider client={queryClient}>
         <RainbowKitProvider
           theme={darkTheme({
-            accentColor: "#005EFF",
+            accentColor: "#9333EA",
             accentColorForeground: "white",
             borderRadius: "large",
             fontStack: "system",

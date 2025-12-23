@@ -29,7 +29,7 @@ export function DexRecentTransactionRow({ tx }: Props) {
 
   if (isLoading || !data) {
     return (
-      <TableRow className="border-neutral-200">
+      <TableRow className="border-border">
         <TableCell colSpan={5}>
           <Skeleton className="h-12 w-full" />
         </TableCell>
@@ -69,7 +69,7 @@ export function DexRecentTransactionRow({ tx }: Props) {
   };
 
   return (
-    <TableRow className="group/row border-neutral-200 transition-all duration-150 hover:bg-neutral-50">
+    <TableRow className="group/row border-border transition-all duration-150 hover:bg-accent-purple-50/50 dark:hover:bg-accent-purple-950/20">
       <TableCell className="py-4">
         <div className="flex items-center gap-2">
           <code className="text-primary-dark-900 rounded border border-neutral-200 bg-neutral-50 px-2 py-1 font-mono text-sm font-medium">
@@ -80,7 +80,7 @@ export function DexRecentTransactionRow({ tx }: Props) {
               href={txUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-accent-teal-600 text-neutral-500 transition-colors"
+              className="hover:text-accent-purple-600 text-neutral-500 transition-colors"
             >
               <FaExternalLinkAlt className="h-3 w-3" />
             </a>

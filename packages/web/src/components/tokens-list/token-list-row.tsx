@@ -62,7 +62,7 @@ export function TokenListRow({ token }: Props) {
     <TableRow
       onClick={handleRowClick}
       aria-label={`View ${name} token details`}
-      className="group/row focus-visible:ring-primary cursor-pointer border-neutral-200 transition-colors duration-150 hover:bg-neutral-50 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-white focus-visible:outline-none"
+      className="group/row focus-visible:ring-primary cursor-pointer border-border transition-colors duration-150 hover:bg-accent-purple-50/50 dark:hover:bg-accent-purple-950/20 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-white focus-visible:outline-none"
     >
       {/* Token */}
       <TableCell className="py-4">

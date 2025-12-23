@@ -12,7 +12,7 @@ type Props = {
 
 export function PortfolioTokenCard({ token }: Props) {
   return (
-    <TableRow className="group/row border-neutral-200 transition-all duration-150 hover:bg-neutral-50">
+    <TableRow className="group/row border-border transition-all duration-150 hover:bg-accent-purple-50/50 dark:hover:bg-accent-purple-950/20">
       <TableCell className="py-4">
         <div className="flex items-center gap-3">
           {token.logo && (

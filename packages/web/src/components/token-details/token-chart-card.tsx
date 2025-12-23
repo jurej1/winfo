@@ -14,6 +14,8 @@ import {
 } from "../ui/card";
 import { TokenLineChart } from "./token-line-chart";
 import { Spinner } from "../ui/spinner";
+import { motion } from "framer-motion";
+import { fadeInUp } from "@/lib/animations";
 
 type Props = {
   id: string;
@@ -32,55 +34,61 @@ export function TokenChartCard({ id }: Props) {
   );
 
   return (
-    <Card>
-      <CardHeader className="border-b border-neutral-100">
-        <CardTitle className="text-xs font-semibold tracking-wide text-neutral-500 uppercase">
-          Price Chart
-        </CardTitle>
-        <CardAction>
-          <TokenChartTimeframeSelector
-            onSelected={handleOnSelected}
-            val={timeframe}
-          />
-        </CardAction>
-      </CardHeader>
-      <CardContent>
-        {isLoading && (
-          <div className="flex h-[400px] items-center justify-center">
-            <div className="text-center">
-              <Spinner className="mx-auto mb-3 h-8 w-8" />
-              <p className="text-sm text-neutral-600">Loading chart data...</p>
+    <motion.div
+      variants={fadeInUp}
+      initial="hidden"
+      animate="visible"
+    >
+      <Card variant="glass">
+        <CardHeader className="border-b border-white/10">
+          <CardTitle className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+            Price Chart
+          </CardTitle>
+          <CardAction>
+            <TokenChartTimeframeSelector
+              onSelected={handleOnSelected}
+              val={timeframe}
+            />
+          </CardAction>
+        </CardHeader>
+        <CardContent>
+          {isLoading && (
+            <div className="flex h-[400px] items-center justify-center">
+              <div className="text-center">
+                <Spinner className="mx-auto mb-3 h-8 w-8" />
+                <p className="text-sm text-muted-foreground">Loading chart data...</p>
+              </div>
             </div>
-          </div>
-        )}
-        {isError && (
-          <div className="flex h-[400px] items-center justify-center">
-            <div className="text-center">
-              <p className="text-sm font-medium text-neutral-700">
-                Unable to load chart
-              </p>
-              <p className="mt-1 text-xs text-neutral-500">
-                Chart data is temporarily unavailable
-              </p>
+          )}
+          {isError && (
+            <div className="flex h-[400px] items-center justify-center">
+              <div className="text-center">
+                <p className="text-sm font-medium">
+                  Unable to load chart
+                </p>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  Chart data is temporarily unavailable
+                </p>
+              </div>
             </div>
-          </div>
-        )}
-        {!isLoading && !isError && data && (
-          <TokenLineChart data={data} timeframe={timeframe} />
-        )}
-        {!isLoading && !isError && !data && (
-          <div className="flex h-[400px] items-center justify-center">
-            <div className="text-center">
-              <p className="text-sm font-medium text-neutral-700">
-                No chart data available
-              </p>
-              <p className="mt-1 text-xs text-neutral-500">
-                Try selecting a different timeframe
-              </p>
+          )}
+          {!isLoading && !isError && data && (
+            <TokenLineChart data={data} timeframe={timeframe} />
+          )}
+          {!isLoading && !isError && !data && (
+            <div className="flex h-[400px] items-center justify-center">
+              <div className="text-center">
+                <p className="text-sm font-medium">
+                  No chart data available
+                </p>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  Try selecting a different timeframe
+                </p>
+              </div>
             </div>
-          </div>
-        )}
-      </CardContent>
-    </Card>
+          )}
+        </CardContent>
+      </Card>
+    </motion.div>
   );
 }

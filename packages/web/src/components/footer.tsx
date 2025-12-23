@@ -1,8 +1,18 @@
+"use client";
+
 import Image from "next/image";
+import { motion } from "framer-motion";
+import { fadeInUp, viewportOnce } from "@/lib/animations";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-neutral-200 bg-white px-6 py-8 text-sm text-neutral-600">
+    <motion.footer
+      variants={fadeInUp}
+      initial="hidden"
+      whileInView="visible"
+      viewport={viewportOnce}
+      className="glass-subtle border-t border-white/20 dark:border-white/10 px-6 py-8 text-sm text-muted-foreground"
+    >
       <div className="mx-auto flex max-w-5xl flex-col gap-6 md:flex-row md:items-center md:justify-between">
         <div className="flex items-center gap-4">
           <Image
@@ -13,10 +23,11 @@ export default function Footer() {
             className="text-primary-dark-900"
           />
         </div>
-        <div className="text-neutral-400">
-          © {new Date().getFullYear()} Wallet Info. All rights reserved.
+        <div className="flex items-center gap-4">
+          <div className="h-1 w-16 rounded-full bg-gradient-to-r from-accent-purple-500 to-accent-blue-500 opacity-50" />
+          <span>© {new Date().getFullYear()} Wallet Info. All rights reserved.</span>
         </div>
       </div>
-    </footer>
+    </motion.footer>
   );
 }

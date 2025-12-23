@@ -6,6 +6,10 @@ import {
 } from "@/components/transaction-table";
 import { useWalletHistory } from "@/util/hooks/wallet/useWalletHistory";
 import { LoadingCard } from "@/components/ui/loading-card";
+import { Card, CardContent } from "@/components/ui/card";
+import { AnimatedBackground } from "../landing/animated-background";
+import { motion } from "framer-motion";
+import { staggerContainer, fadeInUp } from "@/lib/animations";
 
 import { useEffect, useState } from "react";
 import { Address } from "viem";
@@ -32,27 +36,35 @@ export default function TransactionsPage({ address, chainId }: Props) {
 
   if (isLoading || !data) {
     return (
-      <div className="mx-auto mt-5 max-w-7xl">
-        <LoadingCard message="Loading Transaction History..." />
-      </div>
+      <>
+        <AnimatedBackground />
+        <div className="mx-auto mt-5 max-w-7xl p-6">
+          <LoadingCard message="Loading Transaction History..." />
+        </div>
+      </>
     );
   }
 
   if (isError) {
     return (
-      <div className="mx-auto mt-5 max-w-7xl">
-        <div className="flex min-h-[300px] items-center justify-center rounded-lg border border-neutral-200 bg-white p-8 shadow-sm">
-          <div className="text-center">
-            <p className="text-primary-dark-900 mb-2 text-base font-semibold">
-              Error Loading Transactions
-            </p>
-            <p className="text-sm text-neutral-600">
-              There was an error loading your transaction history. Please try
-              again.
-            </p>
-          </div>
+      <>
+        <AnimatedBackground />
+        <div className="mx-auto mt-5 max-w-7xl p-6">
+          <Card variant="glass-subtle" className="min-h-[300px]">
+            <CardContent className="flex items-center justify-center p-8">
+              <div className="text-center">
+                <p className="mb-2 text-base font-semibold">
+                  Error Loading Transactions
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  There was an error loading your transaction history. Please try
+                  again.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
         </div>
-      </div>
+      </>
     );
   }
 
@@ -79,15 +91,27 @@ export default function TransactionsPage({ address, chainId }: Props) {
   };
 
   return (
-    <div className="mx-auto mt-5 flex max-w-7xl flex-col">
-      <TransactionsTable transactions={data.result} />
-      <TransactionTableNavigation
-        onBackPressed={onBackwardsPressed}
-        onBackDisabled={data.page == 0}
-        onForwardPressed={onForwardPressed}
-        onForwardDisabled={data.cursor == null}
-        page={data.page + 1}
-      />
-    </div>
+    <>
+      <AnimatedBackground />
+      <motion.div
+        variants={staggerContainer}
+        initial="hidden"
+        animate="visible"
+        className="mx-auto mt-5 flex max-w-7xl flex-col p-6"
+      >
+        <motion.div variants={fadeInUp}>
+          <TransactionsTable transactions={data.result} />
+        </motion.div>
+        <motion.div variants={fadeInUp}>
+          <TransactionTableNavigation
+            onBackPressed={onBackwardsPressed}
+            onBackDisabled={data.page == 0}
+            onForwardPressed={onForwardPressed}
+            onForwardDisabled={data.cursor == null}
+            page={data.page + 1}
+          />
+        </motion.div>
+      </motion.div>
+    </>
   );
 }

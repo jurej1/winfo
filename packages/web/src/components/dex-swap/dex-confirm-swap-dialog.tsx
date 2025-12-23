@@ -26,6 +26,7 @@ export function DexConfirmSwapDialog({
 
   return (
     <Button
+      variant="gradient"
       className="w-full cursor-pointer py-7 text-lg"
       onClick={executeSwapTransaction}
       disabled={loadingQuote || !quote?.transaction || balanceToLow}

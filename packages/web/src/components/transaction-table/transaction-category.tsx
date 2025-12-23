@@ -12,7 +12,7 @@ export function TransactionCategory({ category }: Props) {
     } else if (lowerCat.includes("receive")) {
       return "bg-success-50 text-success-700";
     } else if (lowerCat.includes("swap") || lowerCat.includes("trade")) {
-      return "bg-accent-teal-50 text-accent-teal-700";
+      return "bg-accent-purple-50 text-accent-purple-700 dark:bg-accent-purple-950/30 dark:text-accent-purple-400";
     } else if (lowerCat.includes("approve")) {
       return "bg-warning-50 text-warning-700";
     } else {

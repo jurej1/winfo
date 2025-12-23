@@ -45,7 +45,7 @@ export function DexLimitOrderTableRow({ limitOrder }: Props) {
     : undefined;
 
   return (
-    <TableRow className="group/row border-neutral-200 transition-colors duration-150 hover:bg-neutral-50">
+    <TableRow className="group/row border-border transition-colors duration-150 hover:bg-accent-purple-50/50 dark:hover:bg-accent-purple-950/20">
       <TableCell className="w-[180px] py-4">
         <div className="flex items-center gap-2">
           <code className="rounded border border-neutral-200 bg-neutral-50 px-2 py-1 font-mono text-sm text-primary-dark-900">
@@ -56,7 +56,7 @@ export function DexLimitOrderTableRow({ limitOrder }: Props) {
               href={orderUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-neutral-400 transition-colors hover:text-accent-teal-600"
+              className="text-neutral-400 transition-colors hover:text-accent-purple-600"
             >
               <FaExternalLinkAlt className="h-3 w-3" />
             </Link>

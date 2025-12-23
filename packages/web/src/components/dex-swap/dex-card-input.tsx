@@ -53,7 +53,7 @@ export function DexCardInput({
   return (
     <DexCardBackground isHovering={setIsHover}>
       <div className="flex justify-between">
-        <p className="text-md text-gray-400">{title}</p>
+        <p className="text-md text-muted-foreground">{title}</p>
         {showAmountSelector && !isLoading && (
           <DexTokenAmountSelector
             tokenAddress={tokenAddress()}
@@ -74,12 +74,12 @@ export function DexCardInput({
 
       <div className="flex items-center justify-between gap-4">
         {isLoading ? (
-          <Skeleton className="h-8 w-40 rounded-full bg-gray-300" />
+          <Skeleton className="h-8 w-40 rounded-full bg-neutral-200 dark:bg-neutral-700" />
         ) : (
           <DexInput
             disabled={isLoading}
             className={cn({
-              "text-red-400": balanceToLow,
+              "text-error-500": balanceToLow,
             })}
             value={value}
             onChange={(event) => {

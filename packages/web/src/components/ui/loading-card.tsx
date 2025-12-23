@@ -1,21 +1,35 @@
+"use client";
+
 import { Spinner } from "./spinner";
+import { Card, CardContent } from "./card";
+import { motion } from "framer-motion";
+import { scaleUp } from "@/lib/animations";
+import { cn } from "@/lib/utils";
 
 type LoadingCardProps = {
   message?: string;
   className?: string;
 };
 
-export function LoadingCard({ 
-  message = "Loading...", 
-  className = "" 
+export function LoadingCard({
+  message = "Loading...",
+  className = ""
 }: LoadingCardProps) {
   return (
-    <div className={`flex h-full w-full min-h-[300px] flex-col items-center justify-center rounded-lg border border-neutral-200 bg-white p-8 shadow-sm ${className}`}>
-      <Spinner />
-      <p className="mt-4 text-sm font-medium text-neutral-600">
-        {message}
-      </p>
-    </div>
+    <motion.div
+      variants={scaleUp}
+      initial="hidden"
+      animate="visible"
+    >
+      <Card variant="glass" className={cn("min-h-[300px]", className)}>
+        <CardContent className="flex h-full w-full flex-col items-center justify-center p-8">
+          <Spinner className="h-8 w-8 text-accent-purple-500" />
+          <p className="mt-4 text-sm font-medium text-muted-foreground">
+            {message}
+          </p>
+        </CardContent>
+      </Card>
+    </motion.div>
   );
 }
 
