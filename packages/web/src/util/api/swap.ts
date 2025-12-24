@@ -3,6 +3,7 @@ import {
   GetPrice0XResponse,
   GetQuote0XParams,
   GetQuote0XResponse,
+  SwingToken,
 } from "@w-info-sst/types";
 
 import {
@@ -61,7 +62,7 @@ export const getSwapTokensForChain = async (chain: number) => {
 
   const body = await response.json();
 
-  return body as TokenDBwithPrice[];
+  return body as SwingToken[];
 };
 
 export const addSwapTransaction = async (tx: InsertDexTransactionDB) => {

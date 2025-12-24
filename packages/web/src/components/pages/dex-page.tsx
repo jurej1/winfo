@@ -41,20 +41,20 @@ export default function DexPage() {
           </motion.div>
           <div className="mt-4">
             <TabsContent value="swap">
-              <motion.div variants={fadeInUp} className="mx-auto w-lg">
+              <div className="mx-auto w-lg">
                 <DexSwapComponent />
-              </motion.div>
-              <motion.div variants={fadeInUp} className="mt-6">
+              </div>
+              <div className="mt-6">
                 <DexRecentTransactions />
-              </motion.div>
+              </div>
             </TabsContent>
             <TabsContent value="limit-order">
-              <motion.div variants={fadeInUp} className="mx-auto w-lg">
+              <div className="mx-auto w-lg">
                 <DexLimitOrderCard />
-              </motion.div>
-              <motion.div variants={fadeInUp} className="mt-6">
+              </div>
+              <div className="mt-6">
                 <DexWalletLimitOrders />
-              </motion.div>
+              </div>
             </TabsContent>
           </div>
         </Tabs>
