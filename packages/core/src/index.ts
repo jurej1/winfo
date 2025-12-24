@@ -11,3 +11,5 @@ export * from "./zero-x/zero-x.repository";
 export * from "./uniswap/uniswap.repository";
 
 export * from "./one-inch";
+
+export * from "./swing/swing.repository";

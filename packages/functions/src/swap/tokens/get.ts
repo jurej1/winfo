@@ -1,8 +1,7 @@
 import middy from "@middy/core";
 import validator from "@middy/validator";
 import { transpileSchema } from "@middy/validator/transpile";
-import { CoingeckoRepository, httpLambdaMiddleware } from "@w-info-sst/core";
-import { getTokensByChainId, TokenDBwithPrice } from "@w-info-sst/db";
+import { httpLambdaMiddleware, SwingRepository } from "@w-info-sst/core";
 import { ApiGwRequest } from "@w-info-sst/types";
 
 const schema = {
@@ -30,39 +29,22 @@ const baseHandler = async (
 ) => {
   const { chain } = event.queryStringParameters;
 
-  const response = await getTokensByChainId(chain);
+  const chainSlug = () => {
+    switch (chain) {
+      case 56:
+        return "bsc";
+      case 1:
+        return "ethereum";
+      default:
+        return "ethereum";
+    }
+  };
 
-  const nativeAddressDB = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
-  const nativeAddressCoingecko = "0x0000000000000000000000000000000000000000";
-
-  const tokenAddresses = response.map((token) => {
-    return token.address.toLowerCase() === nativeAddressDB.toLowerCase()
-      ? nativeAddressCoingecko
-      : token.address;
-  });
-
-  // CoinGecko API allows MAX 30 tokens per request
-  const BATCH_SIZE = 30;
-  const batches: string[][] = [];
-
-  for (let i = 0; i < tokenAddresses.length; i += BATCH_SIZE) {
-    batches.push(tokenAddresses.slice(i, i + BATCH_SIZE));
-  }
-
-  const batchPricesPromises = batches.map((batch) =>
-    CoingeckoRepository.getCoinPriceDexByAddresses("bsc", batch),
-  );
-
-  const batchPricesResults = await Promise.all(batchPricesPromises);
-  const allPrices = batchPricesResults.flat();
-
-  const mappedTokens = response.map((token, index) => {
-    return { ...token, priceUsd: allPrices[index] } as TokenDBwithPrice;
-  });
+  const tokens = await SwingRepository.getEnabledTokens(chainSlug());
 
   return {
     statusCode: 200,
-    body: mappedTokens,
+    body: tokens,
   };
 };
 

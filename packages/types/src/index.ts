@@ -16,3 +16,5 @@ export * from "./uniswap/uniswap-tokens.type";
 export * from "./one-inch";
 
 export * from "./coins";
+
+export * from "./swing/swing-token.type";
